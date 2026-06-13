@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt";
-import { normalizePath } from "@/utils/path";
+import { normalizePath } from "@/common/utils/path";
 
 const authPageRoutes = new Set(["/login"]);
 const apiAuthPrefix = "/api/auth";
