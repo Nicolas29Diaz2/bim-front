@@ -7,8 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "prepare": "husky install",
-    "commit": "cz"
+    "prepare": "husky",
+    "commit": "cz",
+    "lint-staged": "lint-staged"
   },
   "dependencies": {
     "lucide-react": "^1.18.0",
@@ -34,6 +35,8 @@
     "eslint": "^9",
     "eslint-config-next": "16.2.9",
     "husky": "^9.1.7",
+    "lint-staged": "^17.0.7",
+    "prettier": "^3.8.4",
     "typescript": "^5"
   },
   "config": {
