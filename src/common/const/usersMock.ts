@@ -1,7 +1,7 @@
 export const MOCK_USERS = [
   {
     id: "1",
-    name: "Alejandro SuperAdmin",
+    name: "Alejandro",
     email: "admin@spybee.com",
     password: "password123",
     role: "superadmin",

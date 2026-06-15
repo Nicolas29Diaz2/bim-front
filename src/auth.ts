@@ -1,6 +1,7 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-import { MOCK_USERS } from "./common/const/users";
+import { MOCK_USERS } from "./common/const/usersMock";
+import { getUserRole } from "@/common/utils/userRole";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
@@ -25,7 +26,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           id: user.id,
           name: user.name,
           email: user.email,
-          role: user.role,
+          role: getUserRole(user.role),
           avatar: user.avatar,
         };
       },

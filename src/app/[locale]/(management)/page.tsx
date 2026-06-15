@@ -1,6 +1,14 @@
-import { useTranslations } from "next-intl";
 
-export default function Home() {
-  const t = useTranslations("HomePage");
-  return <div>{t("title")}</div>;
+import { auth } from "@/auth";
+import { redirect } from "next/navigation";
+
+
+export default async function Home() {
+  const session = await auth();
+  if (!session) redirect("/login");
+  return (
+    <div>
+      Mis proyectos
+    </div>
+  );
 }

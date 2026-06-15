@@ -1,30 +1,32 @@
 import { HTMLAttributes, ReactNode } from "react";
 import { cn } from "@/common/utils/cn";
 import styles from "./Menu.module.scss";
+import Link from "next/link";
 
 interface MenuItem {
   key: string;
   label: string;
   icon?: ReactNode;
   href?: string;
+  onClick?: () => void;
 }
 
 interface MenuProps extends HTMLAttributes<HTMLElement> {
   items: MenuItem[];
+  footerItems?: MenuItem[];
   activeItem?: string;
   onItemClick?: (key: string) => void;
   profileName?: string;
   profileSub?: string;
-  footer?: ReactNode;
   collapsed?: boolean;
 }
 
 function Menu({
   items,
+  footerItems,
   activeItem,
   profileName,
   profileSub,
-  footer,
   collapsed,
   className,
   ...rest
@@ -52,7 +54,7 @@ function Menu({
         {items.map((item) => {
           const isActive = item.key === activeItem;
           return (
-            <a
+            <Link
               key={item.key}
               href={item.href ?? "#"}
               className={cn(styles.navItem, isActive && styles.active)}
@@ -60,12 +62,50 @@ function Menu({
             >
               <span className={styles.icon}>{item.icon}</span>
               {!collapsed && <span className={styles.label}>{item.label}</span>}
-            </a>
+            </Link>
           );
         })}
       </div>
 
-      {footer && <div className={styles.footer}>{footer}</div>}
+      {footerItems && footerItems.length > 0 && (
+        <div className={styles.footer}>
+          {footerItems.map((item) => {
+            const content = (
+              <>
+                <span className={styles.icon}>{item.icon}</span>
+                {!collapsed && <span className={styles.label}>{item.label}</span>}
+              </>
+            );
+
+            if (item.onClick) {
+
+              return (
+                <button
+                  key={item.key}
+                  type="button"
+                  className={styles.navItem}
+                  title={collapsed ? item.label : undefined}
+                  onClick={item.onClick}
+                >
+                  {content}
+                </button>
+              );
+            }
+
+            return (
+              <Link
+                key={item.key}
+                href={item.href ?? "#"}
+                className={styles.navItem}
+                title={collapsed ? item.label : undefined}
+              >
+                {content}
+              </Link>
+            );
+          })}
+        </div>
+      )}
+
     </nav>
   );
 }

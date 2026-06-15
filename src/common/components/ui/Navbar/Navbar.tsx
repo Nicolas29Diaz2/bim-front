@@ -18,6 +18,10 @@ interface NavbarProps extends HTMLAttributes<HTMLElement> {
   actions?: ReactNode;
   avatar?: ReactNode;
   leadingSlot?: ReactNode;
+  user?: {
+    name: string;
+    role: string;
+  };
 }
 
 function Navbar({
@@ -29,6 +33,7 @@ function Navbar({
   avatar,
   leadingSlot,
   className,
+  user,
   ...rest
 }: Readonly<NavbarProps>) {
   return (
@@ -74,6 +79,10 @@ function Navbar({
           <Settings size={18} />
         </button>
         {avatar ?? <span className={styles.avatar}>A</span>}
+        <div className={styles.userContainer}>
+          <span className={styles.userName}>{user?.name}</span>
+          <span className={styles.userRole}>{user?.role}</span>
+        </div>
       </div>
     </header>
   );

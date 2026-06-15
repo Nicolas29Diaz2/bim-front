@@ -1,24 +1,50 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useCallback, useMemo } from "react";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, AlertTriangle } from "lucide-react";
+import { LayoutDashboard, AlertTriangle, Menu as MenuIcon, CircleHelp, LogOut } from "lucide-react";
 import { cn } from "@/common/utils/cn";
 import { Navbar } from "@/common/components/ui/Navbar";
-import { Menu } from "@/common/components/ui/Menu";
+import { Menu, MenuItem } from "@/common/components/ui/Menu";
 import { SidebarToggle } from "@/common/components/ui/Menu/SidebarToggle";
 import styles from "./Sidebar.module.scss";
+import useIsMobile from "@/common/hooks/useIsMobile";
+import { useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
 
-const NAV_ITEMS = [
-  { key: "dashboard", label: "Dashboard", icon: <LayoutDashboard size={18} />, href: "/dashboard" },
-  { key: "incidents", label: "Incidents", icon: <AlertTriangle size={18} />, href: "/incidents" },
+const NAV_ITEMS: MenuItem[] = [
+  {
+    key: "dashboard",
+    label: "Dashboard",
+    icon: <LayoutDashboard size={18} />,
+    href: "/dashboard",
+  },
+  {
+    key: "incidents",
+    label: "Incidents",
+    icon: <AlertTriangle size={18} />,
+    href: "/incidents",
+  },
 ] as const;
 
-const MOBILE_BREAKPOINT = 768;
+const footerItems: MenuItem[] = [
+  {
+    key: "help",
+    label: "Help",
+    icon: <CircleHelp size={18} />,
+    href: "/help",
+  },
+  {
+    key: "logout",
+    label: "Logout",
+    icon: <LogOut size={18} />,
+    onClick: () => signOut({ callbackUrl: "/login" }),
+  },
+]
 
 function getActiveNavKey(pathname: string): string {
   const segments = pathname.split("/").filter(Boolean);
-  const lastSegment = segments[segments.length - 1] ?? "";
+  const lastSegment = segments.at(-1) ?? "";
   const match = NAV_ITEMS.find((item) => item.key === lastSegment);
   return match?.key ?? "dashboard";
 }
@@ -30,22 +56,16 @@ export default function ManagementLayout({
 }>) {
   const pathname = usePathname();
   const activeKey = getActiveNavKey(pathname);
+  const isMobile = useIsMobile();
+  const { data } = useSession();
+  const user = data?.user;
 
   const [expanded, setExpanded] = useState(true);
-  const [isMobile, setIsMobile] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  useEffect(() => {
-    const mql = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT}px)`);
-    const handleChange = (e: MediaQueryListEvent | MediaQueryList) => {
-      const mobile = e.matches;
-      setIsMobile(mobile);
-      if (mobile) setExpanded(false);
-    };
-    handleChange(mql);
-    mql.addEventListener("change", handleChange);
-    return () => mql.removeEventListener("change", handleChange);
-  }, []);
+  const sidebarCollapsed = isMobile ? false : !expanded;
+
+
 
   const toggleSidebar = useCallback(() => {
     if (isMobile) {
@@ -59,18 +79,22 @@ export default function ManagementLayout({
     setMobileOpen(false);
   }, []);
 
-  const sidebarCollapsed = isMobile ? false : !expanded;
-
-  const sidebar = (
-    <div className={cn(styles.sidebar, sidebarCollapsed && styles.collapsed)}>
+  const renderSidebar = (isMobileView: boolean) => (
+    <div
+      className={cn(
+        styles.sidebar,
+        isMobileView ? styles.mobileOpen : sidebarCollapsed && styles.collapsed,
+      )}
+    >
       <Menu
-        items={NAV_ITEMS.map((item) => ({ ...item }))}
+        items={NAV_ITEMS}
+        footerItems={footerItems}
         activeItem={activeKey}
         profileName="BIM Manager"
         profileSub="Site A-102"
-        collapsed={sidebarCollapsed}
+        collapsed={isMobileView ? false : sidebarCollapsed}
       />
-      {!isMobile && (
+      {!isMobileView && (
         <SidebarToggle collapsed={sidebarCollapsed} onClick={toggleSidebar} />
       )}
     </div>
@@ -87,15 +111,21 @@ export default function ManagementLayout({
               onClick={toggleSidebar}
               aria-label="Open menu"
             >
-              <LayoutDashboard size={18} />
+              <MenuIcon size={18} />
             </button>
           ) : undefined
         }
+        user={{
+          name: user?.name ?? "",
+          role: user?.role ?? "",
+        }}
       />
 
       <div className={styles.body}>
-        {!isMobile && sidebar}
+        {/* Desktop */}
+        {!isMobile && renderSidebar(false)}
 
+        {/* Mobile */}
         {isMobile && mobileOpen && (
           <>
             <div
@@ -103,15 +133,7 @@ export default function ManagementLayout({
               onClick={closeMobileSidebar}
               aria-hidden="true"
             />
-            <div className={cn(styles.sidebar, styles.mobileOpen)}>
-              <Menu
-                items={NAV_ITEMS.map((item) => ({ ...item }))}
-                activeItem={activeKey}
-                profileName="BIM Manager"
-                profileSub="Site A-102"
-                collapsed={false}
-              />
-            </div>
+            {renderSidebar(true)}
           </>
         )}
 

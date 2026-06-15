@@ -39,7 +39,9 @@
   background: none;
   border: none;
   cursor: pointer;
-  transition: color 0.15s ease, background-color 0.15s ease;
+  transition:
+    color 0.15s ease,
+    background-color 0.15s ease;
   white-space: nowrap;
 
   &:hover {
@@ -79,7 +81,9 @@
   border: none;
   color: $color-neutral;
   cursor: pointer;
-  transition: background-color 0.15s ease, color 0.15s ease;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
 
   &:hover {
     background-color: $color-bg-hover;
@@ -99,4 +103,26 @@
   font-size: $font-size-xs;
   font-weight: $font-weight-bold;
   cursor: pointer;
+}
+
+.userContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.userName {
+  font-size: $font-size-sm;
+  color: $color-neutral;
+  font-weight: $font-weight-bold;
+}
+
+.userRole {
+  font-size: $font-size-xs;
+  color: $color-text-muted;
+}
+
+@media (max-width: $breakpoint-md) {
+  .user {
+    display: none;
+  }
 }
