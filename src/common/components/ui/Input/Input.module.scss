@@ -1,0 +1,148 @@
+@use "../../../../app/[locale]/variables" as *;
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: $color-secondary;
+}
+
+.inputContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input {
+  width: 100%;
+  height: 36px;
+  padding: 0 12px;
+  font-family: inherit;
+  font-size: 0.875rem;
+  color: $color-secondary;
+  background-color: $color-bg-surface;
+  border: 1px solid $color-border;
+  border-radius: 8px;
+  outline: none;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+
+  &::placeholder {
+    color: $color-text-muted;
+  }
+
+  &:hover:not(:disabled) {
+    border-color: $color-neutral;
+  }
+
+  &:focus {
+    border-color: $color-border-focus;
+    box-shadow: 0 0 0 3px $color-primary-light;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+// ── Error state ────────────────────────────────────────
+.error {
+  .input {
+    border-color: $color-error;
+
+    &:focus {
+      box-shadow: 0 0 0 3px rgba($color-error, 0.15);
+    }
+  }
+
+  .errorText {
+    color: $color-error;
+  }
+}
+
+// ── Compact mode ───────────────────────────────────────
+.compact .input {
+  height: 30px;
+  padding: 0 10px;
+  font-size: 0.75rem;
+}
+
+// ── Leading icon ───────────────────────────────────────
+.leadingIcon {
+  position: absolute;
+  left: 12px;
+  display: inline-flex;
+  color: $color-text-muted;
+  pointer-events: none;
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  ~ .input {
+    padding-left: 36px;
+  }
+
+  .compact & {
+    left: 10px;
+
+    svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    ~ .input {
+      padding-left: 32px;
+    }
+  }
+}
+
+// ── Trailing icon ──────────────────────────────────────
+.trailingIcon {
+  position: absolute;
+  right: 12px;
+  display: inline-flex;
+  color: $color-text-muted;
+  pointer-events: none;
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  ~ .input {
+    padding-right: 36px;
+  }
+
+  .compact & {
+    right: 10px;
+
+    svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    ~ .input {
+      padding-right: 32px;
+    }
+  }
+}
+
+// ── Helper / error text ────────────────────────────────
+.helperText {
+  font-size: 0.75rem;
+  color: $color-text-muted;
+}
+
+.errorText {
+  font-size: 0.75rem;
+  color: $color-error;
+}

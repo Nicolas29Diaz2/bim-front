@@ -1,0 +1,77 @@
+@use "../../../../app/[locale]/variables" as *;
+
+.tableWrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+// ── Header ─────────────────────────────────────────────
+.thead {
+  background-color: $color-bg-main;
+  border-bottom: 1px solid $color-border;
+}
+
+.th {
+  padding: 10px 16px;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: $color-text-muted;
+  text-align: left;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+// ── Body ───────────────────────────────────────────────
+.tbody {
+  .row {
+    border-bottom: 1px solid $color-border;
+    transition: background-color 0.1s ease;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    &:hover {
+      background-color: $color-bg-hover;
+    }
+
+    &.clickable {
+      cursor: pointer;
+    }
+  }
+}
+
+.td {
+  padding: 12px 16px;
+  vertical-align: middle;
+  color: $color-secondary;
+}
+
+// ── Compact variant ────────────────────────────────────
+.compact {
+  .th {
+    padding: 8px 16px;
+    font-size: 0.625rem;
+  }
+
+  .td {
+    padding: 8px 16px;
+    font-size: 0.8125rem;
+  }
+}
+
+// ── Empty state ────────────────────────────────────────
+.empty {
+  .td {
+    padding: 32px 16px;
+    text-align: center;
+    color: $color-text-muted;
+  }
+}

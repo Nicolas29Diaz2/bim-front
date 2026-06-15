@@ -1,24 +1,24 @@
 "use client";
 
 import { isErr } from "@/common/api/result";
+import { useToastStore } from "@/common/store/toastStore";
 import { loginWithCredentials } from "@/modules/auth/actions/loginWithCredentials.action";
 import { useState } from "react";
 
 function LoginPage() {
-  const [errorMessage, setErrorMessage] = useState("");
   const [isPending, setIsPending] = useState(false);
+  const showError = useToastStore((state) => state.showError);
 
   const handleSubmit = async (event: React.SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
     setIsPending(true);
-    setErrorMessage("");
 
     const formData = new FormData(event.currentTarget);
     const result = await loginWithCredentials(formData);
     console.log(result);
 
     if (isErr(result)) {
-      setErrorMessage(result.error.message);
+      showError(result.error.message);
       setIsPending(false);
     }
   };
@@ -26,8 +26,6 @@ function LoginPage() {
   return (
     <form onSubmit={handleSubmit}>
       <h1>Iniciar Sesión en Spybee</h1>
-
-      {errorMessage && <p>{errorMessage}</p>}
 
       <div>
         <label htmlFor="email">Correo Electrónico</label>

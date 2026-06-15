@@ -1,0 +1,110 @@
+@use "../../../../app/[locale]/variables" as *;
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: $color-secondary;
+}
+
+.selectContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.select {
+  width: 100%;
+  height: 36px;
+  padding: 0 36px 0 12px;
+  font-family: inherit;
+  font-size: 0.875rem;
+  color: $color-secondary;
+  background-color: $color-bg-surface;
+  border: 1px solid $color-border;
+  border-radius: 8px;
+  outline: none;
+  appearance: none;
+  cursor: pointer;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+
+  &:hover:not(:disabled) {
+    border-color: $color-neutral;
+  }
+
+  &:focus {
+    border-color: $color-border-focus;
+    box-shadow: 0 0 0 3px $color-primary-light;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.placeholder {
+  color: $color-text-muted;
+}
+
+// ── Error state ────────────────────────────────────────
+.error {
+  .select {
+    border-color: $color-error;
+
+    &:focus {
+      box-shadow: 0 0 0 3px rgba($color-error, 0.15);
+    }
+  }
+
+  .errorText {
+    color: $color-error;
+  }
+}
+
+// ── Compact mode ───────────────────────────────────────
+.compact .select {
+  height: 30px;
+  padding-right: 32px;
+  padding-left: 10px;
+  font-size: 0.75rem;
+}
+
+// ── Chevron icon ───────────────────────────────────────
+.chevron {
+  position: absolute;
+  right: 12px;
+  display: inline-flex;
+  color: $color-text-muted;
+  pointer-events: none;
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .compact & {
+    right: 10px;
+
+    svg {
+      width: 14px;
+      height: 14px;
+    }
+  }
+}
+
+// ── Helper / error text ────────────────────────────────
+.helperText {
+  font-size: 0.75rem;
+  color: $color-text-muted;
+}
+
+.errorText {
+  font-size: 0.75rem;
+  color: $color-error;
+}

@@ -1,0 +1,35 @@
+@use "../../../../app/[locale]/variables" as *;
+
+.toggle {
+  position: absolute;
+  right: -12px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: $color-secondary;
+  color: #ffffff;
+  border: 2px solid $color-primary;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.15s ease;
+  box-shadow: $shadow-md;
+
+  &:hover {
+    background-color: $color-secondary-hover;
+  }
+
+  svg {
+    transition: transform 0.2s ease;
+  }
+}
+
+.collapsed {
+  svg {
+    transform: rotate(180deg);
+  }
+}

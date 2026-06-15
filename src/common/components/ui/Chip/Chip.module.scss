@@ -1,0 +1,130 @@
+@use "../../../../app/[locale]/variables" as *;
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 4px;
+  font-family: inherit;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+  user-select: none;
+}
+
+// ── Sizes ──────────────────────────────────────────────
+.md {
+  height: 28px;
+  padding: 0 10px;
+  font-size: 0.75rem;
+}
+
+.sm {
+  height: 22px;
+  padding: 0 8px;
+  font-size: 0.6875rem;
+  gap: 4px;
+}
+
+// ── Variant: Filled ────────────────────────────────────
+.filled {
+  &.primary {
+    background-color: $color-primary;
+    color: $color-secondary;
+  }
+
+  &.error {
+    background-color: $color-error;
+    color: #ffffff;
+  }
+
+  &.warning {
+    background-color: $color-warning;
+    color: $color-secondary;
+  }
+
+  &.success {
+    background-color: $color-success;
+    color: #ffffff;
+  }
+
+  &.neutral {
+    background-color: $color-neutral;
+    color: #ffffff;
+  }
+}
+
+// ── Variant: Outlined ──────────────────────────────────
+.outlined {
+  background-color: transparent;
+
+  &.primary {
+    border: 1px solid $color-primary;
+    color: $color-primary;
+  }
+
+  &.error {
+    border: 1px solid $color-error;
+    color: $color-error;
+  }
+
+  &.warning {
+    border: 1px solid $color-warning;
+    color: $color-primary;
+  }
+
+  &.success {
+    border: 1px solid $color-success;
+    color: $color-success;
+  }
+
+  &.neutral {
+    border: 1px solid $color-border;
+    color: $color-neutral;
+  }
+}
+
+// ── Dismiss button ─────────────────────────────────────
+.dismiss {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 2px;
+  margin-right: -2px;
+  padding: 2px;
+  border-radius: 2px;
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 0.15s ease;
+  line-height: 1;
+
+  &:hover {
+    opacity: 1;
+  }
+
+  svg {
+    width: 12px;
+    height: 12px;
+  }
+}
+
+// ── Icon slot ──────────────────────────────────────────
+.icon {
+  display: inline-flex;
+  flex-shrink: 0;
+
+  svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .sm & {
+    svg {
+      width: 12px;
+      height: 12px;
+    }
+  }
+}

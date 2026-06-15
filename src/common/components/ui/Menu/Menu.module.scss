@@ -1,0 +1,176 @@
+@use "../../../../app/[locale]/variables" as *;
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  width: 240px;
+  height: 100%;
+  background-color: $color-secondary;
+  color: #ffffff;
+  padding: $space-lg 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  flex-shrink: 0;
+  transition: width 0.2s ease;
+}
+
+.collapsed {
+  width: 64px;
+  padding: $space-lg 0;
+}
+
+// ── Profile ──────────────────────────────────────────────
+.profile {
+  display: flex;
+  align-items: center;
+  gap: $space-md;
+  padding: 0 $space-lg $space-lg;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: $space-sm;
+}
+
+.collapsed .profile {
+  justify-content: center;
+  padding: 0 0 $space-lg;
+}
+
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: $color-primary;
+  color: $color-secondary;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-bold;
+  flex-shrink: 0;
+}
+
+.profileText {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.profileName {
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  color: #ffffff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.profileSub {
+  font-size: $font-size-2xs;
+  color: rgba(255, 255, 255, 0.45);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+// ── Nav Items ────────────────────────────────────────────
+.navItems {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2xs;
+  padding: $space-sm $space-sm;
+  flex: 1;
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  gap: $space-md;
+  padding: 10px $space-md;
+  border-radius: $radius-md;
+  font-family: inherit;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: rgba(255, 255, 255, 0.55);
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: background-color 0.15s ease, color 0.15s ease;
+  position: relative;
+  text-decoration: none;
+  width: 100%;
+  box-sizing: border-box;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.07);
+    color: rgba(255, 255, 255, 0.95);
+  }
+}
+
+.collapsed .navItem {
+  justify-content: center;
+  padding: 10px;
+  gap: 0;
+}
+
+.active {
+  color: $color-primary;
+  background-color: rgba(255, 255, 255, 0.05);
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: -8px;
+    top: 8px;
+    bottom: 8px;
+    width: 3px;
+    border-radius: 0 $radius-sm $radius-sm 0;
+    background-color: $color-primary;
+  }
+
+  &:hover {
+    color: $color-primary;
+  }
+}
+
+.collapsed .active {
+  &::before {
+    left: 0;
+    top: auto;
+    bottom: 0;
+    width: 100%;
+    height: 3px;
+    border-radius: $radius-sm $radius-sm 0 0;
+  }
+}
+
+.icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  opacity: 0.8;
+  transition: opacity 0.15s ease;
+
+  .active &,
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.label {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.collapsed .label {
+  display: none;
+}
+
+// ── Footer ───────────────────────────────────────────────
+.footer {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2xs;
+  padding: $space-sm;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  margin-top: auto;
+}
