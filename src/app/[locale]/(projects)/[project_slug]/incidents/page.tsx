@@ -1,7 +1,6 @@
 import { auth } from "@/auth";
 import { isErr } from "@/common/api/result";
-import { IncidentsMap } from "@/modules/incidents/components/IncidentsMap";
-import { OverlayControls } from "@/modules/incidents/components/OverlayControls";
+import { IncidentsWorkspace } from "@/modules/incidents/components/IncidentsWorkspace";
 import { getIncidentsByProject } from "@/modules/incidents/services/getIncidentsByProject.service";
 import { redirect } from "next/navigation";
 
@@ -12,20 +11,7 @@ async function IncidentsPage() {
   const incidents = await getIncidentsByProject();
   const finalIncidents = isErr(incidents) ? [] : incidents.value;
 
-  return (
-    <div
-      style={{
-        position: "relative",
-        height: "100%",
-        width: "100%",
-        display: "flex",
-        flexDirection: "column",
-      }}
-    >
-      {/* <OverlayControls /> */}
-      <IncidentsMap incidents={finalIncidents} />
-    </div>
-  );
+  return <IncidentsWorkspace initialIncidents={finalIncidents} />;
 }
 
 export default IncidentsPage;

@@ -1,0 +1,13 @@
+@use "../../../../app/[locale]/variables" as *;
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: $space-sm;
+  width: 100%;
+}
+
+.footer > :first-child {
+  margin-right: auto;
+}

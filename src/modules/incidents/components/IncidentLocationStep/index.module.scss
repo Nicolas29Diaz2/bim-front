@@ -1,0 +1,101 @@
+@use "../../../../app/[locale]/variables" as *;
+
+.step {
+  display: grid;
+  gap: $space-lg;
+}
+
+.sectionTitle {
+  display: grid;
+  gap: $space-xs;
+
+  p {
+    color: $color-text-muted;
+    font-size: $font-size-sm;
+  }
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: $space-xs $space-sm;
+  width: fit-content;
+  background: rgba($color-success, 0.12);
+  color: darken($color-success, 8%);
+  border-radius: $radius-sm;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-bold;
+}
+
+.coordCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-lg;
+  padding: $space-lg;
+  border-radius: $radius-lg;
+  border: 1px dashed $color-border;
+  background: $color-bg-hover;
+}
+
+.coordRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $space-xl;
+}
+
+.coordField {
+  display: grid;
+  gap: $space-2xs;
+
+  span:first-child {
+    color: $color-text-muted;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-semibold;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+}
+
+.coordValue {
+  font-size: $font-size-md;
+  font-weight: $font-weight-bold;
+  font-variant-numeric: tabular-nums;
+  color: $color-secondary;
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $space-lg;
+}
+
+.field {
+  display: grid;
+  gap: $space-xs;
+
+  > span {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    color: $color-secondary;
+  }
+}
+
+.hint {
+  padding: $space-md;
+  border-radius: $radius-md;
+  background: rgba($color-warning, 0.08);
+  color: $color-neutral;
+  font-size: $font-size-sm;
+}
+
+@media (max-width: $breakpoint-sm) {
+  .coordCard {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .formGrid {
+    grid-template-columns: 1fr;
+  }
+}

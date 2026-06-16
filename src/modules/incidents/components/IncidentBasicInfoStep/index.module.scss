@@ -1,0 +1,122 @@
+@use "../../../../app/[locale]/variables" as *;
+
+.step {
+  display: grid;
+  gap: $space-lg;
+}
+
+.hero {
+  padding: $space-lg;
+  border: 1px solid rgba($color-primary, 0.35);
+  border-radius: $radius-lg;
+  background: linear-gradient(135deg, $color-secondary, #29230e);
+  color: white;
+
+  span {
+    color: $color-primary;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-bold;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  h3 {
+    margin-top: $space-xs;
+    font-size: $font-size-lg;
+  }
+
+  p {
+    margin-top: $space-xs;
+    color: rgba(white, 0.68);
+    font-size: $font-size-sm;
+  }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1.3fr 0.7fr;
+  gap: $space-lg;
+}
+
+.field {
+  display: grid;
+  gap: $space-sm;
+
+  > span {
+    color: $color-secondary;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+  }
+}
+
+.textarea {
+  min-height: 104px;
+  resize: vertical;
+  padding: $space-md $space-lg;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  color: $color-secondary;
+  outline: none;
+  transition: all 0.3s ease;
+
+  &:focus {
+    border-color: $color-border-focus;
+    box-shadow: 0 0 0 3px rgba($color-primary, 0.16);
+  }
+}
+
+.priorityGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: $space-sm;
+}
+
+.priority {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $space-sm;
+  min-height: 44px;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  color: $color-secondary;
+  font-weight: $font-weight-bold;
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: $shadow-md;
+  }
+}
+
+.selected {
+  border-color: currentColor;
+  transform: translateY(-2px) scale(1.02);
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.blue {
+  color: #2563eb;
+}
+.green {
+  color: $color-success;
+}
+.orange {
+  color: #f97316;
+}
+.red {
+  color: $color-error;
+}
+
+@media (max-width: $breakpoint-sm) {
+  .grid,
+  .priorityGrid {
+    grid-template-columns: 1fr;
+  }
+}

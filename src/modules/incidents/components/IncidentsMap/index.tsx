@@ -3,7 +3,13 @@ import { useState, useCallback } from "react";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { useIncidentsGeoJson } from "../../hooks/useIncidentsGeoJson";
 import { Incident } from "../../types/incidents";
-import Map, { Layer, MapEvent, Source } from "react-map-gl/mapbox";
+import { useIncidentCreationStore } from "../../store/useIncidentCreationStore";
+import Map, {
+  Layer,
+  MapEvent,
+  MapMouseEvent,
+  Source,
+} from "react-map-gl/mapbox";
 import styles from "./index.module.scss";
 
 const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
@@ -29,6 +35,9 @@ export function IncidentsMap({
     bearing: 0,
   });
 
+  const isCrosshairMode = useIncidentCreationStore((s) => s.isCrosshairMode);
+  const captureMapPoint = useIncidentCreationStore((s) => s.captureMapPoint);
+
   const geoJson = useIncidentsGeoJson(incidents);
 
   const handleMapLoad = useCallback((evt: MapEvent) => {
@@ -46,8 +55,20 @@ export function IncidentsMap({
     });
   }, []);
 
+  const handleMapClick = useCallback(
+    (evt: MapMouseEvent) => {
+      if (!isCrosshairMode) return;
+      const { lng, lat } = evt.lngLat;
+      captureMapPoint({ lat, lng });
+    },
+    [isCrosshairMode, captureMapPoint],
+  );
+
   return (
-    <div className={styles.map}>
+    <div
+      className={styles.map}
+      style={{ cursor: isCrosshairMode ? "crosshair" : undefined }}
+    >
       <Map
         {...viewState}
         onMove={(evt) => setViewState(evt.viewState)}
@@ -55,9 +76,11 @@ export function IncidentsMap({
         mapStyle="mapbox://styles/mapbox/standard"
         maxPitch={85}
         onLoad={handleMapLoad}
+        onClick={handleMapClick}
         style={{
           width: "100%",
           height: "100%",
+          cursor: isCrosshairMode ? "crosshair" : undefined,
         }}
       >
         <Source id="incidents-source" type="geojson" data={geoJson}>

@@ -1,0 +1,84 @@
+@use "../../../../app/[locale]/variables" as *;
+
+.stepper {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: $space-sm;
+  margin-bottom: $space-xl;
+}
+
+.item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $space-sm;
+}
+
+.line {
+  position: absolute;
+  top: 17px;
+  right: 50%;
+  width: 100%;
+  height: 3px;
+  background: $color-border;
+  border-radius: 999px;
+  transition: all 0.3s ease;
+}
+
+.lineDone {
+  background: linear-gradient(90deg, $color-primary, $color-success);
+}
+
+.node {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid $color-border;
+  background: $color-bg-surface;
+  color: $color-neutral;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-bold;
+  box-shadow: $shadow-sm;
+  transition: all 0.3s ease;
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+
+.active {
+  transform: scale(1.14);
+  border-color: $color-primary;
+  background: $color-primary;
+  color: $color-secondary;
+  box-shadow: 0 10px 28px rgba($color-primary, 0.35);
+}
+
+.complete {
+  border-color: $color-success;
+  background: $color-success;
+  color: white;
+}
+
+.label {
+  color: $color-text-muted;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  transition: all 0.3s ease;
+}
+
+.labelActive {
+  color: $color-secondary;
+  transform: translateY(-1px);
+}
+
+@media (max-width: $breakpoint-sm) {
+  .label {
+    font-size: $font-size-2xs;
+  }
+}
