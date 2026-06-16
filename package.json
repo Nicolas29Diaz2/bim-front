@@ -12,6 +12,7 @@
     "lint-staged": "lint-staged"
   },
   "dependencies": {
+    "@types/mapbox-gl": "^3.4.1",
     "lucide-react": "^1.18.0",
     "mapbox-gl": "^3.24.1",
     "next": "16.2.9",

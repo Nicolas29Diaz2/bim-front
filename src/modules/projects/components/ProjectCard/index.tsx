@@ -3,7 +3,7 @@ import { cn } from "@/common/utils/cn";
 import type { Project } from "../../types/projects";
 import styles from "./index.module.scss";
 import Image from "next/image";
-import { getStatusLabel } from "../helpers/statusLabel";
+import { getStatusLabel } from "../../helpers/statusLabel";
 
 interface ProjectCardProps {
   project: Project;
