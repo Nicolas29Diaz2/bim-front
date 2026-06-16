@@ -23,6 +23,7 @@ interface NavbarProps extends HTMLAttributes<HTMLElement> {
     name: string;
     role: string;
   };
+  handleLogoClick?: () => void;
 }
 
 function Navbar({
@@ -36,13 +37,16 @@ function Navbar({
   centerSlot,
   className,
   user,
+  handleLogoClick,
   ...rest
 }: Readonly<NavbarProps>) {
   return (
     <header className={cn(styles.navbar, className)} {...rest}>
       {leadingSlot}
 
-      <span className={styles.logo}>{logo}</span>
+      <button className={styles.logo} onClick={handleLogoClick}>
+        {logo}
+      </button>
 
       {tabs && tabs.length > 0 && (
         <nav className={styles.tabs}>

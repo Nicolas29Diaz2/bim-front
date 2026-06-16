@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useMemo, useCallback } from "react";
-import { usePathname, useParams, notFound } from "next/navigation";
+import { usePathname, useParams, notFound, useRouter } from "next/navigation";
 import {
   Menu as MenuIcon,
   LayoutDashboard,
@@ -69,6 +69,7 @@ export default function ManagementLayout({
   const pathname = usePathname();
   const params = useParams();
   const slug = params.project_slug as string;
+  const router = useRouter();
 
   const isMobile = useIsMobile();
   const { data: session } = useSession();
@@ -154,10 +155,13 @@ export default function ManagementLayout({
             </button>
           ) : undefined
         }
-        centerSlot={project?.name ?? "Spybee Project"}
+        centerSlot={project?.name}
         user={{
           name: user?.name ?? "",
           role: user?.role ?? "",
+        }}
+        handleLogoClick={() => {
+          router.push("/");
         }}
       />
 

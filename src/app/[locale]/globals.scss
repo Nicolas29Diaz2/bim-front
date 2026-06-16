@@ -54,11 +54,11 @@ a {
   }
 
   &-thumb {
-    background: $color-secondary;
+    background: rgba($color-secondary, 0.2);
     border-radius: $radius-md;
 
     &:hover {
-      background: $color-secondary-hover;
+      background: rgba($color-secondary, 0.5);
     }
   }
 }
