@@ -8,6 +8,7 @@ import {
   LEVEL_OPTIONS,
 } from "../../constants/incidentCreationOptions";
 import { useIncidentCreationStore } from "../../store/useIncidentCreationStore";
+import { StepHeader } from "../IncidentStepHeader";
 import styles from "./index.module.scss";
 
 const buildingOptions = BUILDING_OPTIONS.map((b) => ({ value: b, label: b }));
@@ -22,26 +23,30 @@ export function IncidentLocationStep() {
 
   const hasCoords = formData.coordinates !== null;
 
+  function formatCoord(value: number): string {
+    return value.toFixed(8);
+  }
+
   return (
     <section className={styles.step}>
-      <div className={styles.sectionTitle}>
-        <span className={styles.badge}>Step 03</span>
-        <h3>Pin the site location</h3>
-        <p>Confirm coordinates and describe the affected zone in the model.</p>
-      </div>
+      <StepHeader
+        step={3}
+        title="Pin the site location"
+        description="Confirm coordinates and describe the affected zone in the model."
+      />
 
       <div className={styles.coordCard}>
         <div className={styles.coordRow}>
           <div className={styles.coordField}>
             <span>Latitude</span>
             <span className={styles.coordValue}>
-              {hasCoords ? formData.coordinates!.lat.toFixed(6) : "—"}
+              {hasCoords ? formatCoord(formData.coordinates!.lat) : "\u2014"}
             </span>
           </div>
           <div className={styles.coordField}>
             <span>Longitude</span>
             <span className={styles.coordValue}>
-              {hasCoords ? formData.coordinates!.lng.toFixed(6) : "—"}
+              {hasCoords ? formatCoord(formData.coordinates!.lng) : "\u2014"}
             </span>
           </div>
         </div>

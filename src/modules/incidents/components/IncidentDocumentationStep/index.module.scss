@@ -5,27 +5,6 @@
   gap: $space-lg;
 }
 
-.sectionTitle {
-  display: grid;
-  gap: $space-xs;
-
-  p {
-    color: $color-text-muted;
-    font-size: $font-size-sm;
-  }
-}
-
-.badge {
-  display: inline-flex;
-  padding: $space-xs $space-sm;
-  width: fit-content;
-  background: rgba($color-neutral, 0.1);
-  color: $color-neutral;
-  border-radius: $radius-sm;
-  font-size: $font-size-xs;
-  font-weight: $font-weight-bold;
-}
-
 .dropzone {
   position: relative;
   display: flex;
@@ -137,26 +116,6 @@
   }
 }
 
-.syncBar {
-  display: flex;
-  align-items: center;
-  gap: $space-sm;
-  padding: $space-sm $space-md;
-  border-radius: $radius-md;
-  background: rgba($color-success, 0.06);
-  color: $color-success;
-  font-size: $font-size-xs;
-  font-weight: $font-weight-semibold;
-}
-
-.syncDot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: $color-success;
-  animation: pulse 2s ease-in-out infinite;
-}
-
 .hint {
   padding: $space-md;
   border-radius: $radius-md;
@@ -164,16 +123,4 @@
   color: $color-text-muted;
   font-size: $font-size-sm;
   text-align: center;
-}
-
-@keyframes pulse {
-  0%,
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.4;
-    transform: scale(0.8);
-  }
 }

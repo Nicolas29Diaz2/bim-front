@@ -2,6 +2,7 @@
 
 import { useCallback } from "react";
 import { useIncidentCreationStore } from "../../store/useIncidentCreationStore";
+import { StepHeader } from "../IncidentStepHeader";
 import styles from "./index.module.scss";
 
 const ACCEPTED_TYPES = ["application/pdf", "image/jpeg", "image/png"];
@@ -49,11 +50,11 @@ export function IncidentDocumentationStep() {
 
   return (
     <section className={styles.step}>
-      <div className={styles.sectionTitle}>
-        <span className={styles.badge}>Step 04</span>
-        <h3>Documentation &amp; Review</h3>
-        <p>Attach evidence and confirm before submission.</p>
-      </div>
+      <StepHeader
+        step={4}
+        title="Documentation & Review"
+        description="Attach evidence and confirm before submission."
+      />
 
       <div
         className={styles.dropzone}
@@ -115,11 +116,6 @@ export function IncidentDocumentationStep() {
           ))}
         </div>
       )}
-
-      <div className={styles.syncBar}>
-        <span className={styles.syncDot} />
-        <span>Sincronización Activa / Cloud Connected</span>
-      </div>
 
       {formData.attachments.length === 0 && (
         <p className={styles.hint}>

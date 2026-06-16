@@ -9,6 +9,7 @@ import {
 } from "../../constants/incidentCreationOptions";
 import { useIncidentCreationStore } from "../../store/useIncidentCreationStore";
 import { IncidentCategory } from "../../types/incidentCreation";
+import { StepHeader } from "../IncidentStepHeader";
 import styles from "./index.module.scss";
 
 export function IncidentBasicInfoStep() {
@@ -17,11 +18,11 @@ export function IncidentBasicInfoStep() {
 
   return (
     <section className={styles.step}>
-      <div className={styles.hero}>
-        <span>Step 01</span>
-        <h3>Define the incident signal</h3>
-        <p>Capture the operational context before assigning field teams.</p>
-      </div>
+      <StepHeader
+        step={1}
+        title="Define the incident signal"
+        description="Capture the operational context before assigning field teams."
+      />
 
       <div className={styles.grid}>
         <label className={styles.field}>

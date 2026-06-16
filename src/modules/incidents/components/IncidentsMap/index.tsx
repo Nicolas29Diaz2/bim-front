@@ -65,10 +65,7 @@ export function IncidentsMap({
   );
 
   return (
-    <div
-      className={styles.map}
-      style={{ cursor: isCrosshairMode ? "crosshair" : undefined }}
-    >
+    <div className={styles.map}>
       <Map
         {...viewState}
         onMove={(evt) => setViewState(evt.viewState)}
@@ -77,10 +74,10 @@ export function IncidentsMap({
         maxPitch={85}
         onLoad={handleMapLoad}
         onClick={handleMapClick}
+        cursor={isCrosshairMode ? "crosshair" : "grab"}
         style={{
           width: "100%",
           height: "100%",
-          cursor: isCrosshairMode ? "crosshair" : undefined,
         }}
       >
         <Source id="incidents-source" type="geojson" data={geoJson}>

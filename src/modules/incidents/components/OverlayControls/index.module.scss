@@ -1,27 +1,25 @@
 @use "../../../../app/[locale]/variables" as *;
 
-.controls {
+.hintTrack {
   position: absolute;
   top: $space-lg;
   left: $space-lg;
   z-index: 10;
-  display: flex;
-  flex-direction: column;
-  gap: $space-sm;
 }
 
 .hint {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: $space-sm;
   padding: $space-sm $space-md;
-  border-radius: $radius-md;
+  border-radius: 999px;
   background: $color-secondary;
   color: white;
   font-size: $font-size-xs;
   font-weight: $font-weight-semibold;
   white-space: nowrap;
-  animation: fadeIn 0.2s ease;
+  box-shadow: $shadow-lg;
+  animation: slideIn 0.25s ease;
 }
 
 .pulse {
@@ -30,20 +28,99 @@
   border-radius: 50%;
   background: $color-primary;
   flex-shrink: 0;
-}
-
-.pulseActive {
   animation: pulse 1.5s ease-in-out infinite;
 }
 
-@keyframes fadeIn {
+.toolbar {
+  position: absolute;
+  top: 50%;
+  right: $space-lg;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $space-xs;
+  padding: $space-md $space-sm;
+  background: $color-bg-surface;
+  border-radius: $radius-3xl;
+  box-shadow: $shadow-lg;
+  border: 1px solid $color-border;
+  transform: translateY(-50%);
+}
+
+.actionBtn {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: $radius-3xl;
+  background: $color-primary;
+  color: $color-secondary;
+  border: none;
+  cursor: pointer;
+  transition: all 0.25s ease;
+
+  &:hover {
+    background: $color-primary-hover;
+    transform: scale(1.06);
+  }
+}
+
+.actionBtnActive {
+  background: $color-error;
+  color: white;
+
+  &:hover {
+    background: darken($color-error, 8%);
+  }
+}
+
+.icon {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: block;
+}
+
+.iconRotated {
+  transform: rotate(45deg);
+}
+
+.divider {
+  width: 28px;
+  height: 1px;
+  background: $color-border;
+  margin: $space-2xs 0;
+}
+
+.iconBtn {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: $radius-3xl;
+  background: transparent;
+  color: $color-neutral;
+  border: none;
+  cursor: default;
+  transition: all 0.2s ease;
+  opacity: 0.45;
+
+  &:hover {
+    background: $color-bg-hover;
+  }
+
+  &:disabled {
+    cursor: default;
+  }
+}
+
+@keyframes slideIn {
   from {
     opacity: 0;
-    transform: translateY(-4px);
+    transform: translateX(-8px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateX(0);
   }
 }
 
@@ -54,7 +131,7 @@
     transform: scale(1);
   }
   50% {
-    opacity: 0.4;
-    transform: scale(0.7);
+    opacity: 0.35;
+    transform: scale(0.65);
   }
 }

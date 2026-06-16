@@ -95,6 +95,21 @@
   }
 }
 
+.destructive {
+  background-color: $color-error;
+  color: white;
+  border: 1px solid $color-error;
+
+  &:hover:not(:disabled) {
+    background-color: darken($color-error, 8%);
+    border-color: darken($color-error, 8%);
+  }
+
+  &:active:not(:disabled) {
+    background-color: darken($color-error, 12%);
+  }
+}
+
 // ── Loading ────────────────────────────────────────────
 .loading {
   position: relative;

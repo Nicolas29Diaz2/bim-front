@@ -1,12 +1,8 @@
-import {
-  ButtonHTMLAttributes,
-  forwardRef,
-  ReactNode,
-} from "react";
+import { ButtonHTMLAttributes, forwardRef, ReactNode } from "react";
 import { cn } from "@/common/utils/cn";
 import styles from "./Button.module.scss";
 
-type ButtonVariant = "primary" | "secondary" | "ghost" | "text";
+type ButtonVariant = "primary" | "secondary" | "ghost" | "text" | "destructive";
 type ButtonSize = "sm" | "md";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -22,6 +18,7 @@ const variantClasses: Record<ButtonVariant, string> = {
   secondary: styles.secondary,
   ghost: styles.ghost,
   text: styles.text,
+  destructive: styles.destructive,
 };
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(

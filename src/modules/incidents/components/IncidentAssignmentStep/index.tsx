@@ -10,6 +10,7 @@ import {
 } from "../../constants/incidentCreationOptions";
 import { useIncidentCreationStore } from "../../store/useIncidentCreationStore";
 import type { IncidentParticipant } from "../../types/incidentCreation";
+import { StepHeader } from "../IncidentStepHeader";
 import styles from "./index.module.scss";
 
 export function IncidentAssignmentStep() {
@@ -58,13 +59,17 @@ export function IncidentAssignmentStep() {
     );
   }
 
+  const avatar = (url: string) => (
+    <img src={url} alt="" className={styles.avatar} />
+  );
+
   return (
     <section className={styles.step}>
-      <div className={styles.sectionTitle}>
-        <span className={styles.badge}>Step 02</span>
-        <h3>Assign people and context</h3>
-        <p>Select the field team and semantic tags for tracking.</p>
-      </div>
+      <StepHeader
+        step={2}
+        title="Assign people and context"
+        description="Select the field team and semantic tags for tracking."
+      />
 
       <label className={styles.field}>
         <span>Search team members</span>
@@ -82,9 +87,7 @@ export function IncidentAssignmentStep() {
             {formData.assignees.map((user) => (
               <Chip
                 key={user.id}
-                icon={
-                  <img src={user.avatarUrl} alt="" className={styles.avatar} />
-                }
+                icon={avatar(user.avatarUrl)}
                 dismissible
                 onDismiss={() => removeAssignee(user.id)}
               >
@@ -100,7 +103,7 @@ export function IncidentAssignmentStep() {
                 className={styles.userRow}
                 onClick={() => addAssignee(user)}
               >
-                <img src={user.avatarUrl} alt="" className={styles.avatar} />
+                {avatar(user.avatarUrl)}
                 <span>{user.name}</span>
                 <span className={styles.addIcon}>+</span>
               </button>
@@ -115,9 +118,7 @@ export function IncidentAssignmentStep() {
               <Chip
                 key={user.id}
                 variant="outlined"
-                icon={
-                  <img src={user.avatarUrl} alt="" className={styles.avatar} />
-                }
+                icon={avatar(user.avatarUrl)}
                 dismissible
                 onDismiss={() => removeObserver(user.id)}
               >
@@ -133,7 +134,7 @@ export function IncidentAssignmentStep() {
                 className={styles.userRow}
                 onClick={() => addObserver(user)}
               >
-                <img src={user.avatarUrl} alt="" className={styles.avatar} />
+                {avatar(user.avatarUrl)}
                 <span>{user.name}</span>
                 <span className={styles.addIcon}>+</span>
               </button>

@@ -1,10 +1,28 @@
 "use client";
 
-import { Button } from "@/common/components/ui/Button";
+import {
+  Plus,
+  Building2,
+  Ruler,
+  MapPin,
+  Layers,
+  Frame,
+  HardHat,
+  Upload,
+} from "lucide-react";
 import { cn } from "@/common/utils/cn";
 import { useIncidentCreationStore } from "../../store/useIncidentCreationStore";
 import styles from "./index.module.scss";
-import { Plus } from "lucide-react";
+
+const TOOLBAR_ICONS = [
+  { Icon: Building2, label: "Building" },
+  { Icon: Ruler, label: "Measurement" },
+  { Icon: MapPin, label: "Pin" },
+  { Icon: Layers, label: "Layers" },
+  { Icon: Frame, label: "Capture" },
+  { Icon: HardHat, label: "Safety" },
+  { Icon: Upload, label: "Upload" },
+] as const;
 
 export function OverlayControls() {
   const isCrosshairMode = useIncidentCreationStore((s) => s.isCrosshairMode);
@@ -13,21 +31,47 @@ export function OverlayControls() {
   );
 
   return (
-    <div className={styles.controls}>
-      <Button
-        variant={"primary"}
-        onClick={startIncidentSelection}
-        icon={<Plus />}
-      >
-        {isCrosshairMode ? "Click on the map..." : "New Incident"}
-      </Button>
+    <>
+      <div className={styles.hintTrack}>
+        {isCrosshairMode && (
+          <div className={styles.hint}>
+            <span className={styles.pulse} />
+            Click on the map to select the incident location
+          </div>
+        )}
+      </div>
 
-      {isCrosshairMode && (
-        <div className={styles.hint}>
-          <span className={cn(styles.pulse, styles.pulseActive)} />
-          Crosshair active — click anywhere on the map
-        </div>
-      )}
-    </div>
+      <div className={styles.toolbar}>
+        <button
+          type="button"
+          className={cn(
+            styles.actionBtn,
+            isCrosshairMode && styles.actionBtnActive,
+          )}
+          onClick={startIncidentSelection}
+          aria-label={isCrosshairMode ? "Cancel selection" : "Create incident"}
+        >
+          <Plus
+            size={22}
+            className={cn(styles.icon, isCrosshairMode && styles.iconRotated)}
+          />
+        </button>
+
+        <div className={styles.divider} />
+
+        {TOOLBAR_ICONS.map(({ Icon, label }) => (
+          <button
+            key={label}
+            type="button"
+            className={styles.iconBtn}
+            disabled
+            aria-label={label}
+            title={label}
+          >
+            <Icon size={20} strokeWidth={1.8} />
+          </button>
+        ))}
+      </div>
+    </>
   );
 }

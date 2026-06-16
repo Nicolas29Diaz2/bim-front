@@ -5,33 +5,6 @@
   gap: $space-lg;
 }
 
-.hero {
-  padding: $space-lg;
-  border: 1px solid rgba($color-primary, 0.35);
-  border-radius: $radius-lg;
-  background: linear-gradient(135deg, $color-secondary, #29230e);
-  color: white;
-
-  span {
-    color: $color-primary;
-    font-size: $font-size-xs;
-    font-weight: $font-weight-bold;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-
-  h3 {
-    margin-top: $space-xs;
-    font-size: $font-size-lg;
-  }
-
-  p {
-    margin-top: $space-xs;
-    color: rgba(white, 0.68);
-    font-size: $font-size-sm;
-  }
-}
-
 .grid {
   display: grid;
   grid-template-columns: 1.3fr 0.7fr;
