@@ -1,0 +1,198 @@
+@use "styles/variables" as *;
+
+.card {
+  display: flex;
+  flex-direction: column;
+  background-color: $color-bg-surface;
+  border-radius: $radius-lg;
+  border: 1px solid $color-border;
+  overflow: hidden;
+  transition:
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: $shadow-lg;
+    transform: translateY(-2px);
+  }
+}
+
+// ── Image ──────────────────────────────────────────────
+.imageWrapper {
+  position: relative;
+  width: 100%;
+  height: 180px;
+  overflow: hidden;
+  background-color: $color-bg-hover;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.statusBadge {
+  position: absolute;
+  top: $space-md;
+  right: $space-md;
+  padding: $space-2xs $space-sm;
+  border-radius: $radius-sm;
+  font-size: $font-size-2xs;
+  font-weight: $font-weight-bold;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: #ffffff;
+  background-color: $color-primary;
+}
+
+.statusPlanificacion {
+  background-color: $color-neutral;
+}
+
+.incidentBadge {
+  position: absolute;
+  top: $space-md;
+  left: $space-md;
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2xs;
+  padding: $space-2xs $space-sm;
+  border-radius: $radius-sm;
+  font-size: $font-size-2xs;
+  font-weight: $font-weight-semibold;
+  color: $color-error;
+  background-color: rgba(#ffffff, 0.92);
+  backdrop-filter: blur(4px);
+}
+
+.incidentIcon {
+  display: inline-flex;
+
+  svg {
+    width: 12px;
+    height: 12px;
+  }
+}
+
+// ── Body ───────────────────────────────────────────────
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: $space-sm;
+  padding: $space-lg;
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: $space-sm;
+}
+
+.projectName {
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: $color-secondary;
+  line-height: 1.3;
+}
+
+.location {
+  display: flex;
+  align-items: center;
+  gap: $space-xs;
+  font-size: $font-size-xs;
+  color: $color-text-muted;
+}
+
+.locationIcon {
+  display: inline-flex;
+  color: $color-text-muted;
+
+  svg {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+// ── Progress ───────────────────────────────────────────
+.progressSection {
+  display: flex;
+  flex-direction: column;
+  gap: $space-xs;
+}
+
+.progressHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.progressLabel {
+  font-size: $font-size-2xs;
+  font-weight: $font-weight-medium;
+  color: $color-text-muted;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.progressValue {
+  font-size: $font-size-2xs;
+  font-weight: $font-weight-bold;
+  color: $color-secondary;
+}
+
+.progressTrack {
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  background-color: $color-bg-hover;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  border-radius: 3px;
+  background-color: $color-primary;
+  transition: width 0.4s ease;
+}
+
+// ── Footer ─────────────────────────────────────────────
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $space-md $space-lg;
+  border-top: 1px solid $color-border;
+}
+
+.lastActivity {
+  font-size: $font-size-2xs;
+  color: $color-text-muted;
+}
+
+.manageLink {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2xs;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  color: $color-secondary;
+  text-decoration: none;
+  transition: color 0.15s ease;
+
+  &:hover {
+    color: $color-primary;
+  }
+
+  svg {
+    width: 14px;
+    height: 14px;
+    transition: transform 0.15s ease;
+  }
+
+  &:hover svg {
+    transform: translateX(2px);
+  }
+}

@@ -1,4 +1,4 @@
-@use "../../../app/[locale]/variables" as *;
+@use "styles/variables" as *;
 
 // ── Layout Shell ───────────────────────────────────────
 .layout {
@@ -60,7 +60,9 @@
   border: none;
   color: $color-neutral;
   cursor: pointer;
-  transition: background-color 0.15s ease, color 0.15s ease;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
   margin-right: $space-sm;
 
   &:hover {

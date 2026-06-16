@@ -1,33 +1,42 @@
 "use client";
 
-import { useState, useCallback, useMemo } from "react";
-import { usePathname } from "next/navigation";
-import { LayoutDashboard, AlertTriangle, Menu as MenuIcon, CircleHelp, LogOut } from "lucide-react";
+import { useState, useEffect, useMemo, useCallback } from "react";
+import { usePathname, useParams, notFound } from "next/navigation";
+import {
+  Menu as MenuIcon,
+  LayoutDashboard,
+  AlertTriangle,
+  CircleHelp,
+  LogOut,
+} from "lucide-react";
+import { useSession, signOut } from "next-auth/react";
+
 import { cn } from "@/common/utils/cn";
 import { Navbar } from "@/common/components/ui/Navbar";
-import { Menu, MenuItem } from "@/common/components/ui/Menu";
+import { Menu } from "@/common/components/ui/Menu";
 import { SidebarToggle } from "@/common/components/ui/Menu/SidebarToggle";
-import styles from "./Sidebar.module.scss";
 import useIsMobile from "@/common/hooks/useIsMobile";
-import { useSession } from "next-auth/react";
-import { signOut } from "next-auth/react";
+import { getProjectBySlug } from "@/modules/projects/services/getProjectBySlug.service";
+import type { Project } from "@/modules/projects/types/projects";
+import styles from "./layout.module.scss";
+import type { MenuItem } from "@/common/components/ui/Menu";
 
-const NAV_ITEMS: MenuItem[] = [
+export const getNavItems = (slug: string): MenuItem[] => [
   {
     key: "dashboard",
     label: "Dashboard",
     icon: <LayoutDashboard size={18} />,
-    href: "/dashboard",
+    href: `/${slug}/dashboard`,
   },
   {
     key: "incidents",
     label: "Incidents",
     icon: <AlertTriangle size={18} />,
-    href: "/incidents",
+    href: `/${slug}/incidents`,
   },
-] as const;
+];
 
-const footerItems: MenuItem[] = [
+export const footerItems: MenuItem[] = [
   {
     key: "help",
     label: "Help",
@@ -40,12 +49,15 @@ const footerItems: MenuItem[] = [
     icon: <LogOut size={18} />,
     onClick: () => signOut({ callbackUrl: "/login" }),
   },
-]
+];
 
-function getActiveNavKey(pathname: string): string {
+export function getActiveNavKey(
+  pathname: string,
+  navItems: MenuItem[],
+): string {
   const segments = pathname.split("/").filter(Boolean);
   const lastSegment = segments.at(-1) ?? "";
-  const match = NAV_ITEMS.find((item) => item.key === lastSegment);
+  const match = navItems.find((item) => item.key === lastSegment);
   return match?.key ?? "dashboard";
 }
 
@@ -55,29 +67,56 @@ export default function ManagementLayout({
   children: React.ReactNode;
 }>) {
   const pathname = usePathname();
-  const activeKey = getActiveNavKey(pathname);
+  const params = useParams();
+  const slug = params.project_slug as string;
+
   const isMobile = useIsMobile();
-  const { data } = useSession();
-  const user = data?.user;
+  const { data: session } = useSession();
+  const user = session?.user;
 
   const [expanded, setExpanded] = useState(true);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [project, setProject] = useState<Project | null>(null);
+
+  const navItems = useMemo(() => getNavItems(slug ?? ""), [slug]);
+  const activeKey = useMemo(
+    () => getActiveNavKey(pathname, navItems),
+    [pathname, navItems],
+  );
 
   const sidebarCollapsed = isMobile ? false : !expanded;
 
+  const fetchProject = useCallback(async () => {
+    try {
+      const result = await getProjectBySlug(slug);
+      if (!result.ok || !result.value) {
+        notFound();
+        return;
+      }
+      setProject(result.value);
+    } catch (error) {
+      console.error("Error loading project configuration:", error);
+      notFound();
+    }
+  }, [slug]);
 
-
-  const toggleSidebar = useCallback(() => {
+  const toggleSidebar = () => {
     if (isMobile) {
       setMobileOpen((prev) => !prev);
     } else {
       setExpanded((prev) => !prev);
     }
-  }, [isMobile]);
+  };
 
-  const closeMobileSidebar = useCallback(() => {
+  const closeMobileSidebar = () => {
     setMobileOpen(false);
-  }, []);
+  };
+
+  useEffect(() => {
+    if (!slug) return;
+    //eslint-disable-next-line react-hooks/set-state-in-effect
+    fetchProject();
+  }, [fetchProject, slug]);
 
   const renderSidebar = (isMobileView: boolean) => (
     <div
@@ -87,11 +126,11 @@ export default function ManagementLayout({
       )}
     >
       <Menu
-        items={NAV_ITEMS}
+        items={navItems}
         footerItems={footerItems}
         activeItem={activeKey}
-        profileName="BIM Manager"
-        profileSub="Site A-102"
+        profileName={user?.name ?? "User"}
+        profileSub={project?.name ?? "Cargando..."}
         collapsed={isMobileView ? false : sidebarCollapsed}
       />
       {!isMobileView && (
@@ -115,6 +154,7 @@ export default function ManagementLayout({
             </button>
           ) : undefined
         }
+        centerSlot={project?.name ?? "Spybee Project"}
         user={{
           name: user?.name ?? "",
           role: user?.role ?? "",
@@ -122,10 +162,8 @@ export default function ManagementLayout({
       />
 
       <div className={styles.body}>
-        {/* Desktop */}
         {!isMobile && renderSidebar(false)}
 
-        {/* Mobile */}
         {isMobile && mobileOpen && (
           <>
             <div

@@ -3,7 +3,8 @@ export type AppErrorCode =
   | "HTTP_ERROR"
   | "PARSE_ERROR"
   | "UNKNOWN_ERROR"
-  | "CREDENTIALS_SIGNIN_ERROR"
+  | "NOT_FOUND"
+  | "CREDENTIALS_SIGNIN_ERROR";
 
 export type AppError = {
   code: AppErrorCode;

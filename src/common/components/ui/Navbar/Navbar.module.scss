@@ -3,6 +3,7 @@
 .navbar {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   height: 56px;
   padding: 0 $space-xl;
   background-color: $color-bg-surface;
@@ -60,8 +61,10 @@
   }
 }
 
-.spacer {
-  flex: 1;
+.centerSlot {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .actions {
@@ -122,7 +125,15 @@
 }
 
 @media (max-width: $breakpoint-md) {
-  .user {
+  .userContainer {
     display: none;
+  }
+
+  .logo {
+    display: none;
+  }
+
+  .centerSlot {
+    max-width: 30%;
   }
 }

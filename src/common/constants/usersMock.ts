@@ -4,7 +4,7 @@ export const MOCK_USERS = [
     name: "Alejandro",
     email: "admin@spybee.com",
     password: "password123",
-    role: "superadmin",
+    role: "super_admin",
     avatar: "/avatars/admin.png",
   },
   {

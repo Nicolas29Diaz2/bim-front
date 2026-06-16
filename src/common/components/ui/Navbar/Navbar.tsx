@@ -18,6 +18,7 @@ interface NavbarProps extends HTMLAttributes<HTMLElement> {
   actions?: ReactNode;
   avatar?: ReactNode;
   leadingSlot?: ReactNode;
+  centerSlot?: string;
   user?: {
     name: string;
     role: string;
@@ -32,6 +33,7 @@ function Navbar({
   actions,
   avatar,
   leadingSlot,
+  centerSlot,
   className,
   user,
   ...rest
@@ -60,7 +62,7 @@ function Navbar({
         </nav>
       )}
 
-      <div className={styles.spacer} />
+      <div className={styles.centerSlot}>{centerSlot}</div>
 
       <div className={styles.actions}>
         {actions}
