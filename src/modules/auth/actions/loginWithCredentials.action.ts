@@ -13,7 +13,7 @@ export async function loginWithCredentials(
     await signIn("credentials", {
       email: formData.get("email"),
       password: formData.get("password"),
-      redirectTo: "/dashboard",
+      redirectTo: "/",
     });
 
     return ok(undefined);

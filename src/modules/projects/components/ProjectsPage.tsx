@@ -10,7 +10,7 @@ import { ProjectCard } from "./ProjectCard";
 import styles from "./ProjectsPage.module.scss";
 import { NewProjectCard } from "./NewProjectCard";
 import { Navbar } from "@/common/components/ui/Navbar";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 
 function ProjectsPage() {
   const router = useRouter();
@@ -69,7 +69,13 @@ function ProjectsPage() {
             </Button>
           </div>
 
-          <Button variant="text" icon={<LogOut size={16} />}>
+          <Button
+            variant="text"
+            icon={<LogOut size={16} />}
+            onClick={() => {
+              signOut({ callbackUrl: "/login" });
+            }}
+          >
             Cerrar Sesión
           </Button>
         </div>
