@@ -1,21 +1,21 @@
 @use "../../../../app/[locale]/variables" as *;
 
 .calendar {
-  width: 280px;
+  width: 100%;
+  box-sizing: border-box;
   background-color: $color-bg-surface;
-  border: 1px solid $color-border;
-  border-radius: 8px;
-  padding: 16px;
-  box-shadow: $shadow-lg;
+  border: none;
+  border-radius: 0;
+  padding: $space-sm;
+  box-shadow: none;
   user-select: none;
 }
 
-// ── Header ─────────────────────────────────────────────
 .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 16px;
+  margin-bottom: 8px;
 }
 
 .title {
@@ -35,7 +35,9 @@
   border: none;
   color: $color-neutral;
   cursor: pointer;
-  transition: background-color 0.15s ease, color 0.15s ease;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
 
   &:hover:not(:disabled) {
     background-color: $color-bg-hover;
@@ -53,18 +55,17 @@
   }
 }
 
-// ── Weekday headers ────────────────────────────────────
 .weekdays {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  margin-bottom: 4px;
+  margin-bottom: 2px;
 }
 
 .weekday {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 32px;
+  height: 28px;
   font-size: 0.6875rem;
   font-weight: 600;
   color: $color-text-muted;
@@ -72,20 +73,17 @@
   letter-spacing: 0.05em;
 }
 
-// ── Day grid ───────────────────────────────────────────
 .days {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 2px;
+  gap: 1px;
 }
 
 .day {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
-  margin: 0 auto;
+  aspect-ratio: 1;
   border-radius: 50%;
   font-size: 0.8125rem;
   font-weight: 500;
@@ -93,7 +91,9 @@
   background: none;
   border: none;
   cursor: pointer;
-  transition: background-color 0.15s ease, color 0.15s ease;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
 
   &:hover:not(:disabled):not(.selected) {
     background-color: $color-bg-hover;
@@ -104,7 +104,6 @@
   }
 }
 
-// ── States ─────────────────────────────────────────────
 .outsideMonth {
   color: $color-text-muted;
   opacity: 0.4;
@@ -113,7 +112,6 @@
 .today {
   font-weight: 700;
   color: $color-primary;
-  border: 2px solid $color-primary;
 }
 
 .selected {

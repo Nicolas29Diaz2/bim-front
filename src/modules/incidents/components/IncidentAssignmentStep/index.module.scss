@@ -5,6 +5,11 @@
   gap: $space-lg;
 }
 
+.fields {
+  display: grid;
+  gap: $space-lg;
+}
+
 .field {
   display: grid;
   gap: $space-xs;
@@ -13,120 +18,5 @@
     font-size: $font-size-sm;
     font-weight: $font-weight-semibold;
     color: $color-secondary;
-  }
-}
-
-.columns {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: $space-xl;
-}
-
-.column {
-  display: grid;
-  gap: $space-sm;
-
-  h4 {
-    font-size: $font-size-sm;
-    font-weight: $font-weight-bold;
-    color: $color-secondary;
-  }
-}
-
-.chipGrid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: $space-xs;
-  min-height: 32px;
-}
-
-.avatar {
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
-.userList {
-  display: grid;
-  gap: $space-2xs;
-}
-
-.userRow {
-  display: flex;
-  align-items: center;
-  gap: $space-sm;
-  padding: $space-sm $space-md;
-  border-radius: $radius-md;
-  border: 1px solid $color-border;
-  background: $color-bg-surface;
-  color: $color-secondary;
-  font-size: $font-size-sm;
-  font-weight: $font-weight-medium;
-  transition: all 0.2s ease;
-
-  &:hover {
-    background: $color-bg-hover;
-    border-color: $color-primary;
-    transform: translateY(-1px);
-    box-shadow: $shadow-sm;
-  }
-}
-
-.addIcon {
-  margin-left: auto;
-  color: $color-primary;
-  font-weight: $font-weight-bold;
-  font-size: $font-size-md;
-}
-
-.tagsSection {
-  display: grid;
-  gap: $space-sm;
-
-  h4 {
-    font-size: $font-size-sm;
-    font-weight: $font-weight-bold;
-    color: $color-secondary;
-  }
-}
-
-.tagGrid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: $space-sm;
-}
-
-.tag {
-  padding: $space-xs $space-lg;
-  border-radius: $radius-md;
-  border: 2px solid var(--tag-color, $color-border);
-  background: transparent;
-  color: var(--tag-color, $color-secondary);
-  font-size: $font-size-sm;
-  font-weight: $font-weight-semibold;
-  cursor: pointer;
-  transition: all 0.2s ease;
-
-  &:hover {
-    background: color-mix(in srgb, var(--tag-color) 10%, transparent);
-    transform: translateY(-1px);
-  }
-}
-
-.tagSelected {
-  background: var(--tag-color);
-  color: white;
-  box-shadow: 0 4px 14px color-mix(in srgb, var(--tag-color) 40%, transparent);
-
-  &:hover {
-    background: var(--tag-color);
-    opacity: 0.9;
-  }
-}
-
-@media (max-width: $breakpoint-sm) {
-  .columns {
-    grid-template-columns: 1fr;
   }
 }

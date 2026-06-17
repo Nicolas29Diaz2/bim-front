@@ -1,167 +1,80 @@
 "use client";
 
-import { useState } from "react";
-import { Chip } from "@/common/components/ui/Chip";
-import { Input } from "@/common/components/ui/Input";
-import { cn } from "@/common/utils/cn";
+import { MultiSelect } from "@/common/components/ui/MultiSelect";
+import { FormField } from "@/common/components/ui/FormField";
 import {
   MOCK_INCIDENT_USERS,
   TAG_OPTIONS,
 } from "../../constants/incidentCreationOptions";
 import { useIncidentCreationStore } from "../../store/useIncidentCreationStore";
-import type { IncidentParticipant } from "../../types/incidentCreation";
 import { StepHeader } from "../IncidentStepHeader";
 import styles from "./index.module.scss";
+
+const userOptions = MOCK_INCIDENT_USERS.map((user) => ({
+  value: user.id,
+  label: user.name,
+}));
+
+const labelOptions = TAG_OPTIONS.map((tag) => ({
+  value: tag.id,
+  label: tag.name,
+  color: tag.color,
+}));
 
 export function IncidentAssignmentStep() {
   const formData = useIncidentCreationStore((state) => state.formData);
   const updateField = useIncidentCreationStore((state) => state.updateField);
-  const [assigneeSearch, setAssigneeSearch] = useState("");
-
-  const available = MOCK_INCIDENT_USERS.filter(
-    (u) =>
-      !formData.assignees.some((a) => a.id === u.id) &&
-      !formData.observers.some((o) => o.id === u.id) &&
-      u.name.toLowerCase().includes(assigneeSearch.toLowerCase()),
-  );
-
-  function addAssignee(user: IncidentParticipant) {
-    updateField("assignees", [...formData.assignees, user]);
-  }
-
-  function removeAssignee(id: string) {
-    updateField(
-      "assignees",
-      formData.assignees.filter((a) => a.id !== id),
-    );
-  }
-
-  function addObserver(user: IncidentParticipant) {
-    updateField("observers", [...formData.observers, user]);
-  }
-
-  function removeObserver(id: string) {
-    updateField(
-      "observers",
-      formData.observers.filter((o) => o.id !== id),
-    );
-  }
-
-  function toggleTag(tagId: string) {
-    const tag = TAG_OPTIONS.find((t) => t.id === tagId);
-    if (!tag) return;
-    const exists = formData.tags.some((t) => t.id === tagId);
-    updateField(
-      "tags",
-      exists
-        ? formData.tags.filter((t) => t.id !== tagId)
-        : [...formData.tags, tag],
-    );
-  }
-
-  const avatar = (url: string) => (
-    <img src={url} alt="" className={styles.avatar} />
-  );
 
   return (
     <section className={styles.step}>
       <StepHeader
         step={2}
-        title="Assign people and context"
-        description="Select the field team and semantic tags for tracking."
+        title="Assign people and labels"
+        description="Choose the responsible users, observers, and labels for the incident."
       />
 
-      <label className={styles.field}>
-        <span>Search team members</span>
-        <Input
-          value={assigneeSearch}
-          placeholder="Search by name..."
-          onChange={(e) => setAssigneeSearch(e.target.value)}
-        />
-      </label>
+      <div className={styles.fields}>
+        <FormField label="Assigned to">
+          <MultiSelect
+            options={userOptions}
+            value={formData.assignees.map((user) => user.id)}
+            onChange={(ids) => {
+              updateField(
+                "assignees",
+                MOCK_INCIDENT_USERS.filter((user) => ids.includes(user.id)),
+              );
+            }}
+            placeholder="Search and select assigned users..."
+          />
+        </FormField>
 
-      <div className={styles.columns}>
-        <div className={styles.column}>
-          <h4>Assigned ({formData.assignees.length})</h4>
-          <div className={styles.chipGrid}>
-            {formData.assignees.map((user) => (
-              <Chip
-                key={user.id}
-                icon={avatar(user.avatarUrl)}
-                dismissible
-                onDismiss={() => removeAssignee(user.id)}
-              >
-                {user.name}
-              </Chip>
-            ))}
-          </div>
-          <div className={styles.userList}>
-            {available.map((user) => (
-              <button
-                key={user.id}
-                type="button"
-                className={styles.userRow}
-                onClick={() => addAssignee(user)}
-              >
-                {avatar(user.avatarUrl)}
-                <span>{user.name}</span>
-                <span className={styles.addIcon}>+</span>
-              </button>
-            ))}
-          </div>
-        </div>
+        <FormField label="Observers">
+          <MultiSelect
+            options={userOptions}
+            value={formData.observers.map((user) => user.id)}
+            onChange={(ids) => {
+              updateField(
+                "observers",
+                MOCK_INCIDENT_USERS.filter((user) => ids.includes(user.id)),
+              );
+            }}
+            placeholder="Search and select observers..."
+          />
+        </FormField>
 
-        <div className={styles.column}>
-          <h4>Observers ({formData.observers.length})</h4>
-          <div className={styles.chipGrid}>
-            {formData.observers.map((user) => (
-              <Chip
-                key={user.id}
-                variant="outlined"
-                icon={avatar(user.avatarUrl)}
-                dismissible
-                onDismiss={() => removeObserver(user.id)}
-              >
-                {user.name}
-              </Chip>
-            ))}
-          </div>
-          <div className={styles.userList}>
-            {available.map((user) => (
-              <button
-                key={user.id}
-                type="button"
-                className={styles.userRow}
-                onClick={() => addObserver(user)}
-              >
-                {avatar(user.avatarUrl)}
-                <span>{user.name}</span>
-                <span className={styles.addIcon}>+</span>
-              </button>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      <div className={styles.tagsSection}>
-        <h4>Tags</h4>
-        <div className={styles.tagGrid}>
-          {TAG_OPTIONS.map((tag) => (
-            <button
-              key={tag.id}
-              type="button"
-              className={cn(
-                styles.tag,
-                formData.tags.some((t) => t.id === tag.id) &&
-                  styles.tagSelected,
-              )}
-              style={{ ["--tag-color" as string]: tag.color }}
-              onClick={() => toggleTag(tag.id)}
-            >
-              {tag.name}
-            </button>
-          ))}
-        </div>
+        <FormField label="Labels">
+          <MultiSelect
+            options={labelOptions}
+            value={formData.tags.map((tag) => tag.id)}
+            onChange={(ids) => {
+              updateField(
+                "tags",
+                TAG_OPTIONS.filter((tag) => ids.includes(tag.id)),
+              );
+            }}
+            placeholder="Select labels..."
+          />
+        </FormField>
       </div>
     </section>
   );

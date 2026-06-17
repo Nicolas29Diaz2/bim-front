@@ -1,8 +1,9 @@
 "use client";
 
 import { Input } from "@/common/components/ui/Input";
-import { Select } from "@/common/components/ui/Select";
+import { CustomSelect } from "@/common/components/ui/CustomSelect";
 import { Button } from "@/common/components/ui/Button";
+import { FormField } from "@/common/components/ui/FormField";
 import {
   BUILDING_OPTIONS,
   LEVEL_OPTIONS,
@@ -70,34 +71,31 @@ export function IncidentLocationStep() {
       </div>
 
       <div className={styles.formGrid}>
-        <label className={styles.field}>
-          <span>Building</span>
-          <Select
+        <FormField label="Building">
+          <CustomSelect
             value={formData.building}
             placeholder="Select building"
             options={buildingOptions}
-            onChange={(e) => updateField("building", e.target.value)}
+            onChange={(val) => updateField("building", val)}
           />
-        </label>
-        <label className={styles.field}>
-          <span>Level</span>
-          <Select
+        </FormField>
+        <FormField label="Level">
+          <CustomSelect
             value={formData.level}
             placeholder="Select level"
             options={levelOptions}
-            onChange={(e) => updateField("level", e.target.value)}
+            onChange={(val) => updateField("level", val)}
           />
-        </label>
+        </FormField>
       </div>
 
-      <label className={styles.field}>
-        <span>Sector / Description</span>
+      <FormField label="Sector / Description">
         <Input
           value={formData.sectorDescription}
           placeholder="e.g. Eje D2, between columns C5-C7"
           onChange={(e) => updateField("sectorDescription", e.target.value)}
         />
-      </label>
+      </FormField>
 
       {!hasCoords && (
         <p className={styles.hint}>

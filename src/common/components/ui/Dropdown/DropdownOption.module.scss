@@ -1,0 +1,64 @@
+@use "../../../../app/[locale]/variables" as *;
+
+.option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 36px;
+  padding: $space-xs $space-sm;
+  font-family: inherit;
+  font-size: 0.875rem;
+  color: $color-secondary;
+  background: none;
+  border: none;
+  border-radius: $radius-sm;
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  &:hover:not(:disabled):not(.selected) {
+    background-color: $color-bg-hover;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $color-primary;
+    outline-offset: -2px;
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+}
+
+.selected {
+  background-color: $color-primary-light;
+  color: $color-primary-hover;
+  font-weight: $font-weight-medium;
+}
+
+.focused:not(.selected) {
+  background-color: $color-bg-hover;
+}
+
+.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.checkmark {
+  display: inline-flex;
+  flex-shrink: 0;
+  color: $color-primary;
+
+  svg {
+    width: 14px;
+    height: 14px;
+  }
+}
