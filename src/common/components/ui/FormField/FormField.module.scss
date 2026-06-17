@@ -1,0 +1,12 @@
+@use "../../../../app/[locale]/variables" as *;
+
+.field {
+  display: grid;
+  gap: $space-xs;
+}
+
+.label {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  color: $color-secondary;
+}

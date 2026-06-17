@@ -1,0 +1,22 @@
+@use "../../../../app/[locale]/variables" as *;
+
+.step {
+  display: grid;
+  gap: $space-lg;
+}
+
+.fields {
+  display: grid;
+  gap: $space-lg;
+}
+
+.field {
+  display: grid;
+  gap: $space-xs;
+
+  > span {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    color: $color-secondary;
+  }
+}

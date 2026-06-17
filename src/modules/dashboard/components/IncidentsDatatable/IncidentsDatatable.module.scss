@@ -1,0 +1,267 @@
+@use "../../../../app/[locale]/variables" as *;
+
+.container {
+  display: flex;
+  flex-direction: column;
+  background-color: $color-bg-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+  overflow: hidden;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-lg;
+  padding: $space-xl;
+  flex-wrap: wrap;
+}
+
+.title {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  color: $color-secondary;
+  margin: 0;
+}
+
+.searchWrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 12px;
+  color: $color-text-muted;
+  pointer-events: none;
+}
+
+.searchInput {
+  width: 280px;
+  height: 36px;
+  padding: 0 $space-md 0 36px;
+  font-family: inherit;
+  font-size: $font-size-sm;
+  color: $color-secondary;
+  background-color: $color-bg-main;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  outline: none;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+
+  &::placeholder {
+    color: $color-text-muted;
+  }
+
+  &:hover:not(:focus) {
+    border-color: $color-neutral;
+  }
+
+  &:focus {
+    border-color: $color-border-focus;
+    box-shadow: 0 0 0 3px $color-primary-light;
+  }
+}
+
+.tableWrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: $font-size-sm;
+}
+
+.th {
+  padding: $space-md $space-xl;
+  text-align: left;
+  font-size: $font-size-2xs;
+  font-weight: $font-weight-semibold;
+  color: $color-text-muted;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background-color: $color-bg-main;
+  border-bottom: 1px solid $color-border;
+  white-space: nowrap;
+  position: sticky;
+  top: 0;
+}
+
+.row {
+  transition: background-color 0.12s ease;
+
+  &:hover {
+    background-color: $color-bg-hover;
+  }
+
+  &:not(:last-child) td {
+    border-bottom: 1px solid $color-border;
+  }
+}
+
+.td {
+  padding: $space-md $space-xl;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.tdId {
+  @extend .td;
+  font-weight: $font-weight-semibold;
+  color: $color-text-muted;
+  font-size: $font-size-xs;
+  font-variant-numeric: tabular-nums;
+}
+
+.tdTitle {
+  @extend .td;
+  white-space: normal;
+  max-width: 320px;
+}
+
+.titleText {
+  color: $color-secondary;
+  font-weight: $font-weight-medium;
+  line-height: 1.3;
+}
+
+.categoryTag {
+  display: inline-flex;
+  padding: 2px 10px;
+  font-size: $font-size-2xs;
+  font-weight: $font-weight-semibold;
+  color: $color-neutral;
+  background-color: $color-bg-hover;
+  border-radius: $radius-3xl;
+  white-space: nowrap;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  height: 24px;
+  padding: 0 10px;
+  font-size: $font-size-2xs;
+  font-weight: $font-weight-bold;
+  border-radius: $radius-3xl;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.pillCritical {
+  color: #ffffff;
+  background-color: #dc2626;
+}
+
+.pillHigh {
+  color: #ffffff;
+  background-color: #f97316;
+}
+
+.pillMedium {
+  color: $color-secondary;
+  background-color: #eab308;
+}
+
+.pillLow {
+  color: #ffffff;
+  background-color: #22c55e;
+}
+
+.avatars {
+  display: flex;
+  align-items: center;
+}
+
+.avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid $color-bg-surface;
+  object-fit: cover;
+  margin-left: -6px;
+
+  &:first-child {
+    margin-left: 0;
+  }
+}
+
+.avatarMore {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid $color-bg-surface;
+  background-color: $color-bg-hover;
+  font-size: $font-size-2xs;
+  font-weight: $font-weight-bold;
+  color: $color-neutral;
+  margin-left: -6px;
+}
+
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  height: 24px;
+  padding: 0 10px;
+  font-size: $font-size-2xs;
+  font-weight: $font-weight-semibold;
+  border-radius: $radius-3xl;
+}
+
+.statusOpen {
+  color: #92400e;
+  background-color: #fef3c7;
+}
+
+.statusClosed {
+  color: #065f46;
+  background-color: #d1fae5;
+}
+
+.statusPaused {
+  color: $color-neutral;
+  background-color: $color-bg-hover;
+}
+
+.empty {
+  padding: $space-2xl $space-xl;
+  text-align: center;
+  color: $color-text-muted;
+  font-size: $font-size-sm;
+}
+
+.footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: $space-md $space-xl;
+  border-top: 1px solid $color-border;
+}
+
+.count {
+  font-size: $font-size-xs;
+  color: $color-text-muted;
+}
+
+@media (max-width: $breakpoint-md) {
+  .searchInput {
+    width: 100%;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .searchWrap {
+    width: 100%;
+  }
+}

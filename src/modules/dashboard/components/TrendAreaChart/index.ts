@@ -1,0 +1,1 @@
+export { TrendAreaChart } from "./TrendAreaChart";

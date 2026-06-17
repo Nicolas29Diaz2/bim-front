@@ -1,0 +1,105 @@
+@use "styles/variables" as *;
+
+// ── Layout Shell ───────────────────────────────────────
+.layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+// ── Body ───────────────────────────────────────────────
+.body {
+  display: flex;
+  flex: 1;
+  margin-top: 56px;
+  overflow: hidden;
+  position: relative;
+}
+
+// ── Sidebar Wrapper ────────────────────────────────────
+.sidebar {
+  position: fixed;
+  top: 56px;
+  left: 0;
+  bottom: 0;
+  z-index: 20;
+  transition: width 0.2s ease;
+  padding: $space-md 0;
+}
+
+// ── Main Content ───────────────────────────────────────
+.main {
+  flex: 1;
+  overflow-y: auto;
+  transition: margin-left 0.2s ease;
+}
+
+.mainExpanded {
+  margin-left: 240px;
+}
+
+.mainCompact {
+  margin-left: 64px;
+}
+
+.content {
+  padding: $space-md;
+  display: flex;
+  height: 100%;
+}
+
+// ── Mobile Toggle ──────────────────────────────────────
+.mobileToggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: $radius-md;
+  background: none;
+  border: none;
+  color: $color-neutral;
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+  margin-right: $space-sm;
+
+  &:hover {
+    background-color: $color-bg-hover;
+    color: $color-secondary;
+  }
+}
+
+// ── Overlay ────────────────────────────────────────────
+.overlay {
+  display: none;
+}
+
+// ── Responsive ─────────────────────────────────────────
+@media (max-width: $breakpoint-md) {
+  .sidebar {
+    transform: translateX(-100%);
+    z-index: 40;
+    width: 240px !important;
+    box-shadow: $shadow-lg;
+  }
+
+  .mobileOpen {
+    transform: translateX(0);
+  }
+
+  .mainExpanded,
+  .mainCompact {
+    margin-left: 0;
+  }
+
+  .overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 35;
+    background-color: $color-overlay;
+  }
+}

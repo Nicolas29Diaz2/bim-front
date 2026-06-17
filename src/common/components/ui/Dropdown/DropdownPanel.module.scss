@@ -1,0 +1,37 @@
+@use "../../../../app/[locale]/variables" as *;
+
+.panel {
+  position: fixed;
+  z-index: 9999;
+  background-color: $color-bg-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  box-shadow: $shadow-lg;
+  opacity: 0;
+  transform: translateY(-4px);
+  transform-origin: top left;
+  transition:
+    opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.panel.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.panel.up {
+  transform-origin: bottom left;
+}
+
+.scrollArea {
+  overflow-y: auto;
+  padding: $space-xs;
+}
+
+.content {
+  overflow: visible;
+}

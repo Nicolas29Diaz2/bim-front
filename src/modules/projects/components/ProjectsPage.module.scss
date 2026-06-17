@@ -1,0 +1,94 @@
+@use "styles/variables" as *;
+
+.page {
+  max-width: 1200px;
+  margin: 0 auto;
+  margin-top: 100px;
+  padding: 0 $space-lg;
+}
+
+.title {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-bold;
+  color: $color-secondary;
+  margin-bottom: $space-sm;
+  letter-spacing: $tracking-tight;
+}
+
+.subtitle {
+  font-size: $font-size-sm;
+  color: $color-text-muted;
+  margin-bottom: $space-2xl;
+  line-height: 1.5;
+}
+
+// ── Toolbar ────────────────────────────────────────────
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: $space-md;
+  justify-content: space-between;
+  margin-bottom: $space-2xl;
+}
+
+.searchWrapper {
+  min-width: 300px;
+}
+
+.leftActions {
+  display: flex;
+  flex-direction: row;
+  gap: $space-md;
+  flex-wrap: wrap;
+}
+
+// ── Grid ───────────────────────────────────────────────
+.grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: $space-xl;
+
+  @media (min-width: $breakpoint-md) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (min-width: $breakpoint-xl) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+// ── Skeleton ───────────────────────────────────────────
+.skeleton {
+  height: 320px;
+  border-radius: $radius-lg;
+  background-color: $color-bg-hover;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+}
+
+// ── Responsive ─────────────────────────────────────────
+@media (max-width: $breakpoint-md) {
+  .toolbar {
+    flex-wrap: wrap;
+  }
+
+  .searchWrapper {
+    width: 100%;
+    max-width: none;
+    order: -1;
+  }
+
+  .searchWrapper {
+    min-width: 0px;
+  }
+}

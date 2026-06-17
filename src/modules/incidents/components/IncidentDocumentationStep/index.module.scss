@@ -1,0 +1,126 @@
+@use "../../../../app/[locale]/variables" as *;
+
+.step {
+  display: grid;
+  gap: $space-lg;
+}
+
+.dropzone {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: $space-sm;
+  padding: $space-2xl $space-lg;
+  border: 2px dashed $color-border;
+  border-radius: $radius-lg;
+  background: $color-bg-hover;
+  cursor: pointer;
+  transition: all 0.25s ease;
+
+  &:hover {
+    border-color: $color-primary;
+    background: $color-primary-light;
+  }
+}
+
+.dropzoneIcon {
+  color: $color-primary;
+}
+
+.dropText {
+  font-weight: $font-weight-semibold;
+  color: $color-secondary;
+  font-size: $font-size-sm;
+}
+
+.dropHint {
+  color: $color-text-muted;
+  font-size: $font-size-xs;
+}
+
+.hiddenInput {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.fileList {
+  display: grid;
+  gap: $space-xs;
+}
+
+.fileRow {
+  display: flex;
+  align-items: center;
+  gap: $space-md;
+  padding: $space-sm $space-md;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  background: $color-bg-surface;
+  transition: all 0.2s ease;
+
+  &:hover {
+    border-color: $color-primary;
+  }
+}
+
+.fileIcon {
+  display: grid;
+  place-items: center;
+  min-width: 38px;
+  height: 38px;
+  border-radius: $radius-sm;
+  background: rgba($color-primary, 0.1);
+  color: $color-primary-hover;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-bold;
+}
+
+.fileInfo {
+  display: grid;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+
+.fileName {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: $color-secondary;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.fileSize {
+  font-size: $font-size-xs;
+  color: $color-text-muted;
+}
+
+.removeBtn {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: $radius-sm;
+  color: $color-text-muted;
+  font-size: 18px;
+  transition: all 0.15s ease;
+
+  &:hover {
+    background: rgba($color-error, 0.1);
+    color: $color-error;
+  }
+}
+
+.hint {
+  padding: $space-md;
+  border-radius: $radius-md;
+  background: rgba($color-neutral, 0.06);
+  color: $color-text-muted;
+  font-size: $font-size-sm;
+  text-align: center;
+}

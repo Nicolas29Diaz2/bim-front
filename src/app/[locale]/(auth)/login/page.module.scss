@@ -1,0 +1,53 @@
+@use "styles/variables" as *;
+
+.loginContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: $color-bg-main;
+  padding: $space-xl;
+  font-family: $font-family-sans;
+}
+
+.loginCard {
+  width: 100%;
+  max-width: 420px;
+  background-color: $color-bg-surface;
+  padding: $space-2xl;
+  border-radius: $radius-lg;
+  border: 1px solid $color-border;
+  box-shadow: $shadow-lg;
+}
+
+.title {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-bold;
+  color: $color-secondary;
+  margin-bottom: $space-xs;
+  letter-spacing: $tracking-tight;
+  text-align: center;
+}
+
+.subtitle {
+  font-size: $font-size-sm;
+  color: $color-neutral;
+  text-align: center;
+  margin-bottom: $space-2xl;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: $space-xl; // Espaciado consistente entre campos y el botón
+}
+
+.actions {
+  margin-top: $space-sm;
+
+  // Asegura que tu componente Button ocupe todo el ancho
+  button,
+  :global(.btn) {
+    width: 100%;
+  }
+}

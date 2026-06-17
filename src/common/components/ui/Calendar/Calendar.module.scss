@@ -1,0 +1,125 @@
+@use "../../../../app/[locale]/variables" as *;
+
+.calendar {
+  width: 100%;
+  box-sizing: border-box;
+  background-color: $color-bg-surface;
+  border: none;
+  border-radius: 0;
+  padding: $space-sm;
+  box-shadow: none;
+  user-select: none;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: $color-secondary;
+}
+
+.navButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  background: none;
+  border: none;
+  color: $color-neutral;
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+
+  &:hover:not(:disabled) {
+    background-color: $color-bg-hover;
+    color: $color-secondary;
+  }
+
+  &:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  margin-bottom: 2px;
+}
+
+.weekday {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 28px;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: $color-text-muted;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 1px;
+}
+
+.day {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: $color-secondary;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+
+  &:hover:not(:disabled):not(.selected) {
+    background-color: $color-bg-hover;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+
+.outsideMonth {
+  color: $color-text-muted;
+  opacity: 0.4;
+}
+
+.today {
+  font-weight: 700;
+  color: $color-primary;
+}
+
+.selected {
+  background-color: $color-primary;
+  color: $color-secondary;
+  font-weight: 700;
+
+  &:hover:not(:disabled) {
+    background-color: $color-primary-hover;
+  }
+}

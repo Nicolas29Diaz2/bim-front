@@ -1,0 +1,40 @@
+import type { Project } from "../types/projects";
+
+export const MOCK_PROJECTS: readonly Project[] = [
+  {
+    id: "1",
+    name: "Hospital Norte",
+    slug: "hospital-norte",
+    location: "Madrid",
+    country: "ES",
+    status: "en_curso",
+    progress: 65,
+    imageUrl: "https://picsum.photos/seed/inc1_1/1280/720",
+    incidentCount: 12,
+    lastActivity: "Hace 2h",
+  },
+  {
+    id: "2",
+    name: "Torre Residencial A",
+    slug: "torre-residencial-a",
+    location: "Barcelona",
+    country: "ES",
+    status: "planificacion",
+    progress: 12,
+    imageUrl: "https://picsum.photos/seed/inc1_2/1280/720",
+    incidentCount: 0,
+    lastActivity: "Ayer",
+  },
+  {
+    id: "3",
+    name: "Parque Eolico Sur",
+    slug: "parque-eolico-sur",
+    location: "Sevilla",
+    country: "ES",
+    status: "en_curso",
+    progress: 88,
+    imageUrl: "https://picsum.photos/seed/inc1_3/1280/720",
+    incidentCount: 4,
+    lastActivity: "Hace 5h",
+  },
+] as const;

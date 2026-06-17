@@ -1,0 +1,11 @@
+@use "styles/variables" as *;
+
+.workspace {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  border-radius: $radius-lg;
+  overflow-x: hidden;
+}

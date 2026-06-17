@@ -1,0 +1,159 @@
+@use "../../../../app/[locale]/variables" as *;
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  position: relative;
+}
+
+.trigger {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  min-height: 36px;
+  padding: 6px 12px;
+  font-family: inherit;
+  font-size: 0.875rem;
+  color: $color-secondary;
+  background-color: $color-bg-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  outline: none;
+  cursor: pointer;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+
+  &:hover:not(:focus-within) {
+    border-color: $color-neutral;
+  }
+
+  &:focus-within {
+    border-color: $color-border-focus;
+    box-shadow: 0 0 0 3px $color-primary-light;
+  }
+}
+
+.triggerOpen {
+  border-color: $color-border-focus;
+  box-shadow: 0 0 0 3px $color-primary-light;
+}
+
+.placeholder {
+  color: $color-text-muted;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  max-width: 180px;
+  height: 24px;
+  padding: 0 6px;
+  font-size: 0.75rem;
+  font-weight: $font-weight-medium;
+  color: $color-secondary;
+  background-color: $color-bg-hover;
+  border-radius: $radius-3xl;
+  transition: background-color 0.15s ease;
+  animation: chipIn 0.15s ease;
+}
+
+@keyframes chipIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.chipCustom {
+  background-color: var(--chip-color, $color-bg-hover);
+  color: white;
+}
+
+.chipLabel {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.chipDismiss {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+  padding: 0;
+  margin-left: 2px;
+  border: none;
+  border-radius: 50%;
+  background-color: transparent;
+  color: inherit;
+  cursor: pointer;
+  opacity: 0.6;
+  transition:
+    opacity 0.15s ease,
+    background-color 0.15s ease;
+
+  svg {
+    width: 10px;
+    height: 10px;
+  }
+
+  &:hover {
+    opacity: 1;
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+}
+
+.searchInput {
+  flex: 1;
+  min-width: 60px;
+  height: 24px;
+  padding: 0;
+  font-family: inherit;
+  font-size: 0.875rem;
+  color: $color-secondary;
+  background: transparent;
+  border: none;
+  outline: none;
+
+  &::placeholder {
+    color: $color-text-muted;
+  }
+}
+
+.empty {
+  padding: $space-sm $space-md;
+  font-size: 0.8125rem;
+  color: $color-text-muted;
+  text-align: center;
+}
+
+.error {
+  .trigger {
+    border-color: $color-error;
+
+    &:focus-within {
+      box-shadow: 0 0 0 3px rgba($color-error, 0.15);
+    }
+  }
+}
+
+.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.errorText {
+  font-size: 0.75rem;
+  color: $color-error;
+}

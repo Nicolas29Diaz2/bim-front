@@ -1,0 +1,119 @@
+@use "../../../../app/[locale]/variables" as *;
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: $space-lg;
+
+  @media (min-width: $breakpoint-sm) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @media (min-width: $breakpoint-lg) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.card {
+  display: flex;
+  align-items: flex-start;
+  gap: $space-md;
+  padding: $space-xl;
+  background-color: $color-bg-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+  transition:
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+
+  &:hover {
+    box-shadow: $shadow-md;
+    border-color: transparent;
+  }
+}
+
+.iconWrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: $radius-md;
+  background-color: $color-primary-light;
+  color: $color-primary;
+  flex-shrink: 0;
+}
+
+.iconWrapOpen {
+  @extend .iconWrap;
+  background-color: #fffbeb;
+  color: #f59e0b;
+}
+
+.iconWrapCritical {
+  @extend .iconWrap;
+  background-color: #fef2f2;
+  color: $color-error;
+}
+
+.iconWrapSuccess {
+  @extend .iconWrap;
+  background-color: #ecfdf5;
+  color: $color-success;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: $space-xs;
+  min-width: 0;
+}
+
+.label {
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
+  color: $color-text-muted;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.value {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-bold;
+  color: $color-secondary;
+  letter-spacing: $tracking-tight;
+  line-height: 1.1;
+}
+
+.separator {
+  margin: 0 2px;
+  color: $color-text-muted;
+  font-weight: $font-weight-regular;
+}
+
+.valueCritical {
+  @extend .value;
+  color: $color-error;
+}
+
+.progressTrack {
+  width: 100%;
+  height: 6px;
+  background-color: $color-bg-hover;
+  border-radius: $radius-3xl;
+  overflow: hidden;
+  margin-top: $space-2xs;
+}
+
+.progressFill {
+  height: 100%;
+  background-color: $color-success;
+  border-radius: $radius-3xl;
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.badge {
+  font-size: $font-size-2xs;
+  font-weight: $font-weight-semibold;
+  color: $color-success;
+}
