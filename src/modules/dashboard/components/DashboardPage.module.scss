@@ -1,0 +1,42 @@
+@use "styles/variables" as *;
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: $space-xl;
+  width: 100%;
+}
+
+.topRow {
+  width: 100%;
+}
+
+.filtersRow {
+  width: 100%;
+}
+
+.chartsGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: $space-xl;
+
+  @media (min-width: $breakpoint-lg) {
+    grid-template-columns: 1fr 2fr;
+  }
+}
+
+.chartCell {
+  min-width: 0;
+}
+
+.chartCellWide {
+  min-width: 0;
+}
+
+.chartCellFull {
+  min-width: 0;
+}
+
+.tableRow {
+  width: 100%;
+}
