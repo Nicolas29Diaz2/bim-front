@@ -11,12 +11,12 @@ html,
 body {
   height: 100%;
   font-family: $font-family-sans;
-  background-color: $color-bg-main;
   color: $color-secondary;
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  background-color: $color-bg-main;
 }
 img,
 picture,

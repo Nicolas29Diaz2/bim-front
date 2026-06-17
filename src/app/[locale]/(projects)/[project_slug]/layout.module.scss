@@ -25,6 +25,7 @@
   bottom: 0;
   z-index: 20;
   transition: width 0.2s ease;
+  padding: $space-md 0;
 }
 
 // ── Main Content ───────────────────────────────────────
@@ -32,7 +33,6 @@
   flex: 1;
   overflow-y: auto;
   transition: margin-left 0.2s ease;
-  background-color: $color-bg-main;
 }
 
 .mainExpanded {
@@ -44,7 +44,7 @@
 }
 
 .content {
-  padding: $space-xl;
+  padding: $space-md;
   display: flex;
   height: 100%;
 }

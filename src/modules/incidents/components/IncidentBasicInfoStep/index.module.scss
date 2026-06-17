@@ -22,6 +22,18 @@
   }
 }
 
+.categoryContainer {
+  display: flex;
+  width: 100%;
+  align-items: end;
+  gap: 12px;
+
+  .field {
+    flex: 1;
+    width: 100%;
+  }
+}
+
 .textarea {
   min-height: 104px;
   resize: vertical;
@@ -41,55 +53,71 @@
 .priorityGrid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: $space-sm;
+  gap: $space-xs;
+  background-color: #f8fafc;
+  padding: 4px;
+  border-radius: $radius-lg;
+  border: 1px solid #e2e8f0;
 }
 
 .priority {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: $space-sm;
-  min-height: 44px;
-  border: 1px solid $color-border;
+  gap: 8px;
+  min-height: 36px;
+  border: 1px solid transparent;
   border-radius: $radius-md;
-  color: $color-secondary;
-  font-weight: $font-weight-bold;
-  transition: all 0.3s ease;
+  background: transparent;
+  color: #64748b;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
 
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: $shadow-md;
+  &:hover:not(.selected) {
+    background-color: #f1f5f9;
+    color: #334155;
   }
 }
 
 .selected {
-  border-color: currentColor;
-  transform: translateY(-2px) scale(1.02);
-}
+  font-weight: 600;
 
-.dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: currentColor;
-}
-
-.blue {
-  color: #2563eb;
-}
-.green {
-  color: $color-success;
-}
-.orange {
-  color: #f97316;
-}
-.red {
-  color: $color-error;
+  &.blue {
+    background-color: #eff6ff;
+    border-color: #bfdbfe;
+    color: #1d4ed8;
+  }
+  &.green {
+    background-color: #f0fdf4;
+    border-color: #bbf7d0;
+    color: #15803d;
+  }
+  &.orange {
+    background-color: #fff7ed;
+    border-color: #ffedd5;
+    color: #c2410c;
+  }
+  &.red {
+    background-color: #fef2f2;
+    border-color: #fecaca;
+    color: #b91c1c;
+  }
 }
 
 @media (max-width: $breakpoint-sm) {
-  .grid,
   .priorityGrid {
+    grid-template-columns: 1fr;
+    background: transparent;
+    padding: 0;
+    border: none;
+    gap: $space-xs;
+  }
+  .priority {
+    border: 1px solid #e2e8f0;
+  }
+  .grid {
     grid-template-columns: 1fr;
   }
 }

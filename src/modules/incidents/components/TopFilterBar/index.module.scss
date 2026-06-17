@@ -1,0 +1,119 @@
+@use "styles/variables" as *;
+
+.bar {
+  position: absolute;
+  top: $space-lg;
+  left: 50%;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: $space-sm;
+  padding: $space-sm $space-lg;
+  background: $color-bg-surface;
+  border-radius: $radius-3xl;
+  box-shadow: $shadow-lg;
+  border: 1px solid $color-border;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
+.filterIcon {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  color: $color-neutral;
+  flex-shrink: 0;
+}
+
+.datePickerOverride {
+  .trigger {
+    height: 32px;
+    border: none;
+    background: transparent;
+    padding: 0 $space-sm 0 $space-xs;
+    border-radius: $radius-sm;
+    font-size: $font-size-sm;
+
+    &:hover {
+      background: $color-bg-hover;
+    }
+
+    &:focus-visible {
+      box-shadow: none;
+    }
+  }
+}
+
+.separator {
+  width: 1px;
+  height: 20px;
+  background: $color-border;
+  flex-shrink: 0;
+}
+
+.timelineSection {
+  display: flex;
+  align-items: center;
+  gap: $space-sm;
+}
+
+.timelineLabel {
+  font-size: $font-size-xs;
+  color: $color-neutral;
+  flex-shrink: 0;
+}
+
+.timeline {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+.circle {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: $color-primary;
+  flex-shrink: 0;
+}
+
+.line {
+  width: 16px;
+  height: 2px;
+  background: $color-primary;
+  opacity: 0.35;
+  flex-shrink: 0;
+}
+
+.circleAdd {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px dashed $color-primary;
+  opacity: 0.45;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.circleAddInner {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: $color-primary;
+  opacity: 0.6;
+}
+
+.btnGroup {
+  display: flex;
+  align-items: center;
+  gap: $space-xs;
+}
+
+@media (max-width: $breakpoint-md) {
+  .bar {
+    display: none;
+    opacity: 0;
+  }
+}

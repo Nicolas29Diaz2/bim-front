@@ -4,7 +4,8 @@ import { useEffect, useState, useCallback, useMemo } from "react";
 import { IncidentsMap } from "../IncidentsMap";
 import { OverlayControls } from "../OverlayControls";
 import { IncidentCreationModal } from "../IncidentCreationModal";
-import { IncidentDateFilter } from "../IncidentDateFilter";
+import { TopFilterBar } from "../TopFilterBar";
+import { BottomViewControls } from "../BottomViewControls";
 import { useIncidentCreationStore } from "../../store/useIncidentCreationStore";
 import type { Incident } from "../../types/incidents";
 import styles from "./index.module.scss";
@@ -14,6 +15,7 @@ export function IncidentsWorkspace({
 }: Readonly<{ initialIncidents: Incident[] }>) {
   const [incidents, setIncidents] = useState<Incident[]>(initialIncidents);
   const [filterDate, setFilterDate] = useState<Date | null>(null);
+  const [is3D, setIs3D] = useState(false);
   const registerOnCreated = useIncidentCreationStore(
     (s) => s.registerOnCreated,
   );
@@ -34,8 +36,12 @@ export function IncidentsWorkspace({
 
   return (
     <div className={styles.workspace}>
-      <IncidentsMap incidents={filteredIncidents} />
-      <IncidentDateFilter value={filterDate} onChange={setFilterDate} />
+      <IncidentsMap incidents={filteredIncidents} is3D={is3D} />
+      <TopFilterBar value={filterDate} onChange={setFilterDate} />
+      <BottomViewControls
+        is3D={is3D}
+        onToggle3D={() => setIs3D((prev) => !prev)}
+      />
       <OverlayControls />
       <IncidentCreationModal />
     </div>

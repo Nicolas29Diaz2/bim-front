@@ -4,13 +4,14 @@ import { Input } from "@/common/components/ui/Input";
 import { CustomSelect } from "@/common/components/ui/CustomSelect";
 import { DatePicker } from "@/common/components/ui/DatePicker";
 import { FormField } from "@/common/components/ui/FormField";
+import { IconButton } from "@/common/components/ui/IconButton";
 import { cn } from "@/common/utils/cn";
+import { Settings } from "lucide-react";
 import {
   CATEGORY_OPTIONS,
   PRIORITY_OPTIONS,
 } from "../../constants/incidentCreationOptions";
 import { useIncidentCreationStore } from "../../store/useIncidentCreationStore";
-import { StepHeader } from "../IncidentStepHeader";
 import styles from "./index.module.scss";
 
 function toDueDateValue(dateStr: string): Date | null {
@@ -25,12 +26,6 @@ export function IncidentBasicInfoStep() {
 
   return (
     <section className={styles.step}>
-      <StepHeader
-        step={1}
-        title="Define the incident signal"
-        description="Capture the operational context before assigning field teams."
-      />
-
       <div className={styles.grid}>
         <FormField label="Title">
           <Input
@@ -65,34 +60,44 @@ export function IncidentBasicInfoStep() {
         />
       </FormField>
 
-      <FormField label="Category">
-        <CustomSelect
-          value={formData.category}
-          options={CATEGORY_OPTIONS.map((opt) => ({
-            value: opt.value,
-            label: opt.label,
-          }))}
-          onChange={(val) => updateField("category", val)}
+      <div className={styles.categoryContainer}>
+        <FormField label="Category" className={styles.field}>
+          <CustomSelect
+            value={formData.category}
+            options={CATEGORY_OPTIONS.map((opt) => ({
+              value: opt.value,
+              label: opt.label,
+            }))}
+            onChange={(val) => updateField("category", val)}
+          />
+        </FormField>
+        <IconButton
+          icon={<Settings size={16} />}
+          variant="primary"
+          size="sm"
+          aria-label="Category settings"
         />
-      </FormField>
-
-      <div className={styles.priorityGrid}>
-        {PRIORITY_OPTIONS.map((priority) => (
-          <button
-            key={priority.value}
-            type="button"
-            className={cn(
-              styles.priority,
-              styles[priority.tone],
-              formData.priority === priority.value && styles.selected,
-            )}
-            onClick={() => updateField("priority", priority.value)}
-          >
-            <span className={styles.dot} />
-            {priority.label}
-          </button>
-        ))}
       </div>
+
+      <FormField label="Priority">
+        <div className={styles.priorityGrid}>
+          {PRIORITY_OPTIONS.map((priority) => (
+            <button
+              key={priority.value}
+              type="button"
+              className={cn(
+                styles.priority,
+                styles[priority.tone],
+                formData.priority === priority.value && styles.selected,
+              )}
+              onClick={() => updateField("priority", priority.value)}
+            >
+              <span className={styles.dot} />
+              {priority.label}
+            </button>
+          ))}
+        </div>
+      </FormField>
     </section>
   );
 }

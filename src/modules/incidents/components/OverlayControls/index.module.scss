@@ -48,33 +48,6 @@
   transform: translateY(-50%);
 }
 
-.actionBtn {
-  display: grid;
-  place-items: center;
-  width: 44px;
-  height: 44px;
-  border-radius: $radius-3xl;
-  background: $color-primary;
-  color: $color-secondary;
-  border: none;
-  cursor: pointer;
-  transition: all 0.25s ease;
-
-  &:hover {
-    background: $color-primary-hover;
-    transform: scale(1.06);
-  }
-}
-
-.actionBtnActive {
-  background: $color-error;
-  color: white;
-
-  &:hover {
-    background: darken($color-error, 8%);
-  }
-}
-
 .icon {
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   display: block;

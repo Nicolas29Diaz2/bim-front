@@ -60,3 +60,9 @@
 .info {
   background-color: #121313;
 }
+
+@media (max-width: $breakpoint-sm) {
+  .container {
+    width: min(100%, 16rem);
+  }
+}

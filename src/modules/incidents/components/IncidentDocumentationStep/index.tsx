@@ -2,7 +2,6 @@
 
 import { useCallback } from "react";
 import { useIncidentCreationStore } from "../../store/useIncidentCreationStore";
-import { StepHeader } from "../IncidentStepHeader";
 import styles from "./index.module.scss";
 
 const ACCEPTED_TYPES = ["application/pdf", "image/jpeg", "image/png"];
@@ -50,12 +49,6 @@ export function IncidentDocumentationStep() {
 
   return (
     <section className={styles.step}>
-      <StepHeader
-        step={4}
-        title="Documentation & Review"
-        description="Attach evidence and confirm before submission."
-      />
-
       <div
         className={styles.dropzone}
         onDragOver={(e) => e.preventDefault()}

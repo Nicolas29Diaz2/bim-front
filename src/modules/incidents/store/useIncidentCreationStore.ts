@@ -34,6 +34,7 @@ interface IncidentCreationStore {
     key: K,
     value: IncidentCreationFormData[K],
   ) => void;
+  cancelIncidentSelection: () => void;
 }
 
 const initialFormData: IncidentCreationFormData = {
@@ -134,5 +135,6 @@ export const useIncidentCreationStore = create<IncidentCreationStore>(
       set((state) => ({
         formData: { ...state.formData, [key]: value },
       })),
+    cancelIncidentSelection: () => set({ isCrosshairMode: false }),
   }),
 );

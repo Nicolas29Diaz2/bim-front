@@ -26,19 +26,24 @@ const incidentLayerStyle = {
 
 export function IncidentsMap({
   incidents,
-}: Readonly<{ incidents: Incident[] }>) {
-  const [viewState, setViewState] = useState({
+  is3D = false,
+}: Readonly<{ incidents: Incident[]; is3D?: boolean }>) {
+  const [position, setPosition] = useState({
     longitude: -74.1077,
     latitude: 4.6966,
     zoom: 15,
-    pitch: 0,
-    bearing: 0,
   });
 
   const isCrosshairMode = useIncidentCreationStore((s) => s.isCrosshairMode);
   const captureMapPoint = useIncidentCreationStore((s) => s.captureMapPoint);
 
   const geoJson = useIncidentsGeoJson(incidents);
+
+  const viewState = {
+    ...position,
+    pitch: is3D ? 60 : 0,
+    bearing: is3D ? -17.6 : 0,
+  };
 
   const handleMapLoad = useCallback((evt: MapEvent) => {
     const map = evt.target;
@@ -68,16 +73,24 @@ export function IncidentsMap({
     <div className={styles.map}>
       <Map
         {...viewState}
-        onMove={(evt) => setViewState(evt.viewState)}
+        onMove={(evt) =>
+          setPosition({
+            longitude: evt.viewState.longitude,
+            latitude: evt.viewState.latitude,
+            zoom: evt.viewState.zoom,
+          })
+        }
         mapboxAccessToken={MAPBOX_TOKEN}
         mapStyle="mapbox://styles/mapbox/standard"
         maxPitch={85}
         onLoad={handleMapLoad}
         onClick={handleMapClick}
         cursor={isCrosshairMode ? "crosshair" : "grab"}
+        terrain={is3D ? { source: "mapbox-dem", exaggeration: 1.5 } : undefined}
         style={{
           width: "100%",
           height: "100%",
+          borderRadius: "12px",
         }}
       >
         <Source id="incidents-source" type="geojson" data={geoJson}>

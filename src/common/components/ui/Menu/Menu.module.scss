@@ -12,6 +12,7 @@
   overflow-x: hidden;
   flex-shrink: 0;
   transition: width 0.2s ease;
+  border-radius: 0 $radius-lg $radius-lg 0;
 }
 
 .collapsed {
@@ -94,7 +95,9 @@
   border: none;
   cursor: pointer;
   text-align: left;
-  transition: background-color 0.15s ease, color 0.15s ease;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
   position: relative;
   text-decoration: none;
   width: 100%;

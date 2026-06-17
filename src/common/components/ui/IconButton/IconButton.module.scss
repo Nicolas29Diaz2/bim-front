@@ -1,0 +1,86 @@
+@use "../../../../app/[locale]/variables" as *;
+
+.button {
+  display: inline-grid;
+  place-items: center;
+  border: none;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition:
+    background-color 0.25s ease,
+    transform 0.25s ease,
+    color 0.25s ease;
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.45;
+  }
+  border-radius: 100%;
+}
+
+// ── Sizes ──────────────────────────────────────────────
+.md {
+  width: 44px;
+  height: 44px;
+}
+
+.sm {
+  width: 38px;
+  height: 38px;
+}
+
+// ── Variants ───────────────────────────────────────────
+.primary {
+  background: $color-primary;
+  color: $color-secondary;
+
+  &:hover:not(:disabled) {
+    background: $color-primary-hover;
+    transform: scale(1.06);
+  }
+
+  &:active:not(:disabled) {
+    transform: scale(0.97);
+  }
+}
+
+.secondary {
+  background: transparent;
+  color: $color-neutral;
+  border: 1px solid $color-border;
+
+  &:hover:not(:disabled) {
+    background: $color-bg-hover;
+  }
+
+  &:active:not(:disabled) {
+    background: darken($color-bg-hover, 3%);
+  }
+}
+
+.ghost {
+  background: transparent;
+  color: $color-neutral;
+
+  &:hover:not(:disabled) {
+    background: $color-bg-hover;
+  }
+
+  &:active:not(:disabled) {
+    background: darken($color-bg-hover, 3%);
+  }
+}
+
+.destructive {
+  background: $color-error;
+  color: white;
+
+  &:hover:not(:disabled) {
+    background: darken($color-error, 8%);
+    transform: scale(1.06);
+  }
+
+  &:active:not(:disabled) {
+    transform: scale(0.97);
+  }
+}

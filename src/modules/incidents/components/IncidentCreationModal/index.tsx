@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { z } from "zod";
 import { Modal } from "@/common/components/ui/Modal";
 import { Button } from "@/common/components/ui/Button";
@@ -30,12 +30,9 @@ const STEP_COMPONENTS: Record<IncidentCreationStep, React.FC> = {
 const basicInfoSchema = z.object({
   title: z.string().trim().min(3, "Title must be at least 3 characters long"),
   dueDate: z.string().trim().min(1, "Target date is required"),
-  description: z
-    .string()
-    .trim()
-    .min(5, "Description must be at least 5 characters long"),
-  category: z.nativeEnum(IncidentCategory),
-  priority: z.nativeEnum(IncidentPriority),
+  description: z.string().trim(),
+  category: z.enum(IncidentCategory),
+  priority: z.enum(IncidentPriority),
 });
 
 const environmentSchema = z.object({
@@ -132,6 +129,8 @@ export function IncidentCreationModal() {
       } else {
         showError(result.error.message);
       }
+
+      console.log(formData);
     } finally {
       setSubmitting(false);
     }

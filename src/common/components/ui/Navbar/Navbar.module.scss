@@ -65,6 +65,8 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-weight: $font-weight-bold;
+  color: $color-secondary;
 }
 
 .actions {

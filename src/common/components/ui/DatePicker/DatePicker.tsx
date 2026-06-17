@@ -132,7 +132,7 @@ function DatePicker({
       <DropdownPanel
         ref={panelRef}
         isOpen={isOpen}
-        coordinates={coords.coordinates}
+        coordinates={{ ...coords.coordinates, minWidth: 200 }}
         maxHeight={coords.maxHeight}
         direction={coords.direction}
         scrollable={false}

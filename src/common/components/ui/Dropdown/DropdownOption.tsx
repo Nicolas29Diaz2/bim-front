@@ -22,7 +22,7 @@ function DropdownOption({
   className,
 }: Readonly<DropdownOptionProps>) {
   return (
-    <option
+    <button
       aria-selected={isSelected}
       disabled={disabled}
       className={cn(
@@ -34,6 +34,7 @@ function DropdownOption({
       )}
       onClick={onClick}
       onMouseEnter={onMouseEnter}
+      role="option"
     >
       {children}
       {isSelected && (
@@ -50,7 +51,7 @@ function DropdownOption({
           </svg>
         </span>
       )}
-    </option>
+    </button>
   );
 }
 

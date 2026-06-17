@@ -157,7 +157,7 @@ function MultiSelect<TValue extends string>({
         tabIndex={disabled ? -1 : 0}
         role="combobox"
       >
-        {selected.length === 0 && !search && (
+        {selected.length === 0 && !search && !isOpen && (
           <span className={styles.placeholder}>{placeholder}</span>
         )}
         {selected.map((o) => (

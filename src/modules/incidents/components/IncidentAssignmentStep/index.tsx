@@ -7,7 +7,6 @@ import {
   TAG_OPTIONS,
 } from "../../constants/incidentCreationOptions";
 import { useIncidentCreationStore } from "../../store/useIncidentCreationStore";
-import { StepHeader } from "../IncidentStepHeader";
 import styles from "./index.module.scss";
 
 const userOptions = MOCK_INCIDENT_USERS.map((user) => ({
@@ -18,7 +17,6 @@ const userOptions = MOCK_INCIDENT_USERS.map((user) => ({
 const labelOptions = TAG_OPTIONS.map((tag) => ({
   value: tag.id,
   label: tag.name,
-  color: tag.color,
 }));
 
 export function IncidentAssignmentStep() {
@@ -27,12 +25,6 @@ export function IncidentAssignmentStep() {
 
   return (
     <section className={styles.step}>
-      <StepHeader
-        step={2}
-        title="Assign people and labels"
-        description="Choose the responsible users, observers, and labels for the incident."
-      />
-
       <div className={styles.fields}>
         <FormField label="Assigned to">
           <MultiSelect

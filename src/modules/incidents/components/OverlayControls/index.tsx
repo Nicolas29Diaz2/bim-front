@@ -11,8 +11,10 @@ import {
   Upload,
 } from "lucide-react";
 import { cn } from "@/common/utils/cn";
+import { IconButton } from "@/common/components/ui/IconButton";
 import { useIncidentCreationStore } from "../../store/useIncidentCreationStore";
 import styles from "./index.module.scss";
+import { useCallback } from "react";
 
 const TOOLBAR_ICONS = [
   { Icon: Building2, label: "Building" },
@@ -29,6 +31,17 @@ export function OverlayControls() {
   const startIncidentSelection = useIncidentCreationStore(
     (s) => s.startIncidentSelection,
   );
+  const cancelIncidentSelection = useIncidentCreationStore(
+    (s) => s.cancelIncidentSelection,
+  );
+
+  const handle = useCallback(() => {
+    if (isCrosshairMode) {
+      return cancelIncidentSelection();
+    }
+
+    startIncidentSelection();
+  }, [isCrosshairMode, startIncidentSelection, cancelIncidentSelection]);
 
   return (
     <>
@@ -42,20 +55,17 @@ export function OverlayControls() {
       </div>
 
       <div className={styles.toolbar}>
-        <button
-          type="button"
-          className={cn(
-            styles.actionBtn,
-            isCrosshairMode && styles.actionBtnActive,
-          )}
-          onClick={startIncidentSelection}
+        <IconButton
+          icon={
+            <Plus
+              size={22}
+              className={cn(styles.icon, isCrosshairMode && styles.iconRotated)}
+            />
+          }
+          variant={isCrosshairMode ? "destructive" : "primary"}
+          onClick={handle}
           aria-label={isCrosshairMode ? "Cancel selection" : "Create incident"}
-        >
-          <Plus
-            size={22}
-            className={cn(styles.icon, isCrosshairMode && styles.iconRotated)}
-          />
-        </button>
+        />
 
         <div className={styles.divider} />
 

@@ -18,6 +18,7 @@ interface DropdownPanelProps {
     left?: number;
     right?: number;
     width: number;
+    minWidth?: number;
   };
 }
 
@@ -57,6 +58,7 @@ const DropdownPanelInner = forwardRef<
         right: coordinates?.right,
         width: coordinates?.width,
         maxHeight,
+        minWidth: coordinates?.minWidth,
       }}
     >
       <div className={scrollable ? styles.scrollArea : styles.content}>

@@ -8,7 +8,7 @@ import {
 
 export const INCIDENT_STEPS = [
   { step: IncidentCreationStep.BasicInfo, label: "Info" },
-  { step: IncidentCreationStep.Environment, label: "Environment" },
+  { step: IncidentCreationStep.Environment, label: "Assignment" },
   { step: IncidentCreationStep.Location, label: "Location" },
   { step: IncidentCreationStep.Attachments, label: "Attachments" },
 ] as const;
