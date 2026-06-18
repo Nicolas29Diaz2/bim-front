@@ -7,25 +7,68 @@ import {
 } from "../types/incidentCreation";
 
 export const INCIDENT_STEPS = [
-  { step: IncidentCreationStep.BasicInfo, label: "Info" },
-  { step: IncidentCreationStep.Environment, label: "Assignment" },
-  { step: IncidentCreationStep.Location, label: "Location" },
-  { step: IncidentCreationStep.Attachments, label: "Attachments" },
+  {
+    step: IncidentCreationStep.BasicInfo,
+    label: "incidents.creationModal.steps.info",
+  },
+  {
+    step: IncidentCreationStep.Environment,
+    label: "incidents.creationModal.steps.assignment",
+  },
+  {
+    step: IncidentCreationStep.Location,
+    label: "incidents.creationModal.steps.location",
+  },
+  {
+    step: IncidentCreationStep.Attachments,
+    label: "incidents.creationModal.steps.attachments",
+  },
 ] as const;
 
 export const CATEGORY_OPTIONS = [
-  { value: IncidentCategory.Coordination, label: "Coordinación" },
-  { value: IncidentCategory.Electrical, label: "Eléctrico" },
-  { value: IncidentCategory.Plumbing, label: "Hidrosanitario" },
-  { value: IncidentCategory.Safety, label: "Seguridad" },
-  { value: IncidentCategory.Structure, label: "Estructura" },
+  {
+    value: IncidentCategory.Coordination,
+    label: "incidents.creationModal.categories.coordination",
+  },
+  {
+    value: IncidentCategory.Electrical,
+    label: "incidents.creationModal.categories.electrical",
+  },
+  {
+    value: IncidentCategory.Plumbing,
+    label: "incidents.creationModal.categories.plumbing",
+  },
+  {
+    value: IncidentCategory.Safety,
+    label: "incidents.creationModal.categories.safety",
+  },
+  {
+    value: IncidentCategory.Structure,
+    label: "incidents.creationModal.categories.structure",
+  },
 ] as const;
 
 export const PRIORITY_OPTIONS = [
-  { value: IncidentPriority.Low, label: "Low", tone: "blue" },
-  { value: IncidentPriority.Medium, label: "Medium", tone: "green" },
-  { value: IncidentPriority.High, label: "High", tone: "orange" },
-  { value: IncidentPriority.Critical, label: "Critical", tone: "red" },
+  {
+    value: IncidentPriority.Low,
+    label: "incidents.creationModal.priorities.low",
+    tone: "blue",
+  },
+  {
+    value: IncidentPriority.Medium,
+    label: "incidents.creationModal.priorities.medium",
+    tone: "green",
+  },
+  {
+    value: IncidentPriority.High,
+    label: "incidents.creationModal.priorities.high",
+    tone: "orange",
+  },
+  {
+    value: IncidentPriority.Critical,
+    label: "incidents.creationModal.priorities.critical",
+    tone: "red",
+  },
 ] as const;
 
 export const MOCK_INCIDENT_USERS: IncidentParticipant[] = [

@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { memo, useCallback, useMemo } from "react";
 import { RotateCcw } from "lucide-react";
 import { MultiSelect } from "@/common/components/ui/MultiSelect";
@@ -13,20 +14,8 @@ import { toISOString, fromISOString } from "@/common/utils/date";
 import styles from "./FilterBar.module.scss";
 import { Button } from "@/common/components/ui/Button";
 
-const PRIORITY_OPTIONS: MultiSelectOption<PriorityFilter>[] = [
-  { value: "critical", label: "Critical", color: "#dc2626" },
-  { value: "high", label: "High", color: "#f97316" },
-  { value: "medium", label: "Medium", color: "#eab308" },
-  { value: "low", label: "Low", color: "#22c55e" },
-];
-
-const STATUS_OPTIONS: Array<{ value: StatusFilter; label: string }> = [
-  { value: "all", label: "All" },
-  { value: "open", label: "Open" },
-  { value: "closed", label: "Closed" },
-];
-
 const FilterBar = memo(function FilterBar() {
+  const t = useTranslations();
   const filters = useDashboardStore((s) => s.filters);
   const setDateRange = useDashboardStore((s) => s.setDateRange);
   const setCategories = useDashboardStore((s) => s.setCategories);
@@ -34,18 +23,56 @@ const FilterBar = memo(function FilterBar() {
   const setStatus = useDashboardStore((s) => s.setStatus);
   const resetFilters = useDashboardStore((s) => s.resetFilters);
 
+  const PRIORITY_OPTIONS: MultiSelectOption<PriorityFilter>[] = useMemo(
+    () => [
+      {
+        value: "critical",
+        label: t("incidents.creationModal.priorities.critical"),
+        color: "#dc2626",
+      },
+      {
+        value: "high",
+        label: t("incidents.creationModal.priorities.high"),
+        color: "#f97316",
+      },
+      {
+        value: "medium",
+        label: t("incidents.creationModal.priorities.medium"),
+        color: "#eab308",
+      },
+      {
+        value: "low",
+        label: t("incidents.creationModal.priorities.low"),
+        color: "#22c55e",
+      },
+    ],
+    [t],
+  );
+
+  const STATUS_OPTIONS: Array<{ value: StatusFilter; label: string }> = useMemo(
+    () => [
+      { value: "all", label: t("dashboard.filterBar.all") },
+      { value: "open", label: t("dashboard.filterBar.open") },
+      { value: "closed", label: t("dashboard.filterBar.closed") },
+    ],
+    [t],
+  );
+
   const categoryOptions = useMemo(() => {
-    const keys = new Map<string, string>();
+    const seen = new Map<string, string>();
     for (const inc of INCIDENTS_MOCK) {
-      if (!keys.has(inc.type.key)) {
-        keys.set(inc.type.key, inc.type.name);
+      if (!seen.has(inc.type.key)) {
+        seen.set(inc.type.key, inc.type.name);
       }
     }
-    return Array.from(keys.entries()).map(([value, label]) => ({
-      value,
-      label,
-    }));
-  }, []);
+    return Array.from(seen.entries()).map(([key, fallback]) => {
+      try {
+        return { value: key, label: t(`incidents.popup.categories.${key}`) };
+      } catch {
+        return { value: key, label: fallback };
+      }
+    });
+  }, [t]);
 
   const hasActiveFilters =
     filters.dateFrom !== null ||
@@ -70,7 +97,7 @@ const FilterBar = memo(function FilterBar() {
 
   return (
     <div className={styles.bar}>
-      <FormField label="From" className={styles.field}>
+      <FormField label={t("dashboard.filterBar.from")} className={styles.field}>
         <DatePicker
           value={fromISOString(filters.dateFrom)}
           onChange={handleFromChange}
@@ -78,7 +105,7 @@ const FilterBar = memo(function FilterBar() {
         />
       </FormField>
 
-      <FormField label="To" className={styles.field}>
+      <FormField label={t("dashboard.filterBar.to")} className={styles.field}>
         <DatePicker
           value={fromISOString(filters.dateTo)}
           onChange={handleToChange}
@@ -86,26 +113,35 @@ const FilterBar = memo(function FilterBar() {
         />
       </FormField>
 
-      <FormField label="Category" className={styles.field}>
+      <FormField
+        label={t("dashboard.filterBar.category")}
+        className={styles.field}
+      >
         <MultiSelect
           options={categoryOptions}
           value={filters.categories}
           onChange={setCategories}
-          placeholder="All categories"
+          placeholder={t("dashboard.filterBar.allCategories")}
           searchable
         />
       </FormField>
 
-      <FormField label="Priority" className={styles.field}>
+      <FormField
+        label={t("dashboard.filterBar.priority")}
+        className={styles.field}
+      >
         <MultiSelect
           options={PRIORITY_OPTIONS}
           value={filters.priorities}
           onChange={setPriorities}
-          placeholder="All priorities"
+          placeholder={t("dashboard.filterBar.allPriorities")}
         />
       </FormField>
 
-      <FormField label="Status" className={styles.field}>
+      <FormField
+        label={t("dashboard.filterBar.status")}
+        className={styles.field}
+      >
         <div className={styles.toggleGroup}>
           {STATUS_OPTIONS.map((opt) => (
             <button
@@ -127,7 +163,7 @@ const FilterBar = memo(function FilterBar() {
         disabled={!hasActiveFilters}
       >
         <RotateCcw size={14} />
-        Reset
+        {t("dashboard.filterBar.reset")}
       </Button>
     </div>
   );

@@ -1,5 +1,231 @@
 {
-  "HomePage": {
-    "title": "Hello world!"
+  "incidents": {
+    "popup": {
+      "viewFullDetails": "View Full Details",
+      "categories": {
+        "coordination": "Coordination",
+        "electrical": "Electrical",
+        "plumbing": "Plumbing",
+        "safety": "Safety",
+        "structure": "Structure",
+        "safety_hazard": "Safety hazard",
+        "structural": "Structural",
+        "infrastructure": "Infrastructure",
+        "materials": "Materials",
+        "masonry": "Masonry",
+        "achitectural": "Architectural",
+        "stability": "Stability",
+        "excavation": "Excavation",
+        "urban_planning": "Urban planning",
+        "soil-study": "Soil Study",
+        "observation": "Observation",
+        "foundation": "Foundation"
+      }
+    },
+    "filterBar": {
+      "last5Visits": "Last 5 visits",
+      "compare": "Compare",
+      "compareBim": "Compare BIM"
+    },
+    "bottomControls": {
+      "2d": "2D",
+      "3d": "3D",
+      "heatmap": "Heatmap",
+      "previous": "Previous incident",
+      "next": "Next incident"
+    },
+    "overlayControls": {
+      "hint": "Click on the map to select the incident location",
+      "createIncident": "Create incident",
+      "cancelSelection": "Cancel selection",
+      "tools": {
+        "building": "Building",
+        "measurement": "Measurement",
+        "pin": "Pin",
+        "layers": "Layers",
+        "capture": "Capture",
+        "safety": "Safety",
+        "upload": "Upload"
+      }
+    },
+    "creationModal": {
+      "title": "Create Incident",
+      "back": "Back",
+      "cancel": "Cancel",
+      "submit": "Submit",
+      "next": "Next",
+      "success": "Incident created successfully",
+      "validation": {
+        "titleMinLength": "Title must be at least 3 characters long",
+        "targetDateRequired": "Target date is required",
+        "assigneeRequired": "At least one assignee is required",
+        "coordinatesRequired": "Site location pin is required",
+        "buildingRequired": "Building is required",
+        "levelRequired": "Level is required",
+        "failed": "Validation failed",
+        "stepFormat": "Step {step}: {error}"
+      },
+      "steps": {
+        "info": "Info",
+        "assignment": "Assignment",
+        "location": "Location",
+        "attachments": "Attachments"
+      },
+      "basicInfo": {
+        "title": "Title",
+        "targetDate": "Target date",
+        "description": "Description",
+        "category": "Category",
+        "priority": "Priority",
+        "titlePlaceholder": "e.g. Clash in HVAC main duct",
+        "descriptionPlaceholder": "Describe the finding, affected model element, or site evidence.",
+        "categorySettings": "Category settings"
+      },
+      "assignment": {
+        "assignedTo": "Assigned to",
+        "observers": "Observers",
+        "labels": "Labels",
+        "assignedPlaceholder": "Search and select assigned users...",
+        "observersPlaceholder": "Search and select observers...",
+        "labelsPlaceholder": "Select labels..."
+      },
+      "location": {
+        "latitude": "Latitude",
+        "longitude": "Longitude",
+        "repositionPin": "Reposition Pin",
+        "building": "Building",
+        "level": "Level",
+        "sector": "Sector / Description",
+        "buildingPlaceholder": "Select building",
+        "levelPlaceholder": "Select level",
+        "sectorPlaceholder": "e.g. Eje D2, between columns C5-C7",
+        "coordHint": "Click \"Reposition Pin\" to open the map and select a geographic point."
+      },
+      "documentation": {
+        "dropText": "Drop files here or click to browse",
+        "dropHint": "PDF, JPG, PNG supported",
+        "noAttachments": "No attachments required — you can submit without files.",
+        "remove": "Remove {name}"
+      },
+      "categories": {
+        "coordination": "Coordination",
+        "electrical": "Electrical",
+        "plumbing": "Plumbing",
+        "safety": "Safety",
+        "structure": "Structure",
+        "safety_hazard": "Safety hazard",
+        "structural": "Structural",
+        "infrastructure": "Infrastructure",
+        "materials": "Materials",
+        "masonry": "Masonry",
+        "achitectural": "Architectural",
+        "stability": "Stability",
+        "excavation": "Excavation",
+        "urban_planning": "Urban planning",
+        "soil-study": "Soil Study",
+        "observation": "Observation",
+        "foundation": "Foundation"
+      },
+      "priorities": {
+        "low": "Low",
+        "medium": "Medium",
+        "high": "High",
+        "critical": "Critical"
+      }
+    }
+  },
+  "dashboard": {
+    "filterBar": {
+      "from": "From",
+      "to": "To",
+      "category": "Category",
+      "priority": "Priority",
+      "status": "Status",
+      "all": "All",
+      "open": "Open",
+      "closed": "Closed",
+      "allCategories": "All categories",
+      "allPriorities": "All priorities",
+      "reset": "Reset"
+    },
+    "datatable": {
+      "title": "Incidents Detail",
+      "searchPlaceholder": "Search by title or description...",
+      "emptyMessage": "No incidents match your filters.",
+      "paused": "Paused",
+      "columns": {
+        "id": "ID",
+        "title": "Title",
+        "category": "Category",
+        "priority": "Priority",
+        "assignees": "Assignees",
+        "status": "Status"
+      }
+    },
+    "kpiCards": {
+      "totalIncidents": "Total Incidents",
+      "openClosed": "Open / Closed",
+      "criticalHigh": "Critical / High",
+      "avgResolution": "Avg. Resolution",
+      "overdue": "Overdue",
+      "overdueIncidents": "Overdue Incidents",
+      "resolved": "resolved",
+      "ofOpen": "of {count} open",
+      "na": "N/A",
+      "lessThanDay": "<1 day",
+      "lessThanDayShort": "<1d"
+    },
+    "charts": {
+      "statusDistribution": "Status Distribution",
+      "incidentsByCategory": "Incidents by Category & Priority",
+      "incidentTrend": "Incident Creation Trend",
+      "agingAnalysis": "Aging Analysis (Open Incidents)",
+      "open": "Open",
+      "closed": "Closed",
+      "other": "Other",
+      "resolved": "resolved",
+      "cumulative": "Cumulative",
+      "daily": "Daily",
+      "topAssignees": "Top Assignees",
+      "emptyMessage": "No assignee data available.",
+      "assignee": "Assignee",
+      "total": "Total",
+      "avgResolution": "Avg. Resolution"
+    }
+  },
+  "projects": {
+    "title": "My Projects",
+    "subtitle": "Select an active work environment to start managing BIM and construction supervision.",
+    "searchPlaceholder": "Search by name or location...",
+    "filter": "Filter",
+    "newProject": "New Project",
+    "logout": "Log Out"
+  },
+  "login": {
+    "title": "Spybee",
+    "subtitle": "Enter your credentials to access",
+    "email": "Email",
+    "password": "Password",
+    "emailPlaceholder": "admin@spybee.com",
+    "passwordPlaceholder": "••••••••",
+    "validating": "Validating...",
+    "submit": "Sign In"
+  },
+  "navbar": {
+    "notifications": "Notifications",
+    "settings": "Settings"
+  },
+  "menu": {
+    "dashboard": "Dashboard",
+    "incidents": "Incidents",
+    "help": "Help",
+    "logout": "Logout",
+    "loading": "Loading...",
+    "openMenu": "Open menu",
+    "errorLoadingProject": "Error loading project configuration:"
+  },
+  "locale": {
+    "en": "En",
+    "es": "Es"
   }
 }

@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { Filter } from "lucide-react";
 import { Button } from "@/common/components/ui/Button";
 import { DatePicker } from "@/common/components/ui/DatePicker";
@@ -31,6 +32,7 @@ function TimelineCircles() {
 }
 
 export function TopFilterBar({ value, onChange }: Readonly<TopFilterBarProps>) {
+  const t = useTranslations();
   return (
     <div className={styles.bar}>
       <div className={styles.filterIcon}>
@@ -44,7 +46,9 @@ export function TopFilterBar({ value, onChange }: Readonly<TopFilterBarProps>) {
       <div className={styles.separator} />
 
       <div className={styles.timelineSection}>
-        <span className={styles.timelineLabel}>Últimas 5 visitas</span>
+        <span className={styles.timelineLabel}>
+          {t("incidents.filterBar.last5Visits")}
+        </span>
         <TimelineCircles />
       </div>
 
@@ -52,10 +56,10 @@ export function TopFilterBar({ value, onChange }: Readonly<TopFilterBarProps>) {
 
       <div className={styles.btnGroup}>
         <Button variant="secondary" size="sm" disabled>
-          Comparar
+          {t("incidents.filterBar.compare")}
         </Button>
         <Button variant="secondary" size="sm" disabled>
-          Comparar BIM
+          {t("incidents.filterBar.compareBim")}
         </Button>
       </div>
     </div>

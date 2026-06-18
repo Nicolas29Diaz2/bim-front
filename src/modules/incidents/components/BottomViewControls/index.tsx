@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { ChevronLeft, ChevronRight, Flame } from "lucide-react";
 import { cn } from "@/common/utils/cn";
 import {
@@ -19,6 +20,7 @@ const VIEW_OPTIONS: { key: ViewToggleOption; viewMode: ViewMode }[] = [
 ];
 
 export function BottomViewControls() {
+  const t = useTranslations();
   const viewMode = useMapWorkspaceStore((s) => s.viewMode);
   const is3D = useMapWorkspaceStore((s) => s.is3D);
   const currentIndex = useMapWorkspaceStore(selectCurrentIndex);
@@ -52,7 +54,7 @@ export function BottomViewControls() {
         className={styles.navBtn}
         disabled={!hasItems}
         onClick={prevIncident}
-        aria-label="Previous incident"
+        aria-label={t("incidents.bottomControls.previous")}
       >
         <ChevronLeft size={18} strokeWidth={2.2} />
       </button>
@@ -68,7 +70,7 @@ export function BottomViewControls() {
         className={styles.navBtn}
         disabled={!hasItems}
         onClick={nextIncident}
-        aria-label="Next incident"
+        aria-label={t("incidents.bottomControls.next")}
       >
         <ChevronRight size={18} strokeWidth={2.2} />
       </button>
@@ -91,7 +93,7 @@ export function BottomViewControls() {
             {key === "Heatmap" ? (
               <span className={styles.toggleHeatmap}>
                 <Flame size={13} strokeWidth={2.2} />
-                Heatmap
+                {t("incidents.bottomControls.heatmap")}
               </span>
             ) : (
               key

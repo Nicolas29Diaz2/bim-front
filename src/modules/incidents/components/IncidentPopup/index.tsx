@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { Popup } from "react-map-gl/mapbox";
 import {
   AlertTriangle,
@@ -20,14 +21,6 @@ const CATEGORY_ICON: Record<string, React.ElementType> = {
   structure: Triangle,
 };
 
-const CATEGORY_LABEL: Record<string, string> = {
-  coordination: "Coordination",
-  electrical: "Electrical",
-  plumbing: "Plumbing",
-  safety: "Safety",
-  structure: "Structure",
-};
-
 const PRIORITY_STYLES: Record<string, string> = {
   low: styles.pillLow,
   medium: styles.pillMedium,
@@ -46,8 +39,10 @@ export function IncidentPopup({
   onClose,
   onViewDetails,
 }: IncidentPopupProps) {
+  const t = useTranslations();
   const CategoryIcon = CATEGORY_ICON[incident.type.key] ?? AlertTriangle;
-  const categoryLabel = CATEGORY_LABEL[incident.type.key] ?? incident.type.name;
+  const categoryLabel =
+    t(`incidents.popup.categories.${incident.type.key}`) ?? incident.type.name;
   const pillClass = PRIORITY_STYLES[incident.priority] ?? styles.pillMedium;
 
   return (
@@ -85,7 +80,7 @@ export function IncidentPopup({
             onClick={() => onViewDetails(incident)}
           >
             <Eye size={14} strokeWidth={2} />
-            View Full Details
+            {t("incidents.popup.viewFullDetails")}
           </button>
         )}
       </div>

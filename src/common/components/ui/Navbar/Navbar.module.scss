@@ -75,6 +75,11 @@
   gap: $space-xs;
 }
 
+.localeSelector {
+  min-width: 40px;
+  margin-right: $space-xs;
+}
+
 .actionButton {
   display: inline-flex;
   align-items: center;

@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { Input } from "@/common/components/ui/Input";
 import { CustomSelect } from "@/common/components/ui/CustomSelect";
 import { Button } from "@/common/components/ui/Button";
@@ -16,6 +17,7 @@ const buildingOptions = BUILDING_OPTIONS.map((b) => ({ value: b, label: b }));
 const levelOptions = LEVEL_OPTIONS.map((l) => ({ value: l, label: l }));
 
 export function IncidentLocationStep() {
+  const t = useTranslations();
   const formData = useIncidentCreationStore((state) => state.formData);
   const updateField = useIncidentCreationStore((state) => state.updateField);
   const startRepositionPin = useIncidentCreationStore(
@@ -33,13 +35,13 @@ export function IncidentLocationStep() {
       <div className={styles.coordCard}>
         <div className={styles.coordRow}>
           <div className={styles.coordField}>
-            <span>Latitude</span>
+            <span>{t("incidents.creationModal.location.latitude")}</span>
             <span className={styles.coordValue}>
               {hasCoords ? formatCoord(formData.coordinates!.lat) : "\u2014"}
             </span>
           </div>
           <div className={styles.coordField}>
-            <span>Longitude</span>
+            <span>{t("incidents.creationModal.location.longitude")}</span>
             <span className={styles.coordValue}>
               {hasCoords ? formatCoord(formData.coordinates!.lng) : "\u2014"}
             </span>
@@ -47,41 +49,42 @@ export function IncidentLocationStep() {
         </div>
         <Button variant="primary" onClick={startRepositionPin}>
           <Plus size={16} />
-          Reposition Pin
+          {t("incidents.creationModal.location.repositionPin")}
         </Button>
       </div>
 
       <div className={styles.formGrid}>
-        <FormField label="Building">
+        <FormField label={t("incidents.creationModal.location.building")}>
           <CustomSelect
             value={formData.building}
-            placeholder="Select building"
+            placeholder={t(
+              "incidents.creationModal.location.buildingPlaceholder",
+            )}
             options={buildingOptions}
             onChange={(val) => updateField("building", val)}
           />
         </FormField>
-        <FormField label="Level">
+        <FormField label={t("incidents.creationModal.location.level")}>
           <CustomSelect
             value={formData.level}
-            placeholder="Select level"
+            placeholder={t("incidents.creationModal.location.levelPlaceholder")}
             options={levelOptions}
             onChange={(val) => updateField("level", val)}
           />
         </FormField>
       </div>
 
-      <FormField label="Sector / Description">
+      <FormField label={t("incidents.creationModal.location.sector")}>
         <Input
           value={formData.sectorDescription}
-          placeholder="e.g. Eje D2, between columns C5-C7"
+          placeholder={t("incidents.creationModal.location.sectorPlaceholder")}
           onChange={(e) => updateField("sectorDescription", e.target.value)}
         />
       </FormField>
 
       {!hasCoords && (
         <p className={styles.hint}>
-          Click &quot;Reposition Pin&quot; to open the map and select a
-          geographic point.
+          {t("incidents.creationModal.location.coordHint")}
         </p>
       )}
     </section>

@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { memo } from "react";
 import {
   BarChart,
@@ -85,11 +86,12 @@ function CustomBar(props: Readonly<CustomBarProps>) {
 }
 
 const AgingAnalysisChart = memo(function AgingAnalysisChart() {
+  const t = useTranslations();
   const data = useAgingData();
 
   return (
     <div className={styles.container}>
-      <h3 className={styles.title}>Aging Analysis (Open Incidents)</h3>
+      <h3 className={styles.title}>{t("dashboard.charts.agingAnalysis")}</h3>
       <ResponsiveContainer width="100%" height={315}>
         <BarChart
           data={data}

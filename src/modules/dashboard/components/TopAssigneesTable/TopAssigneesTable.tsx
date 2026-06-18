@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { memo, useMemo, useState } from "react";
 import { useAssigneesData } from "../../hooks";
 import { Table, type ColumnDef } from "@/common/components/ui/Table";
@@ -15,6 +16,7 @@ function formatDays(days: number | null): string {
 }
 
 const TopAssigneesTable = memo(function TopAssigneesTable() {
+  const t = useTranslations();
   const allRows = useAssigneesData();
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -30,7 +32,7 @@ const TopAssigneesTable = memo(function TopAssigneesTable() {
     () => [
       {
         key: "assignee",
-        header: "Assignee",
+        header: t("dashboard.charts.assignee"),
         renderCell: (row) => (
           <div className={styles.assigneeCell}>
             <img src={row.avatarUrl} alt={row.name} className={styles.avatar} />
@@ -40,28 +42,28 @@ const TopAssigneesTable = memo(function TopAssigneesTable() {
       },
       {
         key: "totalAssigned",
-        header: "Total",
+        header: t("dashboard.charts.total"),
         renderCell: (row) => (
           <span className={styles.totalBadge}>{row.totalAssigned}</span>
         ),
       },
       {
         key: "openCount",
-        header: "Open",
+        header: t("dashboard.filterBar.open"),
         renderCell: (row) => (
           <span className={styles.openCount}>{row.openCount}</span>
         ),
       },
       {
         key: "closedCount",
-        header: "Closed",
+        header: t("dashboard.filterBar.closed"),
         renderCell: (row) => (
           <span className={styles.closedCount}>{row.closedCount}</span>
         ),
       },
       {
         key: "avgResolutionDays",
-        header: "Avg. Resolution",
+        header: t("dashboard.charts.avgResolution"),
         renderCell: (row) => (
           <span className={styles.avgDays}>
             {formatDays(row.avgResolutionDays)}
@@ -69,17 +71,17 @@ const TopAssigneesTable = memo(function TopAssigneesTable() {
         ),
       },
     ],
-    [],
+    [t],
   );
 
   return (
     <div className={styles.container}>
-      <h3 className={styles.title}>Top Assignees</h3>
+      <h3 className={styles.title}>{t("dashboard.charts.topAssignees")}</h3>
       <Table
         columns={columns}
         data={pageRows}
         rowKey={(row) => row.id}
-        emptyMessage="No assignee data available."
+        emptyMessage={t("dashboard.charts.emptyMessage")}
         className={styles.table}
       />
       {allRows.length > PAGE_SIZE && (

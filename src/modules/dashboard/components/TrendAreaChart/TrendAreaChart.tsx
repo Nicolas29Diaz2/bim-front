@@ -1,6 +1,7 @@
 "use client";
 
 import { memo } from "react";
+import { useTranslations } from "next-intl";
 import {
   AreaChart,
   Area,
@@ -18,12 +19,14 @@ interface CustomTooltipProps {
   active?: boolean;
   payload?: Array<{ name: string; value: number; payload: TrendDataPoint }>;
   label?: string;
+  t?: (key: string) => string;
 }
 
 function CustomTooltip({
   active,
   payload,
   label,
+  t = (key: string) => key,
 }: Readonly<CustomTooltipProps>) {
   if (!active || !payload || payload.length === 0) return null;
   return (
@@ -31,7 +34,9 @@ function CustomTooltip({
       <span className={styles.tooltipDate}>{label}</span>
       <div className={styles.tooltipRow}>
         <span className={styles.tooltipDot} />
-        <span className={styles.tooltipLabel}>Cumulative</span>
+        <span className={styles.tooltipLabel}>
+          {t("dashboard.charts.cumulative")}
+        </span>
         <span className={styles.tooltipValue}>
           {payload[0]?.payload?.cumulative}
         </span>
@@ -39,7 +44,9 @@ function CustomTooltip({
       {payload[0]?.payload?.count !== undefined && (
         <div className={styles.tooltipRow}>
           <span className={styles.tooltipDotSecondary} />
-          <span className={styles.tooltipLabel}>Daily</span>
+          <span className={styles.tooltipLabel}>
+            {t("dashboard.charts.daily")}
+          </span>
           <span className={styles.tooltipValue}>
             {payload[0].payload.count}
           </span>
@@ -50,11 +57,12 @@ function CustomTooltip({
 }
 
 const TrendAreaChart = memo(function TrendAreaChart() {
+  const t = useTranslations();
   const data = useTrendData();
 
   return (
     <div className={styles.container}>
-      <h3 className={styles.title}>Incident Creation Trend</h3>
+      <h3 className={styles.title}>{t("dashboard.charts.incidentTrend")}</h3>
       <ResponsiveContainer width="100%" height={280}>
         <AreaChart
           data={data}
@@ -84,7 +92,7 @@ const TrendAreaChart = memo(function TrendAreaChart() {
             axisLine={false}
             allowDecimals={false}
           />
-          <Tooltip content={<CustomTooltip />} />
+          <Tooltip content={<CustomTooltip t={t} />} />
           <Area
             type="monotone"
             dataKey="cumulative"

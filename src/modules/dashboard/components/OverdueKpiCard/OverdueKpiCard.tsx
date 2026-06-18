@@ -1,6 +1,7 @@
 "use client";
 
 import { memo } from "react";
+import { useTranslations } from "next-intl";
 import { Timer } from "lucide-react";
 import { useOverdueKpi } from "../../hooks";
 import styles from "./OverdueKpiCard.module.scss";
@@ -10,6 +11,7 @@ function formatNumber(n: number): string {
 }
 
 const OverdueKpiCard = memo(function OverdueKpiCard() {
+  const t = useTranslations();
   const { count, totalOpen, ratio } = useOverdueKpi();
 
   return (
@@ -18,10 +20,13 @@ const OverdueKpiCard = memo(function OverdueKpiCard() {
         <Timer size={20} />
       </div>
       <div className={styles.content}>
-        <span className={styles.label}>Overdue Incidents</span>
+        <span className={styles.label}>
+          {t("dashboard.kpiCards.overdueIncidents")}
+        </span>
         <span className={styles.value}>{formatNumber(count)}</span>
         <span className={styles.detail}>
-          of {formatNumber(totalOpen)} open ({ratio.toFixed(1)}%)
+          {t("dashboard.kpiCards.ofOpen", { count: formatNumber(totalOpen) })} (
+          {ratio.toFixed(1)}%)
         </span>
       </div>
     </div>

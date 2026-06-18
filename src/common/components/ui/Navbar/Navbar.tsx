@@ -1,8 +1,11 @@
 "use client";
 
-import { HTMLAttributes, ReactNode } from "react";
+import { HTMLAttributes, ReactNode, useCallback } from "react";
+import { useTranslations, useLocale } from "next-intl";
+import { usePathname, useRouter } from "@/i18n/navigation";
 import { Bell, Settings } from "lucide-react";
 import { cn } from "@/common/utils/cn";
+import { CustomSelect } from "@/common/components/ui/CustomSelect";
 import styles from "./Navbar.module.scss";
 
 interface NavbarTab {
@@ -26,6 +29,11 @@ interface NavbarProps extends HTMLAttributes<HTMLElement> {
   handleLogoClick?: () => void;
 }
 
+const LOCALE_OPTIONS = [
+  { value: "es" as const, label: "locale.es" },
+  { value: "en" as const, label: "locale.en" },
+];
+
 function Navbar({
   logo = "Spybee",
   tabs,
@@ -40,6 +48,18 @@ function Navbar({
   handleLogoClick,
   ...rest
 }: Readonly<NavbarProps>) {
+  const t = useTranslations();
+  const locale = useLocale();
+  const pathname = usePathname();
+  const router = useRouter();
+
+  const handleLocaleChange = useCallback(
+    (newLocale: string) => {
+      router.replace(pathname, { locale: newLocale as "es" | "en" });
+    },
+    [router, pathname],
+  );
+
   return (
     <header className={cn(styles.navbar, className)} {...rest}>
       {leadingSlot}
@@ -70,19 +90,22 @@ function Navbar({
 
       <div className={styles.actions}>
         {actions}
+        <div className={styles.localeSelector}>
+          <CustomSelect
+            value={locale}
+            options={LOCALE_OPTIONS.map((opt) => ({
+              value: opt.value,
+              label: t(opt.label),
+            }))}
+            onChange={handleLocaleChange}
+          />
+        </div>
         <button
           type="button"
           className={styles.actionButton}
-          aria-label="Notifications"
+          aria-label={t("navbar.notifications")}
         >
           <Bell size={18} />
-        </button>
-        <button
-          type="button"
-          className={styles.actionButton}
-          aria-label="Settings"
-        >
-          <Settings size={18} />
         </button>
         {avatar ?? <span className={styles.avatar}>A</span>}
         <div className={styles.userContainer}>
