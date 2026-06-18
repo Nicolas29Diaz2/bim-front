@@ -40,7 +40,10 @@ export const getNavItems = (
   },
 ];
 
-export const getFooterItems = (t: (key: string) => string): MenuItem[] => [
+export const getFooterItems = (
+  t: (key: string) => string,
+  locale?: string,
+): MenuItem[] => [
   {
     key: "help",
     label: t("menu.help"),
@@ -51,7 +54,7 @@ export const getFooterItems = (t: (key: string) => string): MenuItem[] => [
     key: "logout",
     label: t("menu.logout"),
     icon: <LogOut size={18} />,
-    onClick: () => signOut({ callbackUrl: "/login" }),
+    onClick: () => signOut({ callbackUrl: `/${locale || "es"}/login` }),
   },
 ];
 
@@ -85,7 +88,10 @@ export default function ManagementLayout({
   const [project, setProject] = useState<Project | null>(null);
 
   const navItems = useMemo(() => getNavItems(t, slug ?? ""), [t, slug]);
-  const menuFooterItems = useMemo(() => getFooterItems(t), [t]);
+  const menuFooterItems = useMemo(
+    () => getFooterItems(t, params.locale as string),
+    [t, params.locale],
+  );
   const activeKey = useMemo(
     () => getActiveNavKey(pathname, navItems),
     [pathname, navItems],
@@ -162,6 +168,7 @@ export default function ManagementLayout({
           ) : undefined
         }
         centerSlot={project?.name}
+        avatar={user?.avatar}
         user={{
           name: user?.name ?? "",
           role: user?.role ?? "",

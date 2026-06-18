@@ -227,5 +227,12 @@
   "locale": {
     "en": "En",
     "es": "Es"
+  },
+  "roles": {
+    "super_admin": "Super Admin",
+    "admin": "Admin",
+    "project_manager": "Gerente de Proyecto",
+    "field_engineer": "Ingeniero de Campo",
+    "client": "Cliente"
   }
 }

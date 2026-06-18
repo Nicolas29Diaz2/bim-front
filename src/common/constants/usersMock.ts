@@ -5,7 +5,7 @@ export const MOCK_USERS = [
     email: "admin@spybee.com",
     password: "password123",
     role: "super_admin",
-    avatar: "/avatars/admin.png",
+    avatar: "https://i.pravatar.cc/150?u=1",
   },
   {
     id: "2",
@@ -13,6 +13,14 @@ export const MOCK_USERS = [
     email: "ingeniero@spybee.com",
     password: "password123",
     role: "ingeniero_campo",
-    avatar: "/avatars/engineer.png",
+    avatar: "https://i.pravatar.cc/150?u=2",
+  },
+  {
+    id: "3",
+    name: "Pepe Project Manager",
+    email: "manager@spybee.com",
+    password: "password123",
+    role: "project-manager",
+    avatar: "https://i.pravatar.cc/150?u=3",
   },
 ];

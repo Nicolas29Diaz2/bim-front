@@ -4,9 +4,14 @@ import { DashboardPage } from "@/modules/dashboard/components/DashboardPage";
 import { getIncidentsByProject } from "@/modules/incidents/services/getIncidentsByProject.service";
 import { redirect } from "next/navigation";
 
-async function DashboardPageRoute() {
+async function DashboardPageRoute({
+  params,
+}: {
+  params: Promise<{ locale: string; project_slug: string }>;
+}) {
+  const { locale } = await params;
   const session = await auth();
-  if (!session) redirect("/login");
+  if (!session) redirect(`/${locale}/login`);
 
   const incidents = await getIncidentsByProject();
   const finalIncidents = isErr(incidents) ? [] : incidents.value;

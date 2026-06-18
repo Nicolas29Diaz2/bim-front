@@ -1,6 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import { useSearchParams } from "next/navigation";
 import { isErr } from "@/common/api/result";
 import { Button } from "@/common/components/ui/Button";
 import { FormField } from "@/common/components/ui/FormField";
@@ -12,6 +13,8 @@ import styles from "./page.module.scss";
 
 function LoginPage() {
   const t = useTranslations();
+  const searchParams = useSearchParams();
+  const redirectTo = searchParams.get("redirectTo") || "/";
   const [isPending, setIsPending] = useState(false);
   const showError = useToastStore((state) => state.showError);
 
@@ -26,6 +29,8 @@ function LoginPage() {
       showError(result.error.message);
       setIsPending(false);
     }
+
+    globalThis.location.assign(redirectTo);
   };
 
   return (

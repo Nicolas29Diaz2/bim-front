@@ -3,10 +3,11 @@
 import { HTMLAttributes, ReactNode, useCallback } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { usePathname, useRouter } from "@/i18n/navigation";
-import { Bell, Settings } from "lucide-react";
+import { Bell } from "lucide-react";
 import { cn } from "@/common/utils/cn";
 import { CustomSelect } from "@/common/components/ui/CustomSelect";
 import styles from "./Navbar.module.scss";
+import Image from "next/image";
 
 interface NavbarTab {
   key: string;
@@ -19,7 +20,7 @@ interface NavbarProps extends HTMLAttributes<HTMLElement> {
   activeTab?: string;
   onTabClick?: (key: string) => void;
   actions?: ReactNode;
-  avatar?: ReactNode;
+  avatar?: string;
   leadingSlot?: ReactNode;
   centerSlot?: string;
   user?: {
@@ -107,10 +108,22 @@ function Navbar({
         >
           <Bell size={18} />
         </button>
-        {avatar ?? <span className={styles.avatar}>A</span>}
+        {avatar ? (
+          <Image
+            src={avatar}
+            alt={user?.name || ""}
+            className={styles.avatarImg}
+            width={36}
+            height={36}
+          />
+        ) : (
+          <span className={styles.avatar}>{user?.name?.charAt(0) || "A"}</span>
+        )}
         <div className={styles.userContainer}>
           <span className={styles.userName}>{user?.name}</span>
-          <span className={styles.userRole}>{user?.role}</span>
+          <span className={styles.userRole}>
+            {user?.role && t(`roles.${user?.role}`)}
+          </span>
         </div>
       </div>
     </header>

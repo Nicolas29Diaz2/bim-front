@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt";
 import { normalizePath } from "@/common/utils/path";
+import { routing } from "@/i18n/routing";
 
 const authPageRoutes = new Set(["/login"]);
 const apiAuthPrefix = "/api/auth";
@@ -30,7 +31,10 @@ export async function resolveAuthRedirect(
   }
 
   if (!token && !isAuthPageRoute) {
-    const loginUrl = new URL("/login", req.url);
+    const locale =
+      req.nextUrl.pathname.split("/").filter(Boolean)[0] ||
+      routing.defaultLocale;
+    const loginUrl = new URL(`/${locale}/login`, req.url);
     const redirectTo = req.nextUrl.pathname + req.nextUrl.search;
 
     if (redirectTo !== "/") {
