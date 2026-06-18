@@ -35,15 +35,15 @@ const StatusDonutChart = memo(function StatusDonutChart() {
 
   const data = useMemo(() => {
     const chartData: DonutDataPoint[] = [
-      { name: "Open", value: counts.open, fill: "var(--color-warning)" },
-      { name: "Closed", value: counts.closed, fill: "var(--color-success)" },
+      { name: "Open", value: counts.open, fill: "#f59e0b" },
+      { name: "Closed", value: counts.closed, fill: "#10b981" },
     ];
 
     if (counts.other > 0) {
       chartData.push({
         name: "Other",
         value: counts.other,
-        fill: "var(--color-neutral)",
+        fill: "#6366f1",
       });
     }
 
@@ -54,7 +54,7 @@ const StatusDonutChart = memo(function StatusDonutChart() {
     <div className={styles.container}>
       <h3 className={styles.title}>Status Distribution</h3>
       <div className={styles.chartWrap}>
-        <ResponsiveContainer width="100%" height={260}>
+        <ResponsiveContainer width="100%" height={280}>
           <PieChart>
             <Pie
               data={data}

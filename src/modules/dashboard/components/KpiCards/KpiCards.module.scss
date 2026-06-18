@@ -2,23 +2,29 @@
 
 .grid {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: $space-lg;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $space-md;
 
-  @media (min-width: $breakpoint-sm) {
-    grid-template-columns: 1fr 1fr;
+  @media (min-width: $breakpoint-md) {
+    grid-template-columns: repeat(3, 1fr);
   }
 
   @media (min-width: $breakpoint-lg) {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 1fr);
+    gap: $space-lg;
+  }
+
+  @media (max-width: $breakpoint-xs) {
+    grid-template-columns: repeat(1, 1fr);
+    gap: $space-sm;
   }
 }
 
 .card {
   display: flex;
   align-items: flex-start;
-  gap: $space-md;
-  padding: $space-xl;
+  gap: $space-sm;
+  padding: $space-lg;
   background-color: $color-bg-surface;
   border: 1px solid $color-border;
   border-radius: $radius-lg;
@@ -36,8 +42,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
+  width: 36px;
+  height: 36px;
   border-radius: $radius-md;
   background-color: $color-primary-light;
   color: $color-primary;
@@ -62,15 +68,21 @@
   color: $color-success;
 }
 
+.iconWrapOverdue {
+  @extend .iconWrap;
+  background-color: #fef2f2;
+  color: $color-error;
+}
+
 .content {
   display: flex;
   flex-direction: column;
-  gap: $space-xs;
+  gap: 2px;
   min-width: 0;
 }
 
 .label {
-  font-size: $font-size-xs;
+  font-size: $font-size-2xs;
   font-weight: $font-weight-medium;
   color: $color-text-muted;
   text-transform: uppercase;
@@ -78,7 +90,7 @@
 }
 
 .value {
-  font-size: $font-size-xl;
+  font-size: $font-size-lg;
   font-weight: $font-weight-bold;
   color: $color-secondary;
   letter-spacing: $tracking-tight;
@@ -96,9 +108,20 @@
   color: $color-error;
 }
 
+.valueOverdue {
+  @extend .value;
+  color: $color-error;
+}
+
+.detail {
+  font-size: $font-size-2xs;
+  font-weight: $font-weight-medium;
+  color: $color-text-muted;
+}
+
 .progressTrack {
   width: 100%;
-  height: 6px;
+  height: 4px;
   background-color: $color-bg-hover;
   border-radius: $radius-3xl;
   overflow: hidden;

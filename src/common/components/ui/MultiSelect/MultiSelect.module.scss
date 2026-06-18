@@ -23,6 +23,8 @@
   border-radius: $radius-md;
   outline: none;
   cursor: pointer;
+  max-height: 36px;
+  overflow-y: auto;
   transition:
     border-color 0.15s ease,
     box-shadow 0.15s ease;
@@ -117,7 +119,6 @@
 .searchInput {
   flex: 1;
   min-width: 60px;
-  height: 24px;
   padding: 0;
   font-family: inherit;
   font-size: 0.875rem;

@@ -1,12 +1,17 @@
 "use client";
 
-import { memo } from "react";
+import { memo, useMemo, useState } from "react";
 import { Search } from "lucide-react";
 import { useSearchFilteredIncidents } from "../../hooks";
 import { useDashboardStore } from "../../store/useDashboardStore";
+import { Table, type ColumnDef } from "@/common/components/ui/Table";
+import { Pagination } from "@/common/components/ui/Pagination";
 import { cn } from "@/common/utils/cn";
 import type { Incident } from "@/modules/incidents/types/incidents";
 import styles from "./IncidentsDatatable.module.scss";
+import Image from "next/image";
+
+const PAGE_SIZE = 10;
 
 const PRIORITY_MAP: Record<string, { label: string; colorClass: string }> = {
   critical: { label: "Critical", colorClass: styles.pillCritical },
@@ -28,13 +33,15 @@ function AssigneeAvatars({ assignees }: { assignees: Incident["assignees"] }) {
   return (
     <div className={styles.avatars}>
       {shown.map((a, i) => (
-        <img
+        <Image
           key={a.id}
           src={a.avatarUrl}
           alt={a.name}
           className={styles.avatar}
           style={{ zIndex: 3 - i }}
           title={a.name}
+          width={40}
+          height={40}
         />
       ))}
       {extra > 0 && <span className={styles.avatarMore}>+{extra}</span>}
@@ -42,10 +49,70 @@ function AssigneeAvatars({ assignees }: { assignees: Incident["assignees"] }) {
   );
 }
 
+const columns: ColumnDef<Incident>[] = [
+  {
+    key: "sequenceId",
+    header: "ID",
+    renderCell: (row) => (
+      <span className={styles.cellId}>#{row.sequenceId}</span>
+    ),
+  },
+  {
+    key: "title",
+    header: "Title",
+    renderCell: (row) => <span className={styles.cellTitle}>{row.title}</span>,
+  },
+  {
+    key: "category",
+    header: "Category",
+    renderCell: (row) => (
+      <span className={styles.categoryTag}>{row.type.name}</span>
+    ),
+  },
+  {
+    key: "priority",
+    header: "Priority",
+    renderCell: (row) => {
+      const p = PRIORITY_MAP[row.priority] ?? PRIORITY_MAP.medium;
+      return <span className={cn(styles.pill, p.colorClass)}>{p.label}</span>;
+    },
+  },
+  {
+    key: "assignees",
+    header: "Assignees",
+    renderCell: (row) => <AssigneeAvatars assignees={row.assignees} />,
+  },
+  {
+    key: "status",
+    header: "Status",
+    renderCell: (row) => {
+      const s = STATUS_MAP[row.status] ?? STATUS_MAP.open;
+      return (
+        <span className={cn(styles.statusBadge, s.colorClass)}>{s.label}</span>
+      );
+    },
+  },
+];
+
 const IncidentsDatatable = memo(function IncidentsDatatable() {
   const rows = useSearchFilteredIncidents();
   const searchQuery = useDashboardStore((s) => s.searchQuery);
   const setSearchQuery = useDashboardStore((s) => s.setSearchQuery);
+
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const totalPages = Math.max(1, Math.ceil(rows.length / PAGE_SIZE));
+  const safePage = Math.min(currentPage, totalPages);
+
+  const pageRows = useMemo(
+    () => rows.slice((safePage - 1) * PAGE_SIZE, safePage * PAGE_SIZE),
+    [rows, safePage],
+  );
+
+  const handleSearchChange = (value: string) => {
+    setSearchQuery(value);
+    setCurrentPage(1);
+  };
 
   return (
     <div className={styles.container}>
@@ -58,71 +125,29 @@ const IncidentsDatatable = memo(function IncidentsDatatable() {
             className={styles.searchInput}
             placeholder="Search by title or description..."
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={(e) => handleSearchChange(e.target.value)}
           />
         </div>
       </div>
 
-      <div className={styles.tableWrap}>
-        <table className={styles.table}>
-          <thead>
-            <tr>
-              <th className={styles.th}>ID</th>
-              <th className={styles.th}>Title</th>
-              <th className={styles.th}>Category</th>
-              <th className={styles.th}>Priority</th>
-              <th className={styles.th}>Assignees</th>
-              <th className={styles.th}>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {rows.length === 0 ? (
-              <tr>
-                <td colSpan={6} className={styles.empty}>
-                  No incidents match your filters.
-                </td>
-              </tr>
-            ) : (
-              rows.map((inc) => {
-                const p = PRIORITY_MAP[inc.priority] ?? PRIORITY_MAP.medium;
-                const s = STATUS_MAP[inc.status] ?? STATUS_MAP.open;
-                return (
-                  <tr key={inc.id} className={styles.row}>
-                    <td className={styles.tdId}>#{inc.sequenceId}</td>
-                    <td className={styles.tdTitle}>
-                      <span className={styles.titleText}>{inc.title}</span>
-                    </td>
-                    <td className={styles.td}>
-                      <span className={styles.categoryTag}>
-                        {inc.type.name}
-                      </span>
-                    </td>
-                    <td className={styles.td}>
-                      <span className={cn(styles.pill, p.colorClass)}>
-                        {p.label}
-                      </span>
-                    </td>
-                    <td className={styles.td}>
-                      <AssigneeAvatars assignees={inc.assignees} />
-                    </td>
-                    <td className={styles.td}>
-                      <span className={cn(styles.statusBadge, s.colorClass)}>
-                        {s.label}
-                      </span>
-                    </td>
-                  </tr>
-                );
-              })
-            )}
-          </tbody>
-        </table>
-      </div>
+      <Table
+        columns={columns}
+        data={pageRows}
+        rowKey={(row) => row.id}
+        emptyMessage="No incidents match your filters."
+        minBodyHeight={480}
+      />
 
-      <div className={styles.footer}>
-        <span className={styles.count}>
-          {rows.length} incident{rows.length !== 1 ? "s" : ""} found
-        </span>
-      </div>
+      {rows.length > 0 && (
+        <div className={styles.paginationWrap}>
+          <Pagination
+            totalItems={rows.length}
+            pageSize={PAGE_SIZE}
+            currentPage={safePage}
+            onPageChange={setCurrentPage}
+          />
+        </div>
+      )}
     </div>
   );
 });

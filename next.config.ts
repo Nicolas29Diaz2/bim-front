@@ -10,7 +10,7 @@ const nextConfig = {
     includePaths: [path.join(__dirname, "src")],
   },
   images: {
-    domains: ["picsum.photos", "images.unsplash.com"],
+    domains: ["picsum.photos", "images.unsplash.com", "i.pravatar.cc"],
   },
 };
 export default withNextIntl(nextConfig);

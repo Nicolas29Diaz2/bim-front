@@ -9,6 +9,8 @@ import { FilterBar } from "./FilterBar";
 import { StatusDonutChart } from "./StatusDonutChart";
 import { CategoryBarChart } from "./CategoryBarChart";
 import { TrendAreaChart } from "./TrendAreaChart";
+import { AgingAnalysisChart } from "./AgingAnalysisChart";
+import { TopAssigneesTable } from "./TopAssigneesTable";
 import { IncidentsDatatable } from "./IncidentsDatatable";
 
 interface DashboardPageProps {
@@ -41,10 +43,17 @@ function DashboardPage({ incidents }: Readonly<DashboardPageProps>) {
         </div>
       </div>
 
-      <div className={styles.chartsGrid}>
-        <div className={styles.chartCellFull}>
-          <TrendAreaChart />
+      <div className={styles.analysisGrid}>
+        <div className={styles.chartCell}>
+          <AgingAnalysisChart />
         </div>
+        <div className={styles.chartCell}>
+          <TopAssigneesTable />
+        </div>
+      </div>
+
+      <div className={styles.chartCellFull}>
+        <TrendAreaChart />
       </div>
 
       <div className={styles.tableRow}>

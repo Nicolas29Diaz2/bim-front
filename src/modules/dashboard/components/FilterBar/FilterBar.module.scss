@@ -11,76 +11,46 @@
   border-radius: $radius-lg;
 }
 
-.group {
-  display: flex;
-  flex-direction: column;
-  gap: $space-xs;
-}
-
-.groupSelect {
-  display: flex;
-  flex-direction: column;
-  gap: $space-xs;
-  min-width: 200px;
+.field {
   flex: 1;
-}
-
-.fieldLabel {
-  font-size: $font-size-2xs;
-  font-weight: $font-weight-semibold;
-  color: $color-text-muted;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-
-.dateInput {
-  height: 36px;
-  padding: 0 $space-md;
-  font-family: inherit;
-  font-size: $font-size-sm;
-  color: $color-secondary;
-  background-color: $color-bg-surface;
-  border: 1px solid $color-border;
-  border-radius: $radius-md;
-  outline: none;
-  transition:
-    border-color 0.15s ease,
-    box-shadow 0.15s ease;
-
-  &:hover:not(:focus) {
-    border-color: $color-neutral;
-  }
-
-  &:focus {
-    border-color: $color-border-focus;
-    box-shadow: 0 0 0 3px $color-primary-light;
-  }
+  min-width: 140px;
 }
 
 .toggleGroup {
   display: flex;
+  width: 100%;
   border: 1px solid $color-border;
   border-radius: $radius-md;
   overflow: hidden;
   height: 36px;
 }
-
 .toggleBtn {
+  flex: 1;
+  min-width: 0;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0 $space-md;
+
+  padding: 0 $space-sm;
+
   font-family: inherit;
   font-size: $font-size-xs;
   font-weight: $font-weight-medium;
+  line-height: 1;
+
   color: $color-neutral;
   background-color: $color-bg-surface;
+
   border: none;
   border-right: 1px solid $color-border;
+
   cursor: pointer;
+
   transition:
     background-color 0.15s ease,
     color 0.15s ease;
+
   white-space: nowrap;
 
   &:last-child {
@@ -134,8 +104,12 @@
     align-items: stretch;
   }
 
-  .groupSelect {
+  .field {
     min-width: 0;
+    width: 100%;
+  }
+
+  .toggleGroup {
     width: 100%;
   }
 }

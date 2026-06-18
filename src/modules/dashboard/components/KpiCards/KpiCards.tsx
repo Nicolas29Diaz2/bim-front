@@ -1,8 +1,14 @@
 "use client";
 
 import { memo } from "react";
-import { AlertTriangle, CheckCircle2, Clock, AlertOctagon } from "lucide-react";
-import { useKpiData } from "../../hooks";
+import {
+  AlertTriangle,
+  CheckCircle2,
+  Clock,
+  AlertOctagon,
+  Timer,
+} from "lucide-react";
+import { useKpiData, useOverdueKpi } from "../../hooks";
 import styles from "./KpiCards.module.scss";
 
 function formatNumber(n: number): string {
@@ -17,6 +23,7 @@ function formatDays(days: number | null): string {
 
 const KpiCards = memo(function KpiCards() {
   const kpi = useKpiData();
+  const overdue = useOverdueKpi();
 
   return (
     <div className={styles.grid}>
@@ -60,7 +67,7 @@ const KpiCards = memo(function KpiCards() {
           <AlertOctagon size={20} />
         </div>
         <div className={styles.content}>
-          <span className={styles.label}>Critical / High Alerts</span>
+          <span className={styles.label}>Critical / High</span>
           <span className={styles.valueCritical}>
             {formatNumber(kpi.criticalHighCount)}
           </span>
@@ -72,9 +79,24 @@ const KpiCards = memo(function KpiCards() {
           <CheckCircle2 size={20} />
         </div>
         <div className={styles.content}>
-          <span className={styles.label}>Avg. Resolution Time</span>
+          <span className={styles.label}>Avg. Resolution</span>
           <span className={styles.value}>
             {formatDays(kpi.avgResolutionDays)}
+          </span>
+        </div>
+      </div>
+
+      <div className={styles.card}>
+        <div className={styles.iconWrapOverdue}>
+          <Timer size={20} />
+        </div>
+        <div className={styles.content}>
+          <span className={styles.label}>Overdue</span>
+          <span className={styles.valueOverdue}>
+            {formatNumber(overdue.count)}
+          </span>
+          <span className={styles.detail}>
+            of {formatNumber(overdue.totalOpen)} open
           </span>
         </div>
       </div>

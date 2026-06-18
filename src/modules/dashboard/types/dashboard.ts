@@ -50,3 +50,28 @@ export type IncidentRow = Pick<
   | "assignees"
   | "createdAt"
 >;
+
+// ── Overdue KPI ──────────────────────────────────────
+export interface OverdueKpiData {
+  count: number;
+  totalOpen: number;
+  ratio: number;
+}
+
+// ── Top Assignees ────────────────────────────────────
+export interface AssigneeRow {
+  id: string;
+  name: string;
+  avatarUrl: string;
+  totalAssigned: number;
+  openCount: number;
+  closedCount: number;
+  avgResolutionDays: number | null;
+}
+
+// ── Aging Analysis ───────────────────────────────────
+export interface AgingBucket {
+  bucket: string;
+  count: number;
+  sortKey: number;
+}

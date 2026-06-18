@@ -4,10 +4,14 @@ import { memo, useCallback, useMemo } from "react";
 import { RotateCcw } from "lucide-react";
 import { MultiSelect } from "@/common/components/ui/MultiSelect";
 import type { MultiSelectOption } from "@/common/components/ui/MultiSelect";
+import { FormField } from "@/common/components/ui/FormField";
+import { DatePicker } from "@/common/components/ui/DatePicker";
 import { useDashboardStore } from "../../store/useDashboardStore";
 import type { PriorityFilter, StatusFilter } from "../../types/dashboard";
 import { INCIDENTS_MOCK } from "@/modules/incidents/constants/incidentsMock";
+import { toISOString, fromISOString } from "@/common/utils/date";
 import styles from "./FilterBar.module.scss";
+import { Button } from "@/common/components/ui/Button";
 
 const PRIORITY_OPTIONS: MultiSelectOption<PriorityFilter>[] = [
   { value: "critical", label: "Critical", color: "#dc2626" },
@@ -51,43 +55,38 @@ const FilterBar = memo(function FilterBar() {
     filters.status !== "all";
 
   const handleFromChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setDateRange(e.target.value || null, filters.dateTo);
+    (date: Date | null) => {
+      setDateRange(toISOString(date), filters.dateTo);
     },
     [setDateRange, filters.dateTo],
   );
 
   const handleToChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setDateRange(filters.dateFrom, e.target.value || null);
+    (date: Date | null) => {
+      setDateRange(filters.dateFrom, toISOString(date));
     },
     [setDateRange, filters.dateFrom],
   );
 
   return (
     <div className={styles.bar}>
-      <div className={styles.group}>
-        <label className={styles.fieldLabel}>From</label>
-        <input
-          type="date"
-          className={styles.dateInput}
-          value={filters.dateFrom ?? ""}
+      <FormField label="From" className={styles.field}>
+        <DatePicker
+          value={fromISOString(filters.dateFrom)}
           onChange={handleFromChange}
+          clearable={false}
         />
-      </div>
+      </FormField>
 
-      <div className={styles.group}>
-        <label className={styles.fieldLabel}>To</label>
-        <input
-          type="date"
-          className={styles.dateInput}
-          value={filters.dateTo ?? ""}
+      <FormField label="To" className={styles.field}>
+        <DatePicker
+          value={fromISOString(filters.dateTo)}
           onChange={handleToChange}
+          clearable={false}
         />
-      </div>
+      </FormField>
 
-      <div className={styles.groupSelect}>
-        <label className={styles.fieldLabel}>Category</label>
+      <FormField label="Category" className={styles.field}>
         <MultiSelect
           options={categoryOptions}
           value={filters.categories}
@@ -95,20 +94,18 @@ const FilterBar = memo(function FilterBar() {
           placeholder="All categories"
           searchable
         />
-      </div>
+      </FormField>
 
-      <div className={styles.groupSelect}>
-        <label className={styles.fieldLabel}>Priority</label>
+      <FormField label="Priority" className={styles.field}>
         <MultiSelect
           options={PRIORITY_OPTIONS}
           value={filters.priorities}
           onChange={setPriorities}
           placeholder="All priorities"
         />
-      </div>
+      </FormField>
 
-      <div className={styles.group}>
-        <label className={styles.fieldLabel}>Status</label>
+      <FormField label="Status" className={styles.field}>
         <div className={styles.toggleGroup}>
           {STATUS_OPTIONS.map((opt) => (
             <button
@@ -121,18 +118,17 @@ const FilterBar = memo(function FilterBar() {
             </button>
           ))}
         </div>
-      </div>
+      </FormField>
 
-      {hasActiveFilters && (
-        <button
-          type="button"
-          className={styles.resetBtn}
-          onClick={resetFilters}
-        >
-          <RotateCcw size={14} />
-          Reset
-        </button>
-      )}
+      <Button
+        variant="destructive"
+        className={styles.resetBtn}
+        onClick={resetFilters}
+        disabled={!hasActiveFilters}
+      >
+        <RotateCcw size={14} />
+        Reset
+      </Button>
     </div>
   );
 });

@@ -17,9 +17,9 @@
   color: white;
   font-size: $font-size-xs;
   font-weight: $font-weight-semibold;
-  white-space: nowrap;
   box-shadow: $shadow-lg;
   animation: slideIn 0.25s ease;
+  max-width: 200px;
 }
 
 .pulse {

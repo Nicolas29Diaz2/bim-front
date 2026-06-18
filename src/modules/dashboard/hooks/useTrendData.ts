@@ -5,10 +5,10 @@ import { useDashboardStore } from "../store/useDashboardStore";
 import type { TrendDataPoint } from "../types/dashboard";
 import type { Incident } from "@/modules/incidents/types/incidents";
 import {
-  parseISO,
-  format,
-  startOfDay,
   eachDayOfInterval,
+  format,
+  parseISO,
+  startOfDay,
   subDays,
 } from "date-fns";
 
