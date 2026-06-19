@@ -139,6 +139,7 @@
       "from": "From",
       "to": "To",
       "category": "Category",
+      "assignees": "Assignees",
       "priority": "Priority",
       "status": "Status",
       "all": "All",
@@ -146,6 +147,7 @@
       "closed": "Closed",
       "allCategories": "All categories",
       "allPriorities": "All priorities",
+      "allAssignees": "All assignees",
       "reset": "Reset"
     },
     "datatable": {

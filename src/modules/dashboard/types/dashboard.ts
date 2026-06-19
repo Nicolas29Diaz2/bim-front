@@ -3,12 +3,15 @@ import type { Incident } from "@/modules/incidents/types/incidents";
 export type PriorityFilter = "critical" | "high" | "medium" | "low";
 export type StatusFilter = "all" | "open" | "closed";
 
+export type AssigneeFilter = string;
+
 export interface DashboardFilters {
   dateFrom: string | null;
   dateTo: string | null;
   categories: string[];
   priorities: PriorityFilter[];
   status: StatusFilter;
+  assignees: AssigneeFilter[];
 }
 
 export interface KpiData {

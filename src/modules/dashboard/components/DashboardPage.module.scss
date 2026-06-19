@@ -26,17 +26,18 @@
 }
 
 .analysisGrid {
-  display: grid;
-  grid-template-columns: 1fr;
+  display: flex;
+  flex-direction: row;
   gap: $space-xl;
 
-  @media (min-width: $breakpoint-lg) {
-    grid-template-columns: 1fr 1fr;
+  @media (max-width: $breakpoint-lg) {
+    flex-direction: column;
   }
 }
 
 .chartCell {
   min-width: 0;
+  flex: 1;
 }
 
 .chartCellWide {

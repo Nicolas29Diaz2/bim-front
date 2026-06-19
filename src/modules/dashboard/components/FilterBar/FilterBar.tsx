@@ -10,17 +10,25 @@ import { DatePicker } from "@/common/components/ui/DatePicker";
 import { useDashboardStore } from "../../store/useDashboardStore";
 import type { PriorityFilter, StatusFilter } from "../../types/dashboard";
 import { INCIDENTS_MOCK } from "@/modules/incidents/constants/incidentsMock";
+import { MOCK_USERS } from "@/common/constants/usersMock";
 import { toISOString, fromISOString } from "@/common/utils/date";
 import styles from "./FilterBar.module.scss";
 import { Button } from "@/common/components/ui/Button";
 
-const FilterBar = memo(function FilterBar() {
+interface FilterBarProps {
+  isFieldEngineer?: boolean;
+}
+
+const FilterBar = memo(function FilterBar({
+  isFieldEngineer = false,
+}: Readonly<FilterBarProps>) {
   const t = useTranslations();
   const filters = useDashboardStore((s) => s.filters);
   const setDateRange = useDashboardStore((s) => s.setDateRange);
   const setCategories = useDashboardStore((s) => s.setCategories);
   const setPriorities = useDashboardStore((s) => s.setPriorities);
   const setStatus = useDashboardStore((s) => s.setStatus);
+  const setAssignees = useDashboardStore((s) => s.setAssignees);
   const resetFilters = useDashboardStore((s) => s.resetFilters);
 
   const PRIORITY_OPTIONS: MultiSelectOption<PriorityFilter>[] = useMemo(
@@ -74,12 +82,20 @@ const FilterBar = memo(function FilterBar() {
     });
   }, [t]);
 
+  const assigneeOptions = useMemo<MultiSelectOption<string>[]>(() => {
+    return MOCK_USERS.map((u) => ({
+      value: u.id,
+      label: u.name,
+    }));
+  }, []);
+
   const hasActiveFilters =
     filters.dateFrom !== null ||
     filters.dateTo !== null ||
     filters.categories.length > 0 ||
     filters.priorities.length > 0 ||
-    filters.status !== "all";
+    filters.status !== "all" ||
+    filters.assignees.length > 0;
 
   const handleFromChange = useCallback(
     (date: Date | null) => {
@@ -97,7 +113,7 @@ const FilterBar = memo(function FilterBar() {
 
   return (
     <div className={styles.bar}>
-      <FormField label={t("dashboard.filterBar.from")} className={styles.field}>
+      <FormField label={t("dashboard.filterBar.from")}>
         <DatePicker
           value={fromISOString(filters.dateFrom)}
           onChange={handleFromChange}
@@ -105,7 +121,7 @@ const FilterBar = memo(function FilterBar() {
         />
       </FormField>
 
-      <FormField label={t("dashboard.filterBar.to")} className={styles.field}>
+      <FormField label={t("dashboard.filterBar.to")}>
         <DatePicker
           value={fromISOString(filters.dateTo)}
           onChange={handleToChange}
@@ -113,10 +129,7 @@ const FilterBar = memo(function FilterBar() {
         />
       </FormField>
 
-      <FormField
-        label={t("dashboard.filterBar.category")}
-        className={styles.field}
-      >
+      <FormField label={t("dashboard.filterBar.category")}>
         <MultiSelect
           options={categoryOptions}
           value={filters.categories}
@@ -126,10 +139,19 @@ const FilterBar = memo(function FilterBar() {
         />
       </FormField>
 
-      <FormField
-        label={t("dashboard.filterBar.priority")}
-        className={styles.field}
-      >
+      {!isFieldEngineer && (
+        <FormField label={t("dashboard.filterBar.assignees")}>
+          <MultiSelect
+            options={assigneeOptions}
+            value={filters.assignees}
+            onChange={setAssignees}
+            placeholder={t("dashboard.filterBar.allAssignees")}
+            searchable
+          />
+        </FormField>
+      )}
+
+      <FormField label={t("dashboard.filterBar.priority")}>
         <MultiSelect
           options={PRIORITY_OPTIONS}
           value={filters.priorities}
@@ -138,10 +160,7 @@ const FilterBar = memo(function FilterBar() {
         />
       </FormField>
 
-      <FormField
-        label={t("dashboard.filterBar.status")}
-        className={styles.field}
-      >
+      <FormField label={t("dashboard.filterBar.status")}>
         <div className={styles.toggleGroup}>
           {STATUS_OPTIONS.map((opt) => (
             <button

@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { Search, SlidersHorizontal, Plus, LogOut } from "lucide-react";
 import { Input } from "@/common/components/ui/Input";
@@ -34,10 +34,6 @@ function ProjectsPage() {
   const handleProjectClick = (slug: string) => {
     router.push(`/${slug}/dashboard`);
   };
-
-  useEffect(() => {
-    console.log(user);
-  }, [session]);
 
   return (
     <>

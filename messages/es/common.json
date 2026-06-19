@@ -139,6 +139,7 @@
       "from": "Desde",
       "to": "Hasta",
       "category": "Categoría",
+      "assignees": "Asignados",
       "priority": "Prioridad",
       "status": "Estado",
       "all": "Todas",
@@ -146,6 +147,7 @@
       "closed": "Cerrado",
       "allCategories": "Todas las categorías",
       "allPriorities": "Todas las prioridades",
+      "allAssignees": "Todos los asignados",
       "reset": "Reiniciar"
     },
     "datatable": {

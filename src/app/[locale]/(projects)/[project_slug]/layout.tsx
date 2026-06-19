@@ -48,7 +48,6 @@ export const getFooterItems = (
     key: "help",
     label: t("menu.help"),
     icon: <CircleHelp size={18} />,
-    href: "/help",
   },
   {
     key: "logout",
