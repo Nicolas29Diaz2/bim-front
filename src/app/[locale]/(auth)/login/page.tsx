@@ -28,6 +28,7 @@ function LoginPage() {
     if (isErr(result)) {
       showError(result.error.message);
       setIsPending(false);
+      return;
     }
 
     globalThis.location.assign(redirectTo);
@@ -48,6 +49,7 @@ function LoginPage() {
               required
               placeholder={t("login.emailPlaceholder")}
               disabled={isPending}
+              defaultValue={"nicolas.fernandez@constructora.com"}
             />
           </FormField>
 
@@ -59,6 +61,7 @@ function LoginPage() {
               required
               placeholder={t("login.passwordPlaceholder")}
               disabled={isPending}
+              defaultValue={"password123"}
             />
           </FormField>
 
