@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { Input } from "@/common/components/ui/Input";
 import { CustomSelect } from "@/common/components/ui/CustomSelect";
 import { DatePicker } from "@/common/components/ui/DatePicker";
@@ -21,20 +22,23 @@ function toDueDateValue(dateStr: string): Date | null {
 }
 
 export function IncidentBasicInfoStep() {
+  const t = useTranslations();
   const formData = useIncidentCreationStore((state) => state.formData);
   const updateField = useIncidentCreationStore((state) => state.updateField);
 
   return (
     <section className={styles.step}>
       <div className={styles.grid}>
-        <FormField label="Title">
+        <FormField label={t("incidents.creationModal.basicInfo.title")}>
           <Input
             value={formData.title}
-            placeholder="e.g. Clash in HVAC main duct"
+            placeholder={t(
+              "incidents.creationModal.basicInfo.titlePlaceholder",
+            )}
             onChange={(event) => updateField("title", event.target.value)}
           />
         </FormField>
-        <FormField label="Target date">
+        <FormField label={t("incidents.creationModal.basicInfo.targetDate")}>
           <DatePicker
             value={toDueDateValue(formData.dueDate)}
             onChange={(date) => {
@@ -51,22 +55,27 @@ export function IncidentBasicInfoStep() {
         </FormField>
       </div>
 
-      <FormField label="Description">
+      <FormField label={t("incidents.creationModal.basicInfo.description")}>
         <textarea
           className={styles.textarea}
           value={formData.description}
-          placeholder="Describe the finding, affected model element, or site evidence."
+          placeholder={t(
+            "incidents.creationModal.basicInfo.descriptionPlaceholder",
+          )}
           onChange={(event) => updateField("description", event.target.value)}
         />
       </FormField>
 
       <div className={styles.categoryContainer}>
-        <FormField label="Category" className={styles.field}>
+        <FormField
+          label={t("incidents.creationModal.basicInfo.category")}
+          className={styles.field}
+        >
           <CustomSelect
             value={formData.category}
             options={CATEGORY_OPTIONS.map((opt) => ({
               value: opt.value,
-              label: opt.label,
+              label: t(opt.label),
             }))}
             onChange={(val) => updateField("category", val)}
           />
@@ -75,11 +84,11 @@ export function IncidentBasicInfoStep() {
           icon={<Settings size={16} />}
           variant="primary"
           size="sm"
-          aria-label="Category settings"
+          aria-label={t("incidents.creationModal.basicInfo.categorySettings")}
         />
       </div>
 
-      <FormField label="Priority">
+      <FormField label={t("incidents.creationModal.basicInfo.priority")}>
         <div className={styles.priorityGrid}>
           {PRIORITY_OPTIONS.map((priority) => (
             <button
@@ -93,7 +102,7 @@ export function IncidentBasicInfoStep() {
               onClick={() => updateField("priority", priority.value)}
             >
               <span className={styles.dot} />
-              {priority.label}
+              {t(priority.label)}
             </button>
           ))}
         </div>

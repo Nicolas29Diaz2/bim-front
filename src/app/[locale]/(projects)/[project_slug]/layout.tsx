@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useMemo, useCallback } from "react";
+import { useTranslations } from "next-intl";
 import { usePathname, useParams, notFound, useRouter } from "next/navigation";
 import {
   Menu as MenuIcon,
@@ -21,33 +22,38 @@ import type { Project } from "@/modules/projects/types/projects";
 import styles from "./layout.module.scss";
 import type { MenuItem } from "@/common/components/ui/Menu";
 
-export const getNavItems = (slug: string): MenuItem[] => [
+export const getNavItems = (
+  t: (key: string) => string,
+  slug: string,
+): MenuItem[] => [
   {
     key: "dashboard",
-    label: "Dashboard",
+    label: t("menu.dashboard"),
     icon: <LayoutDashboard size={18} />,
     href: `/${slug}/dashboard`,
   },
   {
     key: "incidents",
-    label: "Incidents",
+    label: t("menu.incidents"),
     icon: <AlertTriangle size={18} />,
     href: `/${slug}/incidents`,
   },
 ];
 
-export const footerItems: MenuItem[] = [
+export const getFooterItems = (
+  t: (key: string) => string,
+  locale?: string,
+): MenuItem[] => [
   {
     key: "help",
-    label: "Help",
+    label: t("menu.help"),
     icon: <CircleHelp size={18} />,
-    href: "/help",
   },
   {
     key: "logout",
-    label: "Logout",
+    label: t("menu.logout"),
     icon: <LogOut size={18} />,
-    onClick: () => signOut({ callbackUrl: "/login" }),
+    onClick: () => signOut({ callbackUrl: `/${locale || "es"}/login` }),
   },
 ];
 
@@ -66,6 +72,7 @@ export default function ManagementLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const t = useTranslations();
   const pathname = usePathname();
   const params = useParams();
   const slug = params.project_slug as string;
@@ -79,7 +86,11 @@ export default function ManagementLayout({
   const [mobileOpen, setMobileOpen] = useState(false);
   const [project, setProject] = useState<Project | null>(null);
 
-  const navItems = useMemo(() => getNavItems(slug ?? ""), [slug]);
+  const navItems = useMemo(() => getNavItems(t, slug ?? ""), [t, slug]);
+  const menuFooterItems = useMemo(
+    () => getFooterItems(t, params.locale as string),
+    [t, params.locale],
+  );
   const activeKey = useMemo(
     () => getActiveNavKey(pathname, navItems),
     [pathname, navItems],
@@ -128,10 +139,10 @@ export default function ManagementLayout({
     >
       <Menu
         items={navItems}
-        footerItems={footerItems}
+        footerItems={menuFooterItems}
         activeItem={activeKey}
         profileName={user?.name ?? "User"}
-        profileSub={project?.name ?? "Cargando..."}
+        profileSub={project?.name ?? t("menu.loading")}
         collapsed={isMobileView ? false : sidebarCollapsed}
       />
       {!isMobileView && (
@@ -149,13 +160,14 @@ export default function ManagementLayout({
               type="button"
               className={styles.mobileToggle}
               onClick={toggleSidebar}
-              aria-label="Open menu"
+              aria-label={t("menu.openMenu")}
             >
               <MenuIcon size={18} />
             </button>
           ) : undefined
         }
         centerSlot={project?.name}
+        avatar={user?.avatar}
         user={{
           name: user?.name ?? "",
           role: user?.role ?? "",

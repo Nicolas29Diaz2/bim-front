@@ -16,6 +16,8 @@ interface DatePickerProps {
   className?: string;
   minDate?: Date;
   maxDate?: Date;
+  /** Show the X button to clear the value. Defaults to true. */
+  clearable?: boolean;
 }
 
 function formatDateDisplay(date: Date | null): string {
@@ -35,6 +37,7 @@ function DatePicker({
   className,
   minDate,
   maxDate,
+  clearable = true,
 }: Readonly<DatePickerProps>) {
   const [isOpen, setIsOpen] = useState(false);
   const triggerRef = useRef<HTMLDivElement>(null);
@@ -104,7 +107,7 @@ function DatePicker({
           {displayValue || placeholder}
         </span>
 
-        {displayValue && !disabled && (
+        {displayValue && clearable && !disabled && (
           <button
             type="button"
             className={styles.clearBtn}

@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { MultiSelect } from "@/common/components/ui/MultiSelect";
 import { FormField } from "@/common/components/ui/FormField";
 import {
@@ -20,13 +21,14 @@ const labelOptions = TAG_OPTIONS.map((tag) => ({
 }));
 
 export function IncidentAssignmentStep() {
+  const t = useTranslations();
   const formData = useIncidentCreationStore((state) => state.formData);
   const updateField = useIncidentCreationStore((state) => state.updateField);
 
   return (
     <section className={styles.step}>
       <div className={styles.fields}>
-        <FormField label="Assigned to">
+        <FormField label={t("incidents.creationModal.assignment.assignedTo")}>
           <MultiSelect
             options={userOptions}
             value={formData.assignees.map((user) => user.id)}
@@ -36,11 +38,13 @@ export function IncidentAssignmentStep() {
                 MOCK_INCIDENT_USERS.filter((user) => ids.includes(user.id)),
               );
             }}
-            placeholder="Search and select assigned users..."
+            placeholder={t(
+              "incidents.creationModal.assignment.assignedPlaceholder",
+            )}
           />
         </FormField>
 
-        <FormField label="Observers">
+        <FormField label={t("incidents.creationModal.assignment.observers")}>
           <MultiSelect
             options={userOptions}
             value={formData.observers.map((user) => user.id)}
@@ -50,11 +54,13 @@ export function IncidentAssignmentStep() {
                 MOCK_INCIDENT_USERS.filter((user) => ids.includes(user.id)),
               );
             }}
-            placeholder="Search and select observers..."
+            placeholder={t(
+              "incidents.creationModal.assignment.observersPlaceholder",
+            )}
           />
         </FormField>
 
-        <FormField label="Labels">
+        <FormField label={t("incidents.creationModal.assignment.labels")}>
           <MultiSelect
             options={labelOptions}
             value={formData.tags.map((tag) => tag.id)}
@@ -64,7 +70,9 @@ export function IncidentAssignmentStep() {
                 TAG_OPTIONS.filter((tag) => ids.includes(tag.id)),
               );
             }}
-            placeholder="Select labels..."
+            placeholder={t(
+              "incidents.creationModal.assignment.labelsPlaceholder",
+            )}
           />
         </FormField>
       </div>

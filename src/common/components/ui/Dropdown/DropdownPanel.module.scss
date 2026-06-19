@@ -3,6 +3,7 @@
 .panel {
   position: fixed;
   z-index: 9999;
+  box-sizing: border-box;
   background-color: $color-bg-surface;
   border: 1px solid $color-border;
   border-radius: $radius-md;
@@ -14,7 +15,7 @@
     opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1),
     transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   pointer-events: none;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 .panel.visible {

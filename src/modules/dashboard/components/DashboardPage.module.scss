@@ -25,8 +25,19 @@
   }
 }
 
+.analysisGrid {
+  display: flex;
+  flex-direction: row;
+  gap: $space-xl;
+
+  @media (max-width: $breakpoint-lg) {
+    flex-direction: column;
+  }
+}
+
 .chartCell {
   min-width: 0;
+  flex: 1;
 }
 
 .chartCellWide {

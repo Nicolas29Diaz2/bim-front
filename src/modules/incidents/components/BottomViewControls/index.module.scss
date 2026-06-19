@@ -3,18 +3,77 @@
 .bar {
   position: absolute;
   bottom: $space-lg;
-  left: $space-lg;
+  left: 50%;
+  transform: translateX(-50%);
   z-index: 10;
   display: flex;
   align-items: center;
-  gap: $space-md;
-  padding: $space-sm $space-md;
+  gap: $space-sm;
+  padding: $space-xs $space-sm;
   background: $color-bg-surface;
-  border-radius: $radius-3xl;
+  border-radius: 999px;
   box-shadow: $shadow-lg;
   border: 1px solid $color-border;
 }
 
+// ── Navigation arrows ───────────────────────────────────
+.navBtn {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: transparent;
+  color: $color-secondary;
+  border: none;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  flex-shrink: 0;
+
+  &:hover:not(:disabled) {
+    background: $color-bg-hover;
+  }
+
+  &:disabled {
+    opacity: 0.3;
+    cursor: default;
+  }
+}
+
+// ── Counter ─────────────────────────────────────────────
+.counter {
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  min-width: 48px;
+  justify-content: center;
+  user-select: none;
+}
+
+.counterCurrent {
+  color: $color-secondary;
+}
+
+.counterSep {
+  color: $color-border;
+  margin: 0 1px;
+}
+
+.counterTotal {
+  color: $color-text-muted;
+}
+
+// ── Separator ───────────────────────────────────────────
+.separator {
+  width: 1px;
+  height: 22px;
+  background: $color-border;
+  flex-shrink: 0;
+}
+
+// ── View toggle group ───────────────────────────────────
 .toggleGroup {
   display: flex;
   border-radius: $radius-md;
@@ -47,67 +106,27 @@
   }
 }
 
-.separator {
-  width: 1px;
-  height: 20px;
-  background: $color-border;
-}
-
-.iconBtn {
-  display: grid;
-  place-items: center;
-  width: 32px;
-  height: 32px;
-  border-radius: $radius-md;
-  background: transparent;
-  color: $color-neutral;
-  border: none;
-  cursor: default;
-  opacity: 0.4;
-}
-
-.row360 {
-  display: flex;
+.toggleHeatmap {
+  display: inline-flex;
   align-items: center;
-  gap: $space-sm;
-  opacity: 0.4;
-  pointer-events: none;
+  gap: 4px;
 }
 
-.label360 {
-  font-size: $font-size-sm;
-  font-weight: $font-weight-semibold;
-  color: $color-neutral;
-}
-
-.toggleTrack {
-  position: relative;
-  width: 32px;
-  height: 18px;
-  border-radius: 999px;
-  background: $color-border;
-  flex-shrink: 0;
-}
-
-.toggleThumb {
-  position: absolute;
-  top: 2px;
-  left: 2px;
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  background: white;
-  box-shadow: $shadow-sm;
-  transition: transform 0.2s ease;
-}
-
-.toggleThumbOn {
-  transform: translateX(14px);
-}
-
+// ── Mobile: floating pill at bottom center ───────────────
 @media (max-width: $breakpoint-md) {
   .bar {
-    display: none;
-    opacity: 0;
+    bottom: $space-md;
+    gap: $space-xs;
+    padding: $space-xs $space-md;
+  }
+
+  .toggleBtn {
+    padding: $space-xs $space-sm;
+    font-size: $font-size-xs;
+  }
+
+  .navBtn {
+    width: 30px;
+    height: 30px;
   }
 }

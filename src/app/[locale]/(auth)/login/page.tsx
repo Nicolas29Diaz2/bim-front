@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+import { useSearchParams } from "next/navigation";
 import { isErr } from "@/common/api/result";
 import { Button } from "@/common/components/ui/Button";
 import { FormField } from "@/common/components/ui/FormField";
@@ -10,6 +12,9 @@ import { useState } from "react";
 import styles from "./page.module.scss";
 
 function LoginPage() {
+  const t = useTranslations();
+  const searchParams = useSearchParams();
+  const redirectTo = searchParams.get("redirectTo") || "/";
   const [isPending, setIsPending] = useState(false);
   const showError = useToastStore((state) => state.showError);
 
@@ -24,40 +29,42 @@ function LoginPage() {
       showError(result.error.message);
       setIsPending(false);
     }
+
+    globalThis.location.assign(redirectTo);
   };
 
   return (
     <div className={styles.loginContainer}>
       <div className={styles.loginCard}>
-        <h1 className={styles.title}>Spybee</h1>
-        <p className={styles.subtitle}>Ingresa tus credenciales para acceder</p>
+        <h1 className={styles.title}>{t("login.title")}</h1>
+        <p className={styles.subtitle}>{t("login.subtitle")}</p>
 
         <form onSubmit={handleSubmit} className={styles.form}>
-          <FormField label="Correo Electrónico">
+          <FormField label={t("login.email")}>
             <Input
               type="email"
               id="email"
               name="email"
               required
-              placeholder="admin@spybee.com"
+              placeholder={t("login.emailPlaceholder")}
               disabled={isPending}
             />
           </FormField>
 
-          <FormField label="Contraseña">
+          <FormField label={t("login.password")}>
             <Input
               type="password"
               id="password"
               name="password"
               required
-              placeholder="••••••••"
+              placeholder={t("login.passwordPlaceholder")}
               disabled={isPending}
             />
           </FormField>
 
           <div className={styles.actions}>
             <Button variant="primary" type="submit" disabled={isPending}>
-              {isPending ? "Validando..." : "Ingresar"}
+              {isPending ? t("login.validating") : t("login.submit")}
             </Button>
           </div>
         </form>

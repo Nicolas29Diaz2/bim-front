@@ -1,0 +1,1 @@
+export { TopAssigneesTable } from "./TopAssigneesTable";

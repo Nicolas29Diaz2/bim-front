@@ -1,6 +1,7 @@
 "use client";
 
 import { memo } from "react";
+import { useTranslations } from "next-intl";
 import {
   BarChart,
   Bar,
@@ -48,11 +49,14 @@ function CustomTooltip({
 }
 
 const CategoryBarChart = memo(function CategoryBarChart() {
+  const t = useTranslations();
   const data = useCategoryBarData();
 
   return (
     <div className={styles.container}>
-      <h3 className={styles.title}>Incidents by Category &amp; Priority</h3>
+      <h3 className={styles.title}>
+        {t("dashboard.charts.incidentsByCategory")}
+      </h3>
       <ResponsiveContainer width="100%" height={280}>
         <BarChart
           data={data}

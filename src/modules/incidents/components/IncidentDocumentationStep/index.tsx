@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useCallback } from "react";
 import { useIncidentCreationStore } from "../../store/useIncidentCreationStore";
 import styles from "./index.module.scss";
@@ -18,6 +19,7 @@ function formatSize(bytes: number): string {
 }
 
 export function IncidentDocumentationStep() {
+  const t = useTranslations();
   const formData = useIncidentCreationStore((state) => state.formData);
   const addAttachments = useIncidentCreationStore(
     (state) => state.addAttachments,
@@ -75,8 +77,12 @@ export function IncidentDocumentationStep() {
             />
           </svg>
         </div>
-        <p className={styles.dropText}>Drop files here or click to browse</p>
-        <p className={styles.dropHint}>PDF, JPG, PNG supported</p>
+        <p className={styles.dropText}>
+          {t("incidents.creationModal.documentation.dropText")}
+        </p>
+        <p className={styles.dropHint}>
+          {t("incidents.creationModal.documentation.dropHint")}
+        </p>
         <input
           type="file"
           className={styles.hiddenInput}
@@ -101,7 +107,9 @@ export function IncidentDocumentationStep() {
                 type="button"
                 className={styles.removeBtn}
                 onClick={() => removeAttachment(file.id)}
-                aria-label={`Remove ${file.name}`}
+                aria-label={t("incidents.creationModal.documentation.remove", {
+                  name: file.name,
+                })}
               >
                 ×
               </button>
@@ -112,7 +120,7 @@ export function IncidentDocumentationStep() {
 
       {formData.attachments.length === 0 && (
         <p className={styles.hint}>
-          No attachments required — you can submit without files.
+          {t("incidents.creationModal.documentation.noAttachments")}
         </p>
       )}
     </section>

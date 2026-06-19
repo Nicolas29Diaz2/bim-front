@@ -1,4 +1,4 @@
-@use "../../../../app/[locale]/variables" as *;
+@use "styles/variables" as *;
 
 .button {
   display: inline-flex;
@@ -100,7 +100,7 @@
   color: white;
   border: 1px solid $color-error;
 
-  &:hover:not(:disabled) {
+  &:hover {
     background-color: darken($color-error, 8%);
     border-color: darken($color-error, 8%);
   }

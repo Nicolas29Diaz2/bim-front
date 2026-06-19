@@ -1,0 +1,62 @@
+@use "../../../../app/[locale]/variables" as *;
+
+.card {
+  display: flex;
+  align-items: flex-start;
+  gap: $space-md;
+  padding: $space-xl;
+  background-color: $color-bg-surface;
+  border: 1px solid $color-border;
+  border-left: 3px solid $color-error;
+  border-radius: $radius-lg;
+  transition:
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+
+  &:hover {
+    box-shadow: $shadow-md;
+    border-color: transparent;
+    border-left-color: $color-error;
+  }
+}
+
+.iconWrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: $radius-md;
+  background-color: #fef2f2;
+  color: $color-error;
+  flex-shrink: 0;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: $space-xs;
+  min-width: 0;
+}
+
+.label {
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
+  color: $color-text-muted;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.value {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-bold;
+  color: $color-error;
+  letter-spacing: $tracking-tight;
+  line-height: 1.1;
+}
+
+.detail {
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
+  color: $color-text-muted;
+}

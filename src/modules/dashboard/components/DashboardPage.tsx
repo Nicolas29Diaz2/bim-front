@@ -9,7 +9,11 @@ import { FilterBar } from "./FilterBar";
 import { StatusDonutChart } from "./StatusDonutChart";
 import { CategoryBarChart } from "./CategoryBarChart";
 import { TrendAreaChart } from "./TrendAreaChart";
+import { AgingAnalysisChart } from "./AgingAnalysisChart";
+import { TopAssigneesTable } from "./TopAssigneesTable";
 import { IncidentsDatatable } from "./IncidentsDatatable";
+import { useSession } from "next-auth/react";
+import { Role } from "@/common/types/role";
 
 interface DashboardPageProps {
   incidents: Incident[];
@@ -17,6 +21,9 @@ interface DashboardPageProps {
 
 function DashboardPage({ incidents }: Readonly<DashboardPageProps>) {
   const setIncidents = useDashboardStore((s) => s.setIncidents);
+  const { data: session } = useSession();
+  const role = session?.user?.role ?? "";
+  const isFieldEngineer = role === Role.FIELD_ENGINEER;
 
   useEffect(() => {
     setIncidents(incidents);
@@ -29,7 +36,7 @@ function DashboardPage({ incidents }: Readonly<DashboardPageProps>) {
       </div>
 
       <div className={styles.filtersRow}>
-        <FilterBar />
+        <FilterBar isFieldEngineer={isFieldEngineer} />
       </div>
 
       <div className={styles.chartsGrid}>
@@ -41,15 +48,26 @@ function DashboardPage({ incidents }: Readonly<DashboardPageProps>) {
         </div>
       </div>
 
-      <div className={styles.chartsGrid}>
-        <div className={styles.chartCellFull}>
-          <TrendAreaChart />
+      <div className={styles.analysisGrid}>
+        <div className={styles.chartCell}>
+          <AgingAnalysisChart />
         </div>
+        {role !== Role.FIELD_ENGINEER && (
+          <div className={styles.chartCell}>
+            <TopAssigneesTable />
+          </div>
+        )}
       </div>
 
-      <div className={styles.tableRow}>
-        <IncidentsDatatable />
+      <div className={styles.chartCellFull}>
+        <TrendAreaChart />
       </div>
+
+      {role !== Role.FIELD_ENGINEER && (
+        <div className={styles.tableRow}>
+          <IncidentsDatatable />
+        </div>
+      )}
     </div>
   );
 }

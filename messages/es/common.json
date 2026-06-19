@@ -1,5 +1,240 @@
 {
-  "HomePage": {
-    "title": "Hola Mundo!"
+  "incidents": {
+    "popup": {
+      "viewFullDetails": "Ver Detalles Completos",
+      "categories": {
+        "coordination": "Coordinación",
+        "electrical": "Eléctrico",
+        "plumbing": "Hidrosanitario",
+        "safety": "Seguridad",
+        "structure": "Estructura",
+        "safety_hazard": "Prevención de riesgos",
+        "structural": "Estructural",
+        "infrastructure": "Infraestructura",
+        "materials": "Materiales",
+        "masonry": "Mampostería",
+        "achitectural": "Arquitectónico",
+        "stability": "Estabilidad",
+        "excavation": "Excavación",
+        "urban_planning": "Urbanismo",
+        "soil-study": "Estudio Suelos",
+        "observation": "Observación General",
+        "foundation": "Cimentación"
+      }
+    },
+    "filterBar": {
+      "last5Visits": "Últimas 5 visitas",
+      "compare": "Comparar",
+      "compareBim": "Comparar BIM"
+    },
+    "bottomControls": {
+      "2d": "2D",
+      "3d": "3D",
+      "heatmap": "Mapa de Calor",
+      "previous": "Incidente anterior",
+      "next": "Incidente siguiente"
+    },
+    "overlayControls": {
+      "hint": "Haz clic en el mapa para seleccionar la ubicación del incidente",
+      "createIncident": "Crear incidente",
+      "cancelSelection": "Cancelar selección",
+      "tools": {
+        "building": "Edificio",
+        "measurement": "Medición",
+        "pin": "Pin",
+        "layers": "Capas",
+        "capture": "Captura",
+        "safety": "Seguridad",
+        "upload": "Subir"
+      }
+    },
+    "creationModal": {
+      "title": "Crear Incidente",
+      "back": "Atrás",
+      "cancel": "Cancelar",
+      "submit": "Enviar",
+      "next": "Siguiente",
+      "success": "Incidente creado exitosamente",
+      "validation": {
+        "titleMinLength": "El título debe tener al menos 3 caracteres",
+        "targetDateRequired": "La fecha objetivo es requerida",
+        "assigneeRequired": "Se requiere al menos un asignado",
+        "coordinatesRequired": "El pin de ubicación es requerido",
+        "buildingRequired": "El edificio es requerido",
+        "levelRequired": "El nivel es requerido",
+        "failed": "Falló la validación",
+        "stepFormat": "Paso {step}: {error}"
+      },
+      "steps": {
+        "info": "Información",
+        "assignment": "Asignación",
+        "location": "Ubicación",
+        "attachments": "Adjuntos"
+      },
+      "basicInfo": {
+        "title": "Título",
+        "targetDate": "Fecha objetivo",
+        "description": "Descripción",
+        "category": "Categoría",
+        "priority": "Prioridad",
+        "titlePlaceholder": "ej. Conflicto en ducto principal HVAC",
+        "descriptionPlaceholder": "Describe el hallazgo, el elemento del modelo afectado o la evidencia en sitio.",
+        "categorySettings": "Configuración de categoría"
+      },
+      "assignment": {
+        "assignedTo": "Asignado a",
+        "observers": "Observadores",
+        "labels": "Etiquetas",
+        "assignedPlaceholder": "Busca y selecciona usuarios asignados...",
+        "observersPlaceholder": "Busca y selecciona observadores...",
+        "labelsPlaceholder": "Selecciona etiquetas..."
+      },
+      "location": {
+        "latitude": "Latitud",
+        "longitude": "Longitud",
+        "repositionPin": "Reposicionar Pin",
+        "building": "Edificio",
+        "level": "Nivel",
+        "sector": "Sector / Descripción",
+        "buildingPlaceholder": "Selecciona edificio",
+        "levelPlaceholder": "Selecciona nivel",
+        "sectorPlaceholder": "ej. Eje D2, entre columnas C5-C7",
+        "coordHint": "Haz clic en \"Reposicionar Pin\" para abrir el mapa y seleccionar un punto geográfico."
+      },
+      "documentation": {
+        "dropText": "Arrastra archivos aquí o haz clic para explorar",
+        "dropHint": "PDF, JPG, PNG soportados",
+        "noAttachments": "No se requieren adjuntos — puedes enviar sin archivos.",
+        "remove": "Eliminar {name}"
+      },
+      "categories": {
+        "coordination": "Coordinación",
+        "electrical": "Eléctrico",
+        "plumbing": "Hidrosanitario",
+        "safety": "Seguridad",
+        "structure": "Estructura",
+        "safety_hazard": "Prevención de riesgos",
+        "structural": "Estructural",
+        "infrastructure": "Infraestructura",
+        "materials": "Materiales",
+        "masonry": "Mampostería",
+        "achitectural": "Arquitectónico",
+        "stability": "Estabilidad",
+        "excavation": "Excavación",
+        "urban_planning": "Urbanismo",
+        "soil-study": "Estudio Suelos",
+        "observation": "Observación General",
+        "foundation": "Cimentación"
+      },
+      "priorities": {
+        "low": "Baja",
+        "medium": "Media",
+        "high": "Alta",
+        "critical": "Crítica"
+      }
+    }
+  },
+  "dashboard": {
+    "filterBar": {
+      "from": "Desde",
+      "to": "Hasta",
+      "category": "Categoría",
+      "assignees": "Asignados",
+      "priority": "Prioridad",
+      "status": "Estado",
+      "all": "Todas",
+      "open": "Abierto",
+      "closed": "Cerrado",
+      "allCategories": "Todas las categorías",
+      "allPriorities": "Todas las prioridades",
+      "allAssignees": "Todos los asignados",
+      "reset": "Reiniciar"
+    },
+    "datatable": {
+      "title": "Detalle de Incidentes",
+      "searchPlaceholder": "Buscar por título o descripción...",
+      "emptyMessage": "No hay incidentes que coincidan con tus filtros.",
+      "paused": "En Pausa",
+      "columns": {
+        "id": "ID",
+        "title": "Título",
+        "category": "Categoría",
+        "priority": "Prioridad",
+        "assignees": "Asignados",
+        "status": "Estado"
+      }
+    },
+    "kpiCards": {
+      "totalIncidents": "Total de Incidentes",
+      "openClosed": "Abiertos / Cerrados",
+      "criticalHigh": "Críticos / Altos",
+      "avgResolution": "Resolución Prom.",
+      "overdue": "Vencidos",
+      "overdueIncidents": "Incidentes Vencidos",
+      "resolved": "resuelto",
+      "ofOpen": "de {count} abiertos",
+      "na": "N/D",
+      "lessThanDay": "<1 día",
+      "lessThanDayShort": "<1d"
+    },
+    "charts": {
+      "statusDistribution": "Distribución por Estado",
+      "incidentsByCategory": "Incidentes por Categoría y Prioridad",
+      "incidentTrend": "Tendencia de Creación de Incidentes",
+      "agingAnalysis": "Análisis de Antigüedad (Incidentes Abiertos)",
+      "open": "Abierto",
+      "closed": "Cerrado",
+      "other": "Otro",
+      "resolved": "resuelto",
+      "cumulative": "Acumulado",
+      "daily": "Diario",
+      "topAssignees": "Principales Asignados",
+      "emptyMessage": "No hay datos de asignados disponibles.",
+      "assignee": "Asignado",
+      "total": "Total",
+      "avgResolution": "Resolución Prom."
+    }
+  },
+  "projects": {
+    "title": "Mis Proyectos",
+    "subtitle": "Selecciona un entorno de trabajo activo para comenzar la gestión de BIM y supervisión de obra.",
+    "searchPlaceholder": "Buscar por nombre o ubicación...",
+    "filter": "Filtrar",
+    "newProject": "Nuevo Proyecto",
+    "logout": "Cerrar Sesión"
+  },
+  "login": {
+    "title": "Spybee",
+    "subtitle": "Ingresa tus credenciales para acceder",
+    "email": "Correo Electrónico",
+    "password": "Contraseña",
+    "emailPlaceholder": "admin@spybee.com",
+    "passwordPlaceholder": "••••••••",
+    "validating": "Validando...",
+    "submit": "Ingresar"
+  },
+  "navbar": {
+    "notifications": "Notificaciones",
+    "settings": "Configuración"
+  },
+  "menu": {
+    "dashboard": "Dashboard",
+    "incidents": "Incidentes",
+    "help": "Ayuda",
+    "logout": "Cerrar Sesión",
+    "loading": "Cargando...",
+    "openMenu": "Abrir menú",
+    "errorLoadingProject": "Error al cargar la configuración del proyecto:"
+  },
+  "locale": {
+    "en": "En",
+    "es": "Es"
+  },
+  "roles": {
+    "super_admin": "Super Admin",
+    "admin": "Admin",
+    "project_manager": "Gerente de Proyecto",
+    "field_engineer": "Ingeniero de Campo",
+    "client": "Cliente"
   }
 }

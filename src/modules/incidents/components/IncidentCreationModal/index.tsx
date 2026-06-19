@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect } from "react";
+import { useTranslations } from "next-intl";
 import { z } from "zod";
 import { Modal } from "@/common/components/ui/Modal";
 import { Button } from "@/common/components/ui/Button";
@@ -27,52 +28,77 @@ const STEP_COMPONENTS: Record<IncidentCreationStep, React.FC> = {
   [IncidentCreationStep.Attachments]: IncidentDocumentationStep,
 };
 
-const basicInfoSchema = z.object({
-  title: z.string().trim().min(3, "Title must be at least 3 characters long"),
-  dueDate: z.string().trim().min(1, "Target date is required"),
-  description: z.string().trim(),
-  category: z.enum(IncidentCategory),
-  priority: z.enum(IncidentPriority),
-});
+const basicInfoSchema = (t: (key: string) => string) =>
+  z.object({
+    title: z
+      .string()
+      .trim()
+      .min(3, t("incidents.creationModal.validation.titleMinLength")),
+    dueDate: z
+      .string()
+      .trim()
+      .min(1, t("incidents.creationModal.validation.targetDateRequired")),
+    description: z.string().trim(),
+    category: z.enum(IncidentCategory),
+    priority: z.enum(IncidentPriority),
+  });
 
-const environmentSchema = z.object({
-  assignees: z.array(z.unknown()).min(1, "At least one assignee is required"),
-});
+const environmentSchema = (t: (key: string) => string) =>
+  z.object({
+    assignees: z
+      .array(z.unknown())
+      .min(1, t("incidents.creationModal.validation.assigneeRequired")),
+  });
 
-const locationSchema = z.object({
-  coordinates: z
-    .object({
-      lat: z.number(),
-      lng: z.number(),
-    })
-    .nullable()
-    .refine((val) => val !== null, "Site location pin is required"),
-  building: z.string().trim().min(1, "Building is required"),
-  level: z.string().trim().min(1, "Level is required"),
-});
+const locationSchema = (t: (key: string) => string) =>
+  z.object({
+    coordinates: z
+      .object({
+        lat: z.number(),
+        lng: z.number(),
+      })
+      .nullable()
+      .refine(
+        (val) => val !== null,
+        t("incidents.creationModal.validation.coordinatesRequired"),
+      ),
+    building: z
+      .string()
+      .trim()
+      .min(1, t("incidents.creationModal.validation.buildingRequired")),
+    level: z
+      .string()
+      .trim()
+      .min(1, t("incidents.creationModal.validation.levelRequired")),
+  });
 
 function validateStep(
   step: IncidentCreationStep,
   data: IncidentCreationFormData,
+  t: (key: string) => string,
 ): { success: true } | { success: false; error: string } {
   try {
     if (step === IncidentCreationStep.BasicInfo) {
-      basicInfoSchema.parse(data);
+      basicInfoSchema(t).parse(data);
     } else if (step === IncidentCreationStep.Environment) {
-      environmentSchema.parse(data);
+      environmentSchema(t).parse(data);
     } else if (step === IncidentCreationStep.Location) {
-      locationSchema.parse(data);
+      locationSchema(t).parse(data);
     }
     return { success: true };
   } catch (err) {
     if (err instanceof z.ZodError) {
       return { success: false, error: err.issues[0].message };
     }
-    return { success: false, error: "Validation failed" };
+    return {
+      success: false,
+      error: t("incidents.creationModal.validation.failed"),
+    };
   }
 }
 
 export function IncidentCreationModal() {
+  const t = useTranslations();
   const isModalOpen = useIncidentCreationStore((s) => s.isModalOpen);
   const currentStep = useIncidentCreationStore((s) => s.currentStep);
   const formData = useIncidentCreationStore((s) => s.formData);
@@ -89,29 +115,43 @@ export function IncidentCreationModal() {
   const StepComponent = STEP_COMPONENTS[currentStep];
 
   const handleNext = useCallback(() => {
-    const validation = validateStep(currentStep, formData);
+    const validation = validateStep(currentStep, formData, t);
     if (!validation.success) {
       showError(validation.error);
       return;
     }
     nextStep();
-  }, [currentStep, formData, nextStep, showError]);
+  }, [currentStep, formData, nextStep, showError, t]);
 
   const handleSubmit = useCallback(async () => {
-    // Validate all steps before submitting
-    const step1 = validateStep(IncidentCreationStep.BasicInfo, formData);
+    const step1 = validateStep(IncidentCreationStep.BasicInfo, formData, t);
     if (!step1.success) {
-      showError(`Step 1: ${step1.error}`);
+      showError(
+        t("incidents.creationModal.validation.stepFormat", {
+          step: 1,
+          error: step1.error,
+        }),
+      );
       return;
     }
-    const step2 = validateStep(IncidentCreationStep.Environment, formData);
+    const step2 = validateStep(IncidentCreationStep.Environment, formData, t);
     if (!step2.success) {
-      showError(`Step 2: ${step2.error}`);
+      showError(
+        t("incidents.creationModal.validation.stepFormat", {
+          step: 2,
+          error: step2.error,
+        }),
+      );
       return;
     }
-    const step3 = validateStep(IncidentCreationStep.Location, formData);
+    const step3 = validateStep(IncidentCreationStep.Location, formData, t);
     if (!step3.success) {
-      showError(`Step 3: ${step3.error}`);
+      showError(
+        t("incidents.creationModal.validation.stepFormat", {
+          step: 3,
+          error: step3.error,
+        }),
+      );
       return;
     }
 
@@ -124,17 +164,15 @@ export function IncidentCreationModal() {
       });
       if (result.ok) {
         onCreated?.(result.value);
-        showToast("Incident created successfully", "success");
+        showToast(t("incidents.creationModal.success"), "success");
         resetFlow();
       } else {
         showError(result.error.message);
       }
-
-      console.log(formData);
     } finally {
       setSubmitting(false);
     }
-  }, [formData, onCreated, resetFlow, setSubmitting, showError, showToast]);
+  }, [formData, onCreated, resetFlow, setSubmitting, showError, showToast, t]);
 
   function handleClose() {
     resetFlow();
@@ -145,16 +183,16 @@ export function IncidentCreationModal() {
       open={isModalOpen}
       onClose={handleClose}
       size="lg"
-      title="Create Incident"
+      title={t("incidents.creationModal.title")}
       footer={
         <div className={styles.footer}>
           {currentStep > IncidentCreationStep.BasicInfo && (
             <Button variant="secondary" onClick={previousStep}>
-              Back
+              {t("incidents.creationModal.back")}
             </Button>
           )}
           <Button variant="ghost" onClick={handleClose}>
-            Cancel
+            {t("incidents.creationModal.cancel")}
           </Button>
           {isLastStep ? (
             <Button
@@ -162,11 +200,11 @@ export function IncidentCreationModal() {
               loading={isSubmitting}
               onClick={handleSubmit}
             >
-              Submit
+              {t("incidents.creationModal.submit")}
             </Button>
           ) : (
             <Button variant="primary" onClick={handleNext}>
-              Next
+              {t("incidents.creationModal.next")}
             </Button>
           )}
         </div>

@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { memo, useMemo } from "react";
 import {
   PieChart,
@@ -30,31 +31,38 @@ function CustomTooltip({ active, payload }: Readonly<CustomTooltipProps>) {
 }
 
 const StatusDonutChart = memo(function StatusDonutChart() {
+  const t = useTranslations();
   const counts = useDonutCounts();
   const kpi = useKpiData();
 
   const data = useMemo(() => {
     const chartData: DonutDataPoint[] = [
-      { name: "Open", value: counts.open, fill: "var(--color-warning)" },
-      { name: "Closed", value: counts.closed, fill: "var(--color-success)" },
+      { name: t("dashboard.charts.open"), value: counts.open, fill: "#f59e0b" },
+      {
+        name: t("dashboard.charts.closed"),
+        value: counts.closed,
+        fill: "#10b981",
+      },
     ];
 
     if (counts.other > 0) {
       chartData.push({
-        name: "Other",
+        name: t("dashboard.charts.other"),
         value: counts.other,
-        fill: "var(--color-neutral)",
+        fill: "#6366f1",
       });
     }
 
     return chartData;
-  }, [counts.open, counts.closed, counts.other]);
+  }, [counts.open, counts.closed, counts.other, t]);
 
   return (
     <div className={styles.container}>
-      <h3 className={styles.title}>Status Distribution</h3>
+      <h3 className={styles.title}>
+        {t("dashboard.charts.statusDistribution")}
+      </h3>
       <div className={styles.chartWrap}>
-        <ResponsiveContainer width="100%" height={260}>
+        <ResponsiveContainer width="100%" height={280}>
           <PieChart>
             <Pie
               data={data}
@@ -86,7 +94,9 @@ const StatusDonutChart = memo(function StatusDonutChart() {
           <span className={styles.centerValue}>
             {kpi.completionRate.toFixed(0)}%
           </span>
-          <span className={styles.centerSub}>resolved</span>
+          <span className={styles.centerSub}>
+            {t("dashboard.charts.resolved")}
+          </span>
         </div>
       </div>
     </div>

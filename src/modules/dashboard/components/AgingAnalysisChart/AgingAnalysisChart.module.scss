@@ -1,0 +1,49 @@
+@use "../../../../app/[locale]/variables" as *;
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: $space-lg;
+  padding: $space-xl;
+  background-color: $color-bg-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+  height: 400px;
+}
+
+.title {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  color: $color-secondary;
+  margin: 0;
+}
+
+.tooltip {
+  display: flex;
+  flex-direction: column;
+  gap: $space-xs;
+  padding: $space-sm $space-md;
+  background-color: $color-secondary;
+  border-radius: $radius-md;
+  box-shadow: $shadow-lg;
+}
+
+.tooltipLabel {
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  color: #ffffff;
+  padding-bottom: $space-xs;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.tooltipValue {
+  font-size: $font-size-xs;
+  font-weight: $font-weight-bold;
+  color: #ffffff;
+}
+
+.barLabel {
+  font-size: 11px;
+  font-weight: 600;
+  fill: #ffffff;
+}

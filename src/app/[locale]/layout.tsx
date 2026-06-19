@@ -5,6 +5,7 @@ import { getMessages } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
 import { ToastContainer } from "@/common/components/ui/Toast/ToastContainer";
 import { SessionProvider } from "next-auth/react";
+import { auth } from "@/auth";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,6 +31,7 @@ export default async function RootLayout({
 }>) {
   const { locale } = await params;
   const messages = await getMessages();
+  const session = await auth();
 
   return (
     <html
@@ -37,7 +39,7 @@ export default async function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable}`}
     >
       <body>
-        <SessionProvider>
+        <SessionProvider session={session}>
           <ToastContainer />
           <NextIntlClientProvider messages={messages}>
             {children}

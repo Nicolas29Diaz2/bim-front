@@ -1,9 +1,9 @@
 @use "../../../../app/[locale]/variables" as *;
 
 .bar {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-end;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  align-items: end;
   gap: $space-md;
   padding: $space-xl;
   background-color: $color-bg-surface;
@@ -11,54 +11,41 @@
   border-radius: $radius-lg;
 }
 
-.group {
-  display: flex;
-  flex-direction: column;
+.resetBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   gap: $space-xs;
-}
-
-.groupSelect {
-  display: flex;
-  flex-direction: column;
-  gap: $space-xs;
-  min-width: 200px;
-  flex: 1;
-}
-
-.fieldLabel {
-  font-size: $font-size-2xs;
-  font-weight: $font-weight-semibold;
-  color: $color-text-muted;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-
-.dateInput {
   height: 36px;
   padding: 0 $space-md;
   font-family: inherit;
-  font-size: $font-size-sm;
-  color: $color-secondary;
-  background-color: $color-bg-surface;
-  border: 1px solid $color-border;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  color: $color-error;
+  background-color: transparent;
+  border: 1px solid rgba($color-error, 0.3);
   border-radius: $radius-md;
-  outline: none;
+  cursor: pointer;
   transition:
-    border-color 0.15s ease,
-    box-shadow 0.15s ease;
+    background-color 0.15s ease,
+    border-color 0.15s ease;
+  white-space: nowrap;
+  justify-self: end;
 
-  &:hover:not(:focus) {
-    border-color: $color-neutral;
+  &:hover {
+    background-color: rgba($color-error, 0.08);
+    border-color: $color-error;
   }
 
-  &:focus {
-    border-color: $color-border-focus;
-    box-shadow: 0 0 0 3px $color-primary-light;
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
   }
 }
 
 .toggleGroup {
   display: flex;
+  width: 100%;
   border: 1px solid $color-border;
   border-radius: $radius-md;
   overflow: hidden;
@@ -66,21 +53,32 @@
 }
 
 .toggleBtn {
+  flex: 1;
+  min-width: 0;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0 $space-md;
+
+  padding: 0 $space-sm;
+
   font-family: inherit;
   font-size: $font-size-xs;
   font-weight: $font-weight-medium;
+  line-height: 1;
+
   color: $color-neutral;
   background-color: $color-bg-surface;
+
   border: none;
   border-right: 1px solid $color-border;
+
   cursor: pointer;
+
   transition:
     background-color 0.15s ease,
     color 0.15s ease;
+
   white-space: nowrap;
 
   &:last-child {
@@ -103,39 +101,12 @@
   }
 }
 
-.resetBtn {
-  display: inline-flex;
-  align-items: center;
-  gap: $space-xs;
-  height: 36px;
-  padding: 0 $space-md;
-  font-family: inherit;
-  font-size: $font-size-xs;
-  font-weight: $font-weight-semibold;
-  color: $color-error;
-  background-color: transparent;
-  border: 1px solid rgba($color-error, 0.3);
-  border-radius: $radius-md;
-  cursor: pointer;
-  transition:
-    background-color 0.15s ease,
-    border-color 0.15s ease;
-  white-space: nowrap;
-
-  &:hover {
-    background-color: rgba($color-error, 0.08);
-    border-color: $color-error;
-  }
-}
-
 @media (max-width: $breakpoint-md) {
   .bar {
-    flex-direction: column;
-    align-items: stretch;
+    grid-template-columns: 1fr;
   }
 
-  .groupSelect {
-    min-width: 0;
-    width: 100%;
+  .resetBtn {
+    justify-self: stretch;
   }
 }

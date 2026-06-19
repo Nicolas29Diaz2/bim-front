@@ -6,7 +6,7 @@ import { resolveAuthRedirect } from "./proxy/auth";
 
 const handleI18nRouting = createMiddleware(routing);
 
-export default async function middleware(req: NextRequest) {
+export default async function proxy(req: NextRequest) {
   const response = handleI18nRouting(req);
 
   ensureNextLocaleCookie(req, response);

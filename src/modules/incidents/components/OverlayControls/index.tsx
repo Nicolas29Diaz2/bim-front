@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import {
   Plus,
   Building2,
@@ -17,16 +18,17 @@ import styles from "./index.module.scss";
 import { useCallback } from "react";
 
 const TOOLBAR_ICONS = [
-  { Icon: Building2, label: "Building" },
-  { Icon: Ruler, label: "Measurement" },
-  { Icon: MapPin, label: "Pin" },
-  { Icon: Layers, label: "Layers" },
-  { Icon: Frame, label: "Capture" },
-  { Icon: HardHat, label: "Safety" },
-  { Icon: Upload, label: "Upload" },
+  { Icon: Building2, labelKey: "incidents.overlayControls.tools.building" },
+  { Icon: Ruler, labelKey: "incidents.overlayControls.tools.measurement" },
+  { Icon: MapPin, labelKey: "incidents.overlayControls.tools.pin" },
+  { Icon: Layers, labelKey: "incidents.overlayControls.tools.layers" },
+  { Icon: Frame, labelKey: "incidents.overlayControls.tools.capture" },
+  { Icon: HardHat, labelKey: "incidents.overlayControls.tools.safety" },
+  { Icon: Upload, labelKey: "incidents.overlayControls.tools.upload" },
 ] as const;
 
 export function OverlayControls() {
+  const t = useTranslations();
   const isCrosshairMode = useIncidentCreationStore((s) => s.isCrosshairMode);
   const startIncidentSelection = useIncidentCreationStore(
     (s) => s.startIncidentSelection,
@@ -49,7 +51,7 @@ export function OverlayControls() {
         {isCrosshairMode && (
           <div className={styles.hint}>
             <span className={styles.pulse} />
-            Click on the map to select the incident location
+            {t("incidents.overlayControls.hint")}
           </div>
         )}
       </div>
@@ -64,19 +66,23 @@ export function OverlayControls() {
           }
           variant={isCrosshairMode ? "destructive" : "primary"}
           onClick={handle}
-          aria-label={isCrosshairMode ? "Cancel selection" : "Create incident"}
+          aria-label={
+            isCrosshairMode
+              ? t("incidents.overlayControls.cancelSelection")
+              : t("incidents.overlayControls.createIncident")
+          }
         />
 
         <div className={styles.divider} />
 
-        {TOOLBAR_ICONS.map(({ Icon, label }) => (
+        {TOOLBAR_ICONS.map(({ Icon, labelKey }) => (
           <button
-            key={label}
+            key={labelKey}
             type="button"
             className={styles.iconBtn}
             disabled
-            aria-label={label}
-            title={label}
+            aria-label={t(labelKey)}
+            title={t(labelKey)}
           >
             <Icon size={20} strokeWidth={1.8} />
           </button>

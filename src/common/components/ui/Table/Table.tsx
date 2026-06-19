@@ -28,6 +28,8 @@ interface TableProps<TData> extends HTMLAttributes<HTMLTableElement> {
   onRowClick?: (row: TData, index: number) => void;
   /** Function to extract a unique key from row data for React keys */
   rowKey: (row: TData) => string;
+  /** Minimum height for the table body to prevent layout shift */
+  minBodyHeight?: number;
 }
 
 function Table<TData>({
@@ -37,17 +39,15 @@ function Table<TData>({
   emptyMessage = "No data available",
   onRowClick,
   rowKey,
+  minBodyHeight,
   className,
   ...rest
-}: TableProps<TData>) {
+}: Readonly<TableProps<TData>>) {
   const visibleColumns = columns.filter((col) => !col.hidden);
 
   return (
-    <div className={styles.tableWrapper}>
-      <table
-        className={cn(styles.table, compact && styles.compact, className)}
-        {...rest}
-      >
+    <div className={cn(styles.tableWrapper, className)}>
+      <table className={cn(styles.table, compact && styles.compact)} {...rest}>
         <thead className={styles.thead}>
           <tr>
             {visibleColumns.map((col) => (
@@ -57,7 +57,10 @@ function Table<TData>({
             ))}
           </tr>
         </thead>
-        <tbody className={styles.tbody}>
+        <tbody
+          className={styles.tbody}
+          style={minBodyHeight ? { minHeight: minBodyHeight } : undefined}
+        >
           {data.length === 0 ? (
             <tr>
               <td colSpan={visibleColumns.length} className={styles.td}>
@@ -72,7 +75,10 @@ function Table<TData>({
                 onClick={onRowClick ? () => onRowClick(row, idx) : undefined}
               >
                 {visibleColumns.map((col) => (
-                  <td key={col.key} className={cn(styles.td, col.cellClassName)}>
+                  <td
+                    key={col.key}
+                    className={cn(styles.td, col.cellClassName)}
+                  >
                     {col.renderCell
                       ? col.renderCell(row, col.key)
                       : String((row as Record<string, unknown>)[col.key] ?? "")}

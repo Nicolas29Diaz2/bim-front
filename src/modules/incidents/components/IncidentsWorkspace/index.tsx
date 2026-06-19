@@ -7,6 +7,7 @@ import { IncidentCreationModal } from "../IncidentCreationModal";
 import { TopFilterBar } from "../TopFilterBar";
 import { BottomViewControls } from "../BottomViewControls";
 import { useIncidentCreationStore } from "../../store/useIncidentCreationStore";
+import { useMapWorkspaceStore } from "../../store/useMapWorkspaceStore";
 import type { Incident } from "../../types/incidents";
 import styles from "./index.module.scss";
 
@@ -15,9 +16,12 @@ export function IncidentsWorkspace({
 }: Readonly<{ initialIncidents: Incident[] }>) {
   const [incidents, setIncidents] = useState<Incident[]>(initialIncidents);
   const [filterDate, setFilterDate] = useState<Date | null>(null);
-  const [is3D, setIs3D] = useState(false);
+
   const registerOnCreated = useIncidentCreationStore(
     (s) => s.registerOnCreated,
+  );
+  const setFilteredIncidents = useMapWorkspaceStore(
+    (s) => s.setFilteredIncidents,
   );
 
   const handleIncidentCreated = useCallback((incident: Incident) => {
@@ -34,14 +38,15 @@ export function IncidentsWorkspace({
     return incidents.filter((inc) => inc.createdAt.slice(0, 10) === selected);
   }, [incidents, filterDate]);
 
+  useEffect(() => {
+    setFilteredIncidents(filteredIncidents);
+  }, [filteredIncidents, setFilteredIncidents]);
+
   return (
     <div className={styles.workspace}>
-      <IncidentsMap incidents={filteredIncidents} is3D={is3D} />
+      <IncidentsMap />
       <TopFilterBar value={filterDate} onChange={setFilterDate} />
-      <BottomViewControls
-        is3D={is3D}
-        onToggle3D={() => setIs3D((prev) => !prev)}
-      />
+      <BottomViewControls />
       <OverlayControls />
       <IncidentCreationModal />
     </div>

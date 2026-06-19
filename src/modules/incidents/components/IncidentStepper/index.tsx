@@ -1,16 +1,21 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { cn } from "@/common/utils/cn";
 import { INCIDENT_STEPS } from "../../constants/incidentCreationOptions";
 import { useIncidentCreationStore } from "../../store/useIncidentCreationStore";
 import styles from "./index.module.scss";
 
 export function IncidentStepper() {
+  const t = useTranslations();
   const currentStep = useIncidentCreationStore((state) => state.currentStep);
   const goToStep = useIncidentCreationStore((state) => state.goToStep);
 
   return (
-    <div className={styles.stepper} aria-label="Incident creation progress">
+    <div
+      className={styles.stepper}
+      aria-label={t("incidents.creationModal.steps.info")}
+    >
       {INCIDENT_STEPS.map(({ step, label }, index) => {
         const isActive = step === currentStep;
         const isComplete = step < currentStep;
@@ -37,7 +42,7 @@ export function IncidentStepper() {
               {step}
             </button>
             <span className={cn(styles.label, isActive && styles.labelActive)}>
-              {label}
+              {t(label)}
             </span>
           </div>
         );

@@ -75,6 +75,11 @@
   gap: $space-xs;
 }
 
+.localeSelector {
+  min-width: 40px;
+  margin-right: $space-xs;
+}
+
 .actionButton {
   display: inline-flex;
   align-items: center;
@@ -107,6 +112,14 @@
   justify-content: center;
   font-size: $font-size-xs;
   font-weight: $font-weight-bold;
+  cursor: pointer;
+}
+
+.avatarImg {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
   cursor: pointer;
 }
 

@@ -4,6 +4,7 @@ import type {
   DashboardFilters,
   PriorityFilter,
   StatusFilter,
+  AssigneeFilter,
 } from "../types/dashboard";
 import { parseISO, startOfDay } from "date-fns";
 
@@ -19,6 +20,7 @@ interface DashboardStore {
   setCategories: (categories: string[]) => void;
   setPriorities: (priorities: PriorityFilter[]) => void;
   setStatus: (status: StatusFilter) => void;
+  setAssignees: (assignees: AssigneeFilter[]) => void;
   setSearchQuery: (query: string) => void;
   resetFilters: () => void;
 }
@@ -30,6 +32,7 @@ const DEFAULT_FILTERS: DashboardFilters = {
   categories: [],
   priorities: [],
   status: "all",
+  assignees: [],
 };
 
 export function applyFilters(
@@ -37,6 +40,15 @@ export function applyFilters(
   filters: DashboardFilters,
 ): Incident[] {
   return incidents.filter((inc) => {
+    if (filters.assignees.length > 0) {
+      if (
+        !filters.assignees.some((aid) =>
+          inc.assignees.some((a) => a.id === aid),
+        )
+      )
+        return false;
+    }
+
     if (filters.dateFrom) {
       if (parseISO(inc.createdAt) < startOfDay(parseISO(filters.dateFrom)))
         return false;
@@ -103,6 +115,15 @@ export const useDashboardStore = create<DashboardStore>((set) => ({
   setStatus: (status) =>
     set((state) => {
       const nextFilters = { ...state.filters, status };
+      return {
+        filters: nextFilters,
+        filteredIncidents: applyFilters(state.allIncidents, nextFilters),
+      };
+    }),
+
+  setAssignees: (assignees) =>
+    set((state) => {
+      const nextFilters = { ...state.filters, assignees };
       return {
         filters: nextFilters,
         filteredIncidents: applyFilters(state.allIncidents, nextFilters),

@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { Search, SlidersHorizontal, Plus, LogOut } from "lucide-react";
@@ -13,6 +14,7 @@ import { Navbar } from "@/common/components/ui/Navbar";
 import { signOut, useSession } from "next-auth/react";
 
 function ProjectsPage() {
+  const t = useTranslations();
   const router = useRouter();
   const { projects, loading } = useProjects();
   const [search, setSearch] = useState("");
@@ -36,6 +38,7 @@ function ProjectsPage() {
   return (
     <>
       <Navbar
+        avatar={user?.avatar}
         user={{
           name: user?.name ?? "",
           role: user?.role ?? "",
@@ -45,27 +48,24 @@ function ProjectsPage() {
         }}
       />
       <div className={styles.page}>
-        <h1 className={styles.title}>Mis Proyectos</h1>
-        <p className={styles.subtitle}>
-          Selecciona un entorno de trabajo activo para comenzar la gestion de
-          BIM y supervision de obra.
-        </p>
+        <h1 className={styles.title}>{t("projects.title")}</h1>
+        <p className={styles.subtitle}>{t("projects.subtitle")}</p>
 
         <div className={styles.toolbar}>
           <div className={styles.leftActions}>
             <div className={styles.searchWrapper}>
               <Input
-                placeholder="Buscar por nombre o ubicacion..."
+                placeholder={t("projects.searchPlaceholder")}
                 leadingIcon={<Search size={16} />}
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
               />
             </div>
             <Button variant="secondary" icon={<SlidersHorizontal size={16} />}>
-              Filtrar
+              {t("projects.filter")}
             </Button>
             <Button variant="primary" icon={<Plus size={16} />}>
-              Nuevo Proyecto
+              {t("projects.newProject")}
             </Button>
           </div>
 
@@ -76,7 +76,7 @@ function ProjectsPage() {
               signOut({ callbackUrl: "/login" });
             }}
           >
-            Cerrar Sesión
+            {t("projects.logout")}
           </Button>
         </div>
 
